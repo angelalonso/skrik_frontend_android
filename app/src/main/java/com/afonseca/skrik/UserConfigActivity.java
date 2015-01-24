@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ public class UserConfigActivity extends ActionBarActivity {
     TextView regid;
     TextView passwd;
 
+    Control_BackendHandler backend = new Control_BackendHandler();
     Control_Userconfig controlUserconfig = new Control_Userconfig();
 
     @Override
@@ -34,11 +36,17 @@ public class UserConfigActivity extends ActionBarActivity {
         regid = (TextView) findViewById(R.id.regid_input);
         passwd = (TextView) findViewById(R.id.passwd_input);
 
+
         Context context = getApplicationContext();
+
+        String current_uid = controlUserconfig.getUid(context);
+        if (current_uid == ""){
+            current_uid = backend.getnewID();
+        }
 
         name.setText(controlUserconfig.getUsername(context));
         email.setText(controlUserconfig.getEmail(context));
-        uid.setText(controlUserconfig.getUid(context));
+        uid.setText(current_uid);
         regid.setText(controlUserconfig.getRegid(context));
 
     }
@@ -74,6 +82,7 @@ public class UserConfigActivity extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         Context context = getApplicationContext();
+        Log.i(" TESTING REGID 1", rid);
         controlUserconfig.saveUser(context, n, em, id, rid, pwd);
         String saveResult = controlUserconfig.userOK(context);
         if (saveResult == "OK") {
@@ -89,9 +98,11 @@ public class UserConfigActivity extends ActionBarActivity {
 
         name.setText("");
         email.setText("");
-        uid.setText("");
+        uid.setText(backend.getnewID());
         regid.setText("");
         passwd.setText("");
+
+
     }
 }
 

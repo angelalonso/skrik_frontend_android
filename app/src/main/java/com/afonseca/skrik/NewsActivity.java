@@ -21,15 +21,10 @@ public class NewsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        String url = "http://192.168.10.229:8000/getnewid/";
-        String result = "nothing";
-
         test_output = (TextView) findViewById(R.id.test_tv);
-        //Control_StringAsyncTask task = new Control_StringAsyncTask();
-        //result = task.execute(new String[] { url }).get();
-        String output = null;
-        output = backend.getnewID();
-        //String new_output = "Gili";
+
+        String output = backend.getnewID();
+
         test_output.setText(output);
     }
 

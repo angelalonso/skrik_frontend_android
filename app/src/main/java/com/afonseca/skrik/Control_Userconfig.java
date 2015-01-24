@@ -6,11 +6,15 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by afonseca on 1/24/2015.
  */
 public class Control_Userconfig extends Activity {
+
+    Control_BackendHandler backend = new Control_BackendHandler();
 
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Name = "nameKey";
@@ -34,12 +38,15 @@ public class Control_Userconfig extends Activity {
             allOK = false;
             errors.add("username");
         }
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(sharedpreferences.getString(Email, ""));
         if (!sharedpreferences.contains(Email)
                 || sharedpreferences.getString(Email, "") == ""
-                || !sharedpreferences.getString(Email, "").matches("[a-zA-Z]+"))
+                || !matcher.matches())
         {
             allOK = false;
-            errors.add("Email");
+            errors.add("'VALID' Email");
         }
 
 
@@ -88,6 +95,15 @@ public class Control_Userconfig extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
 
+
+        String sanitized_regid = regid.replaceAll("[^\\d.]", "");;
+        Log.i(" TESTING sanitized_regid", sanitized_regid);
+        if (sanitized_regid == "") {
+            regid = "4444";
+
+        }
+
+
         editor.putString(Name, username);
         editor.putString(Email, email);
         editor.putString(Uid, uid);
@@ -96,6 +112,7 @@ public class Control_Userconfig extends Activity {
 
         editor.commit();
 
+        backend.saveUserToBackend(username, email, uid, regid);
     }
 
 
@@ -111,6 +128,5 @@ public class Control_Userconfig extends Activity {
         editor.remove(Passwd);
         editor.commit();
 
-        editor.commit();
     }
 }

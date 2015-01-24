@@ -23,4 +23,17 @@ public class Control_BackendHandler {
         }
         return output;
     }
+
+    public String saveUserToBackend(String username, String email, String userid, String regid) {
+        String output = null;
+        String url_saveuser = URL + "/saveid/" + userid + "/name/" + username + "/email/" + email + "/regid/" + regid + "/";
+        try {
+            output = new Control_StringAsyncTask().execute(url_saveuser).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
 }
