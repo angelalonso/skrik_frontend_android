@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class NewsActivity extends ActionBarActivity {
 
+    Control_BackendHandler backend = new Control_BackendHandler();
     TextView test_output;
 
     @Override
@@ -20,20 +21,14 @@ public class NewsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        String url = "http://google.com/";
+        String url = "http://192.168.10.229:8000/getnewid/";
         String result = "nothing";
 
         test_output = (TextView) findViewById(R.id.test_tv);
         //Control_StringAsyncTask task = new Control_StringAsyncTask();
         //result = task.execute(new String[] { url }).get();
         String output = null;
-        try {
-            output = new Control_StringAsyncTask().execute(url).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        output = backend.getnewID();
         //String new_output = "Gili";
         test_output.setText(output);
     }
