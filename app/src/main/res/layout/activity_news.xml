@@ -42,4 +42,9 @@
             android:textColor="#ffefefef" />
     </LinearLayout>
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newslist_lv" />
+
 </LinearLayout>
