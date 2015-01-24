@@ -52,11 +52,11 @@ public class Control_NewsListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.news_item, null);
 
         }
-        TextView tvSlNo = (TextView) convertView.findViewById(R.id.tv_slno);
+        TextView tvSlNo = (TextView) convertView.findViewById(R.id.nr_msgs_tv);
         tvSlNo.setText(contactListItems.getSlno());
-        TextView tvName = (TextView) convertView.findViewById(R.id.tv_name);
+        TextView tvName = (TextView) convertView.findViewById(R.id.username_tv);
         tvName.setText(contactListItems.getName());
-        TextView tvPhone = (TextView) convertView.findViewById(R.id.tv_phone);
+        TextView tvPhone = (TextView) convertView.findViewById(R.id.timestamp_tv);
         tvPhone.setText(contactListItems.getPhone());
 
         return convertView;

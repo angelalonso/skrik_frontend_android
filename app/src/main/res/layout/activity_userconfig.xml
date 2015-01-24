@@ -7,7 +7,7 @@
 
     <TextView android:text="@string/title_activity_user" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
+        android:id="@+id/MsgsNr_tv"
         android:layout_alignRight="@+id/name_input"
         android:layout_alignEnd="@+id/name_input"
         android:textSize="30sp"
@@ -26,7 +26,7 @@
         android:text="Enter your name here"
         android:ems="10"
         android:id="@+id/name_input"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/MsgsNr_tv"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/save_btn"

@@ -8,17 +8,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class Control_SqlHandler {
+public class Control_NewsDbHandler {
 
     public static final String DATABASE_NAME = "MSGING_DB";
     public static final int DATABASE_VERSION = 1;
-    Context context;
+    //Context context;
     SQLiteDatabase sqlDatabase;
-    Control_SqlDbHelper dbHelper;
+    Control_NewsDbHelper dbHelper;
 
-    public Control_SqlHandler(Context context) {
+    public Control_NewsDbHandler(Context context) {
 
-        dbHelper = new Control_SqlDbHelper(context, DATABASE_NAME, null,
+        dbHelper = new Control_NewsDbHelper(context, DATABASE_NAME, null,
                 DATABASE_VERSION);
         sqlDatabase = dbHelper.getWritableDatabase();
     }
@@ -61,4 +61,5 @@ public class Control_SqlHandler {
     }
 
 }
+
 

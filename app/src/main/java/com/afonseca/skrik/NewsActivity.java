@@ -18,9 +18,11 @@ import java.util.concurrent.ExecutionException;
  */
 public class NewsActivity extends ActionBarActivity {
 
-    Control_SqlHandler sqlHandler;
+    //Control_SqlDbHandler sqlHandler;
+    Control_NewsDbHandler sqlHandler;
     ListView NewsList_lv;
     Button btnsubmit;
+    Button btndelete;
 
     Control_Userconfig controlUserconfig = new Control_Userconfig();
     Control_BackendHandler backend = new Control_BackendHandler();
@@ -31,10 +33,16 @@ public class NewsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
+        Context context = getApplicationContext();
+        String userid = controlUserconfig.getUid(context);
+
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
-        sqlHandler = new Control_SqlHandler(this);
+        //sqlHandler = new Control_SqlDbHandler(this);
+        sqlHandler = new Control_NewsDbHandler(this);
         showList();
 
+
+        /* AUX BUTTONS */
         btnsubmit = (Button) findViewById(R.id.aux_btn);
         btnsubmit.setOnClickListener(new View.OnClickListener() {
 
@@ -44,12 +52,28 @@ public class NewsActivity extends ActionBarActivity {
                 String name = "Hey you!";
                 String phoneNo = "Im Testing!";
 
-                String query = "INSERT INTO PHONE_CONTACTS(name,phone) values ('"
+                String query = "INSERT INTO NEWS (name,phone) values ('"
                         + name + "','" + phoneNo + "')";
                 sqlHandler.executeQuery(query);
                 showList();
             }
         });
+        btndelete = (Button) findViewById(R.id.del_btn);
+        btndelete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                String query = "DELETE FROM PHONE_CONTACTS WHERE name = name";
+                sqlHandler.executeQuery(query);
+                showList();
+            }
+        });
+
+        /* END OF AUX BUTTONS */
+
+
+
 
         username = (TextView) findViewById(R.id.username_tv);
 

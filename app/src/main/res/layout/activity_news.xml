@@ -34,12 +34,18 @@
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Aux"
+            android:layout_height="wrap_content"
+            android:text="add"
             android:id="@+id/aux_btn"
-            android:singleLine="true"
-            android:layout_weight="0.33"
             android:textColor="#ffefefef" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="del"
+            android:id="@+id/del_btn"
+            android:textColor="#ffefefef"  />
     </LinearLayout>
 
     <ListView
