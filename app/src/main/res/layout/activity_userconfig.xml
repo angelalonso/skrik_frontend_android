@@ -15,6 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignWithParentIfMissing="false"
         android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
         android:gravity="center_horizontal"
         android:layout_marginBottom="30sp" />
 
@@ -50,6 +51,9 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/uid_input"
+        android:editable="false"
+        android:focusable="false"
+        android:textColor="#77000000"
         android:layout_below="@+id/email_input"
         android:layout_alignLeft="@+id/email_input"
         android:layout_alignStart="@+id/email_input"
@@ -62,6 +66,9 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/regid_input"
+        android:editable="false"
+        android:focusable="false"
+        android:textColor="#77000000"
         android:layout_below="@+id/uid_input"
         android:layout_alignLeft="@+id/uid_input"
         android:layout_alignStart="@+id/uid_input"

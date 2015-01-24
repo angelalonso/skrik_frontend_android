@@ -11,6 +11,11 @@ import java.util.regex.Pattern;
 
 /**
  * Created by afonseca on 1/24/2015.
+ *
+ * TODO:
+ * REALLY, REALLY Check the values of username and email before saving
+ * REALLY, REALLY Check the values of userid and regid and handle that offline AND online
+ *
  */
 public class Control_Userconfig extends Activity {
 
@@ -32,8 +37,7 @@ public class Control_Userconfig extends Activity {
         ArrayList<String> errors = new ArrayList<>();
 
         if (!sharedpreferences.contains(Name)
-                || sharedpreferences.getString(Name, "") == ""
-                || !sharedpreferences.getString(Name, "").matches("[a-zA-Z]+"))
+                || sharedpreferences.getString(Name, "") == "")
         {
             allOK = false;
             errors.add("username");

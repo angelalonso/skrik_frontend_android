@@ -6,23 +6,40 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        android:weightSum="1"
+        android:background="#ff000000">
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Config"
             android:id="@+id/cfg_btn"
             android:singleLine="true"
-            android:onClick="gotoUserConfig"/>
+            android:onClick="gotoUserConfig"
+            android:textColor="#ffefefef" />
+
+        <TextView
+            android:layout_width="201dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/username_tv"
+            android:layout_weight="0.55"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textColor="#ffefefef" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Aux"
+            android:id="@+id/aux_btn"
+            android:singleLine="true"
+            android:layout_weight="0.33"
+            android:textColor="#ffefefef" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="311dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/test_tv"
-        android:layout_gravity="center_vertical" />
 </LinearLayout>
