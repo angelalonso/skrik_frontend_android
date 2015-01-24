@@ -18,32 +18,42 @@ NO  -> it passes the ball to "USER CONFIG"
  */
 
 public class SkrikActivity extends ActionBarActivity {
-
+/*
     public static final String MyPREFERENCES = "MyPrefs" ;
     SharedPreferences sharedpreferences;
     public static final String Name = "nameKey";
     public static final String Email = "emailKey";
-
+*/
     Control_Userconfig controlUserconfig = new Control_Userconfig();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skrik);
-
-        if (controlUserconfig.userOK()){
+        Context context = getApplicationContext();
+        if (controlUserconfig.userOK(context) == "OK"){
             Intent intent = new Intent(this, NewsActivity.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, UserConfigActivity.class);
             startActivity(intent);
         }
-        /*sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-        Intent intent = new Intent(this, UserConfigActivity.class);
-        startActivity(intent);*/
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_skrik);
+        Context context = getApplicationContext();
+
+        if (controlUserconfig.userOK(context) == "OK"){
+            Intent intent = new Intent(this, NewsActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, UserConfigActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,22 +77,9 @@ public class SkrikActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-    public boolean userOK() {
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        Boolean result = false;
-        if (sharedpreferences.contains(Name) && sharedpreferences.contains(Email))
-        {
-            result = true;
-        }
 
-
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        return result;
-    }
-     */
     /** Called when the user clicks the Config button */
-    public void configUser(View view) {
+    public void gotoUserConfig(View view) {
         Intent intent = new Intent(this, UserConfigActivity.class);
         startActivity(intent);
     }

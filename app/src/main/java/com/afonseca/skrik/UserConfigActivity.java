@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by aaf on 1/23/15.
@@ -20,13 +21,7 @@ public class UserConfigActivity extends ActionBarActivity {
     TextView regid;
     TextView passwd;
 
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    public static final String Name = "nameKey";
-    public static final String Email = "emailKey";
-    public static final String Uid = "uidKey";
-    public static final String Regid = "regidKey";
-    public static final String Passwd = "PasswdKey";
-    SharedPreferences sharedpreferences;
+    Control_Userconfig controlUserconfig = new Control_Userconfig();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +34,13 @@ public class UserConfigActivity extends ActionBarActivity {
         regid = (TextView) findViewById(R.id.regid_input);
         passwd = (TextView) findViewById(R.id.passwd_input);
 
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        Context context = getApplicationContext();
 
-        if (sharedpreferences.contains(Name))
-        {
-            name.setText(sharedpreferences.getString(Name, ""));
-        }
-        if (sharedpreferences.contains(Email))
-        {
-            email.setText(sharedpreferences.getString(Email, ""));
-        }
-        if (sharedpreferences.contains(Uid))
-        {
-            uid.setText(sharedpreferences.getString(Uid, ""));
-        }
-        if (sharedpreferences.contains(Regid))
-        {
-            regid.setText(sharedpreferences.getString(Regid, ""));
-        }
+        name.setText(controlUserconfig.getUsername(context));
+        email.setText(controlUserconfig.getEmail(context));
+        uid.setText(controlUserconfig.getUid(context));
+        regid.setText(controlUserconfig.getRegid(context));
+
     }
 
 
@@ -78,7 +62,6 @@ public class UserConfigActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -90,28 +73,19 @@ public class UserConfigActivity extends ActionBarActivity {
         String rid  = regid.getText().toString();
         String pwd  = passwd.getText().toString();
 
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-        editor.putString(Name, n);
-        editor.putString(Email, em);
-        editor.putString(Uid, id);
-        editor.putString(Regid, rid);
-        editor.putString(Passwd, pwd);
-
-        editor.commit();
-
-        finish();
+        Context context = getApplicationContext();
+        controlUserconfig.saveUser(context, n, em, id, rid, pwd);
+        String saveResult = controlUserconfig.userOK(context);
+        if (saveResult == "OK") {
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), saveResult, Toast.LENGTH_LONG).show();
+        }
     }
     public void clearUser(View view) {
 
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-        editor.remove(Name);
-        editor.remove(Email);
-        editor.remove(Uid);
-        editor.remove(Regid);
-        editor.remove(Passwd);
-        editor.commit();
+        Context context = getApplicationContext();
+        controlUserconfig.clearUser(context);
 
         name.setText("");
         email.setText("");
