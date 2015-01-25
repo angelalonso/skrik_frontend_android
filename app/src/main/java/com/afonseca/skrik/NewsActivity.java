@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -18,7 +19,6 @@ import java.util.concurrent.ExecutionException;
  */
 public class NewsActivity extends ActionBarActivity {
 
-    //Control_SqlDbHandler sqlHandler;
     Control_NewsDbHandler sqlHandler;
     ListView NewsList_lv;
     Button btnsubmit;
@@ -35,14 +35,14 @@ public class NewsActivity extends ActionBarActivity {
 
         /* We would need this to add entries to/from us
         *  So far used in SHOWLIST */
+        sqlHandler = new Control_NewsDbHandler(this);
+
         Context context = getApplicationContext();
         String userid = controlUserconfig.getUid(context);
 
+        backend.updateNewslist(sqlHandler,userid);
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
-
-        //sqlHandler = new Control_SqlDbHandler(this);
-        sqlHandler = new Control_NewsDbHandler(this);
 
         /* SHOWLIST */
         showList(userid);
@@ -81,7 +81,7 @@ public class NewsActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                String query = "DELETE FROM PHONE_CONTACTS WHERE name = name";
+                String query = "DELETE FROM NEWS WHERE userid_to = userid_to";
                 sqlHandler.executeQuery(query);
 
                 Context context = getApplicationContext();
@@ -108,7 +108,11 @@ public class NewsActivity extends ActionBarActivity {
         Context context = getApplicationContext();
         String output = controlUserconfig.getUsername(context);
 
-        username.setText(output + " news");
+        username.setText(output);
+
+        String userid = controlUserconfig.getUid(context);
+
+        backend.updateNewslist(sqlHandler,userid);
     }
 
     private void showList(String user_me) {
