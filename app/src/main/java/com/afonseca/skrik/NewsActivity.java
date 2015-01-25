@@ -61,15 +61,8 @@ public class NewsActivity extends ActionBarActivity {
                 String status = "sent";
                 String timestamp = "1422169444";
 
-                String query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp) VALUES ('"
-                        + userid + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "')";
-                sqlHandler.executeQuery(query);
-
-                message = "another message";
-                timestamp = "1422169490";
-                String userfrom = "9999999999999";
-
-                query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "')";
+                String query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('"
+                        + userid + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','444444444444')";
                 sqlHandler.executeQuery(query);
 
                 showList(userid);
@@ -86,6 +79,8 @@ public class NewsActivity extends ActionBarActivity {
 
                 Context context = getApplicationContext();
                 String userid = controlUserconfig.getUid(context);
+
+                backend.updateNewslist(sqlHandler,userid);
                 showList(userid);
             }
         });
@@ -96,7 +91,19 @@ public class NewsActivity extends ActionBarActivity {
 
         String output = controlUserconfig.getUsername(context);
 
-        username.setText(output + " News");
+        String auxquery = "SELECT count(*) as result FROM NEWS ";
+        Cursor c1 = sqlHandler.selectQuery(auxquery);
+        String nr_msgs = "";
+        if (c1 != null && c1.getCount() > 0) {
+            if (c1.moveToFirst()) {
+                do {
+                    nr_msgs = c1.getString(c1.getColumnIndex("result"));
+                } while (c1.moveToNext());
+            }
+        }
+        c1.close();
+
+        username.setText(nr_msgs + " " + output);
     }
 
     @Override
@@ -108,7 +115,19 @@ public class NewsActivity extends ActionBarActivity {
         Context context = getApplicationContext();
         String output = controlUserconfig.getUsername(context);
 
-        username.setText(output);
+        String auxquery = "SELECT count(*) as result FROM NEWS ";
+        Cursor c1 = sqlHandler.selectQuery(auxquery);
+        String nr_msgs = "";
+        if (c1 != null && c1.getCount() > 0) {
+            if (c1.moveToFirst()) {
+                do {
+                    nr_msgs = c1.getString(c1.getColumnIndex("result"));
+                } while (c1.moveToNext());
+            }
+        }
+        c1.close();
+
+        username.setText(nr_msgs + " " + output);
 
         String userid = controlUserconfig.getUid(context);
 
@@ -121,7 +140,7 @@ public class NewsActivity extends ActionBarActivity {
         contactList.clear();
 
         //String query = "SELECT * FROM PHONE_CONTACTS ";
-        String query = "SELECT count(*) as msg_nr, userid_from, message, MAX(timestamp) as timestamp_last FROM NEWS WHERE userid_to = '" + user_me + "' GROUP BY userid_from";
+        String query = "SELECT count(*) as msg_nr, userid_from, message, MAX(timestamp) as timestamp_last FROM NEWS GROUP BY userid_from";
 
         Cursor c1 = sqlHandler.selectQuery(query);
         //if (c1 != null && c1.getCount() != 0) {

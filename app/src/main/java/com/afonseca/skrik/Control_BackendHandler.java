@@ -73,8 +73,6 @@ public class Control_BackendHandler {
 
         for (String s : stringArray) {
             try {
-
-
                 JSONArray jsonLine = new JSONArray(s);
                 String userfrom = jsonLine.getString(0);
                 String message = jsonLine.getString(1);
@@ -83,20 +81,23 @@ public class Control_BackendHandler {
                 String backend_id = jsonLine.getString(4);
                 String query = "SELECT count(*) as result FROM NEWS WHERE backend_id = '" + backend_id + "' ";
                 Cursor c1 = sqlHandler.selectQuery(query);
-                Log.i("--TESTING EXISTING ---- c1 has", Integer.toString(c1.getCount()));
-                if (c1 == null || c1.getCount() == 0){
-                    Log.i("--TESTING EXISTING ---- c1 has","NOTHING");
+                if (c1 == null || c1.getCount() <= 0){
                     String insert_query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
                     sqlHandler.executeQuery(insert_query);
-                }else if (c1 != null && c1.getCount() > 0) {
-
-                    Log.i("--TESTING EXISTING ---- c1 ","has at least ONE");
-                    if (c1.moveToFirst()) {
+                }
+                c1.close();
+                String auxquery = "SELECT count(*) as result FROM NEWS ";
+                Cursor c2 = sqlHandler.selectQuery(auxquery);
+                String nr_msgs = "";
+                if (c2 != null && c2.getCount() > 0) {
+                    if (c2.moveToFirst()) {
                         do {
-                            Log.i("--TESTING EXISTING ---- c1 has",c1.getString(c1.getColumnIndex("result")));
-                        } while (c1.moveToNext());
+                            nr_msgs = c2.getString(c2.getColumnIndex("result"));
+                        } while (c2.moveToNext());
                     }
                 }
+                Log.i("--TESTING EXISTING ---- THERE ARE", nr_msgs + " Messages");
+                c2.close();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
