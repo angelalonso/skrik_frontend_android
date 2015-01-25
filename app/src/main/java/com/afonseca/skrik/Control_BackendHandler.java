@@ -3,6 +3,7 @@ package com.afonseca.skrik;
 
 
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -78,8 +79,13 @@ public class Control_BackendHandler {
                 String message = jsonLine.getString(1);
                 String status = jsonLine.getString(2);
                 String timestamp = jsonLine.getString(3);
-                String query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "')";
-                sqlHandler.executeQuery(query);
+                String backend_id = jsonLine.getString(4);
+                String query = "SELECT count(*) FROM NEWS WHERE backend_id = '" + backend_id + "' ";
+                Cursor c1 = sqlHandler.selectQuery(query);
+                if (c1 == null){
+                    String insert_query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
+                    sqlHandler.executeQuery(insert_query);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

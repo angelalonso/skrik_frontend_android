@@ -18,6 +18,7 @@ public class Control_NewsDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN4 = "message";
     public static final String COLUMN5 = "status";
     public static final String COLUMN6 = "timestamp";
+    public static final String COLUMN7 = "backend_id";
     private static final String SCRIPT_CREATE_DATABASE = "create table "
             + DATABASE_TABLE + " ("
             + COLUMN1 + " integer primary key autoincrement, "
@@ -25,7 +26,8 @@ public class Control_NewsDbHelper extends SQLiteOpenHelper {
             + COLUMN3 + " text not null, "
             + COLUMN4 + " text not null, "
             + COLUMN5 + " text not null, "
-            + COLUMN6 + " text not null "
+            + COLUMN6 + " text not null, "
+            + COLUMN7 + " text not null "
             + ");";
 
     public Control_NewsDbHelper(Context context, String name, CursorFactory factory,
