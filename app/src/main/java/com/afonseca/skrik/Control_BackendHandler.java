@@ -90,7 +90,7 @@ public class Control_BackendHandler {
                     sqlHandler.executeQuery(insert_query);
                 }else if (c1 != null && c1.getCount() > 0) {
 
-                    Log.i("--TESTING EXISTING ---- c1 has","at least ONE");
+                    Log.i("--TESTING EXISTING ---- c1 ","has at least ONE");
                     if (c1.moveToFirst()) {
                         do {
                             Log.i("--TESTING EXISTING ---- c1 has",c1.getString(c1.getColumnIndex("result")));
