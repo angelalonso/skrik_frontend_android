@@ -17,7 +17,7 @@ NO  -> it passes the ball to "USER CONFIG"
 
  */
 
-public class SkrikActivity extends ActionBarActivity {
+public class Act_Main extends ActionBarActivity {
 /*
     public static final String MyPREFERENCES = "MyPrefs" ;
     SharedPreferences sharedpreferences;

@@ -60,7 +60,6 @@ public class Control_BackendHandler {
         /*  Work on the result */
         ArrayList<String> stringArray = new ArrayList<String>();
         if (output != null){
-
             try {
                 JSONArray jsonArray = new JSONArray(output);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -74,17 +73,29 @@ public class Control_BackendHandler {
 
         for (String s : stringArray) {
             try {
+
+
                 JSONArray jsonLine = new JSONArray(s);
                 String userfrom = jsonLine.getString(0);
                 String message = jsonLine.getString(1);
                 String status = jsonLine.getString(2);
                 String timestamp = jsonLine.getString(3);
                 String backend_id = jsonLine.getString(4);
-                String query = "SELECT count(*) FROM NEWS WHERE backend_id = '" + backend_id + "' ";
+                String query = "SELECT count(*) as result FROM NEWS WHERE backend_id = '" + backend_id + "' ";
                 Cursor c1 = sqlHandler.selectQuery(query);
-                if (c1 == null){
+                Log.i("--TESTING EXISTING ---- c1 has", Integer.toString(c1.getCount()));
+                if (c1 == null || c1.getCount() == 0){
+                    Log.i("--TESTING EXISTING ---- c1 has","NOTHING");
                     String insert_query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
                     sqlHandler.executeQuery(insert_query);
+                }else if (c1 != null && c1.getCount() > 0) {
+
+                    Log.i("--TESTING EXISTING ---- c1 has","at least ONE");
+                    if (c1.moveToFirst()) {
+                        do {
+                            Log.i("--TESTING EXISTING ---- c1 has",c1.getString(c1.getColumnIndex("result")));
+                        } while (c1.moveToNext());
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
