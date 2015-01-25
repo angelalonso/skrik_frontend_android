@@ -81,9 +81,18 @@ public class Control_BackendHandler {
                 String backend_id = jsonLine.getString(4);
                 String query = "SELECT count(*) as result FROM NEWS WHERE backend_id = '" + backend_id + "' ";
                 Cursor c1 = sqlHandler.selectQuery(query);
-                if (c1 == null || c1.getCount() <= 0){
+                if (c1 == null){
                     String insert_query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
                     sqlHandler.executeQuery(insert_query);
+                } else {
+                    String test = Integer.toString(c1.getCount());
+                    if (c1.moveToFirst()) {
+                        Integer nr_msgs = Integer.parseInt(c1.getString(c1.getColumnIndex("result")));
+                        if (nr_msgs == 0){
+                            String insert_query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
+                            sqlHandler.executeQuery(insert_query);
+                        }
+                    }
                 }
                 c1.close();
                 String auxquery = "SELECT count(*) as result FROM NEWS ";
@@ -96,7 +105,7 @@ public class Control_BackendHandler {
                         } while (c2.moveToNext());
                     }
                 }
-                Log.i("--TESTING EXISTING ---- THERE ARE", nr_msgs + " Messages");
+
                 c2.close();
             } catch (JSONException e) {
                 e.printStackTrace();
