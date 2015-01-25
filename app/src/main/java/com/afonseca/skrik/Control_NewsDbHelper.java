@@ -25,7 +25,7 @@ public class Control_NewsDbHelper extends SQLiteOpenHelper {
             + COLUMN3 + " text not null, "
             + COLUMN4 + " text not null, "
             + COLUMN5 + " text not null, "
-            + COLUMN6 + " text not null, "
+            + COLUMN6 + " text not null "
             + ");";
 
     public Control_NewsDbHelper(Context context, String name, CursorFactory factory,

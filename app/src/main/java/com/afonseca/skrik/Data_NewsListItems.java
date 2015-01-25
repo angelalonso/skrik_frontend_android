@@ -5,32 +5,42 @@ package com.afonseca.skrik;
  */
 public class Data_NewsListItems {
 
-    String slno;
-    String name;
-    String phone;
+    String nr_of_msgs;
+    String username;
+    String news;
+    String timestamp;
 
-    public String getSlno() {
-        return slno;
+
+
+    public String getNrOfMsgs() {
+        return nr_of_msgs;
     }
 
-    public void setSlno(String slno) {
-        this.slno = slno;
+    public void setNrOfMsgs(String nr_of_msgs) {
+        this.nr_of_msgs = nr_of_msgs;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getNews() {
+        return news;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setNews(String news) {
+        this.news = news;
     }
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 }
