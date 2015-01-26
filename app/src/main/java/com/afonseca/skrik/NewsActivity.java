@@ -15,14 +15,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
- * Created by afonseca on 1/24/2015.
+ * This Activity should show the News for the configured user
  */
 public class NewsActivity extends ActionBarActivity {
 
     Control_NewsDbHandler sqlHandler;
+
+    String serverSide;
+
     ListView NewsList_lv;
     Button btnsubmit;
     Button btndelete;
@@ -35,24 +37,23 @@ public class NewsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        Context context = getApplicationContext();
+        serverSide = serverCheck(context);
 
-        checker();
-        /* We would need this to add entries to/from us
-        *  So far used in SHOWLIST */
+        // We would need this to add entries to/from us
+        //  So far used in SHOWLIST */
         sqlHandler = new Control_NewsDbHandler(this);
 
-        Context context = getApplicationContext();
         String userid = controlUserconfig.getUid(context);
 
-        backend.updateNewslist(sqlHandler,userid);
+        if (serverSide.matches("OK")) { backend.updateNewslist(sqlHandler, userid); }
+        else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there"); }
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
 
-        /* SHOWLIST */
         showList(userid);
+/*
 
-
-        /* AUX BUTTONS */
         btnsubmit = (Button) findViewById(R.id.aux_btn);
         btnsubmit.setOnClickListener(new View.OnClickListener() {
 
@@ -89,8 +90,6 @@ public class NewsActivity extends ActionBarActivity {
             }
         });
 
-        /* END OF AUX BUTTONS */
-
         username = (TextView) findViewById(R.id.username_tv);
 
         String output = controlUserconfig.getUsername(context);
@@ -108,6 +107,8 @@ public class NewsActivity extends ActionBarActivity {
         c1.close();
 
         username.setText(nr_msgs + " " + output);
+
+        */
     }
 
     @Override
@@ -116,9 +117,22 @@ public class NewsActivity extends ActionBarActivity {
 
         username = (TextView) findViewById(R.id.username_tv);
 
-        checker();
         Context context = getApplicationContext();
-        String output = controlUserconfig.getUsername(context);
+        serverSide = serverCheck(context);
+
+
+        // We would need this to add entries to/from us
+        //  So far used in SHOWLIST */
+        sqlHandler = new Control_NewsDbHandler(this);
+
+        String userid = controlUserconfig.getUid(context);
+
+        if (serverSide.matches("OK")) { backend.updateNewslist(sqlHandler, userid); }
+        else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, because the server is not there"); }
+
+        showList(userid);
+
+      /*  String output = controlUserconfig.getUsername(context);
 
         String auxquery = "SELECT count(*) as result FROM NEWS ";
         Cursor c1 = sqlHandler.selectQuery(auxquery);
@@ -133,27 +147,22 @@ public class NewsActivity extends ActionBarActivity {
         c1.close();
 
         username.setText(nr_msgs + " " + output);
-
-        String userid = controlUserconfig.getUid(context);
-
-        backend.updateNewslist(sqlHandler,userid);
+*/
     }
 
     private void showList(String user_me) {
 
-        ArrayList<Data_NewsListItems> contactList = new ArrayList<Data_NewsListItems>();
+        ArrayList<Data_NewsListItems> contactList = new ArrayList<>();
         contactList.clear();
 
         //String query = "SELECT * FROM PHONE_CONTACTS ";
         String query = "SELECT count(*) as msg_nr, userid_from, message, MAX(timestamp) as timestamp_last FROM NEWS GROUP BY userid_from";
 
         Cursor c1 = sqlHandler.selectQuery(query);
-        //if (c1 != null && c1.getCount() != 0) {
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {
                     Data_NewsListItems newsListItems = new Data_NewsListItems();
-
 
                     newsListItems.setNrOfMsgs(c1.getString(c1
                             .getColumnIndex("msg_nr")));
@@ -169,7 +178,6 @@ public class NewsActivity extends ActionBarActivity {
                 } while (c1.moveToNext());
             }
         }
-        c1.close();
 
         Control_NewsListAdapter contactListAdapter = new Control_NewsListAdapter(
                 NewsActivity.this, contactList);
@@ -177,17 +185,24 @@ public class NewsActivity extends ActionBarActivity {
 
     }
 
-    public void checker() {
+    public String serverCheck(Context mContext) {
         TextView server_tv = (TextView) findViewById(R.id.server_tv);
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null) {
-            /* TODO: CHECK THAT THE INTERNET CONNECTION TIMES OUT! OTHERWISE IT GETS BLOCKED */
-            server_tv.setTextColor(Color.GREEN);
-        } else {
-            server_tv.setTextColor(Color.RED);
+        String status = backend.testNetwork(mContext);
+        switch(status) {
+            case "OK":
+                server_tv.setTextColor(getResources().getColor(R.color.Lime));
+                break;
+            case "NoServer":
+                server_tv.setTextColor(getResources().getColor(R.color.Gold));
+                break;
+            case "NoNet":
+                server_tv.setTextColor(getResources().getColor(R.color.Red));
+                break;
+            default:
+                server_tv.setTextColor(getResources().getColor(R.color.DarkViolet));
+                break;
         }
+        return status;
     }
 
     /** Called when the user clicks the Config button */

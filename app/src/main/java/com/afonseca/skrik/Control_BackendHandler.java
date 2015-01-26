@@ -4,6 +4,9 @@ package com.afonseca.skrik;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -11,12 +14,63 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by afonseca on 1/24/2015.
  */
 public class Control_BackendHandler {
-    String URL = "http://192.168.10.229:8000";
+
+    /* I keep these separated, just in case */
+    String IP = "192.168.10.229";
+    String PORT = "8000";
+    String URL = "http://" + IP + ":" + PORT;
+
+    public String testNetwork(Context mContext) {
+        /* Logic:
+         * - If the mobile phone has no network, or deactivated, we get a "NoNet"
+         * - If it is active:
+         *   - If we get a timeout within a second, we get a "NoServer"
+         *   - Otherwise, if the answer:
+         *     - is a Site, even an error one ("<!DOCTYPE") we get an "OK"
+         *     - is not a Site, we get a "NoServer"
+         */
+        String output;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (activeNetworkInfo != null) {
+            String url_checkserver = URL;
+
+            try {
+                /* TODO: TEST that the Timeout is right */
+                /* TODO: Configure the server to avoid DDoS */
+                String knock = new Control_StringAsyncTask().execute(url_checkserver).get(1000, TimeUnit.MILLISECONDS);
+                if (knock.startsWith("<!DOCTYPE html>")) {
+                    output = "OK";
+                } else {
+                    output = "NoServer";
+                }
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                output = "NoServer";
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+                output = "NoServer";
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+                output = "NoServer";
+            }
+
+        } else {
+            output = "NoNet";
+        }
+
+        return output;
+    }
 
     public String getnewID() {
         String output = null;
