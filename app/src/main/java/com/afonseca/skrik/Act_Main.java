@@ -24,8 +24,10 @@ public class Act_Main extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_skrik);
         Context context = getApplicationContext();
+
         if (controlUserconfig.userOK(context) == "OK"){
             Intent intent = new Intent(this, NewsActivity.class);
             startActivity(intent);
@@ -34,11 +36,14 @@ public class Act_Main extends ActionBarActivity {
             startActivity(intent);
         }
     }
+
+    /* Same Logic as for onCreate */
 
     @Override
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_skrik);
+
         Context context = getApplicationContext();
 
         if (controlUserconfig.userOK(context) == "OK"){
@@ -50,30 +55,9 @@ public class Act_Main extends ActionBarActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_skrik, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    /** Called when the user clicks the Config button */
+    /** In case the user lands on the main Activity,
+     *   despite the workflow on Create and Resume,
+     **/
     public void gotoUserConfig(View view) {
         Intent intent = new Intent(this, UserConfigActivity.class);
         startActivity(intent);
