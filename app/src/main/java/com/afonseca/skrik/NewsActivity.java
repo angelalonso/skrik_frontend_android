@@ -3,6 +3,7 @@ package com.afonseca.skrik;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class NewsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
+        checker();
         /* We would need this to add entries to/from us
         *  So far used in SHOWLIST */
         sqlHandler = new Control_NewsDbHandler(this);
@@ -172,6 +174,10 @@ public class NewsActivity extends ActionBarActivity {
 
     }
 
+    public void checker() {
+        TextView server_tv = (TextView) findViewById(R.id.server_tv);
+        server_tv.setTextColor(Color.GREEN);
+    }
 
     /** Called when the user clicks the Config button */
     public void gotoUserConfig(View view) {

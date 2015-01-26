@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="70dp"
@@ -21,15 +21,17 @@
             android:textColor="#ffefefef" />
 
         <TextView
-            android:layout_width="201dp"
+            android:layout_width="182dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/username_tv"
-            android:layout_weight="0.55"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textColor="#ffefefef" />
+            android:textColor="#ffefefef"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/cfg_btn"
+            android:layout_toEndOf="@+id/cfg_btn" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -37,7 +39,11 @@
             android:layout_height="wrap_content"
             android:text="add"
             android:id="@+id/aux_btn"
-            android:textColor="#ffefefef" />
+            android:textColor="#ffefefef"
+            android:layout_gravity="right|top"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/server_tv"
+            android:layout_toStartOf="@+id/server_tv" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -45,8 +51,25 @@
             android:layout_height="wrap_content"
             android:text="del"
             android:id="@+id/del_btn"
-            android:textColor="#ffefefef"  />
-    </LinearLayout>
+            android:textColor="#ffefefef"
+            android:layout_gravity="right|top"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/aux_btn"
+            android:layout_toStartOf="@+id/aux_btn" />
+
+        <TextView
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:text="."
+            android:id="@+id/server_tv"
+            android:textColor="#ffffffff"
+            android:textStyle="bold"
+            android:layout_gravity="bottom|right|top"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/aux_btn"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
 
     <ListView
         android:layout_width="wrap_content"
