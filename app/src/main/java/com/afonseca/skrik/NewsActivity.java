@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -114,6 +116,7 @@ public class NewsActivity extends ActionBarActivity {
 
         username = (TextView) findViewById(R.id.username_tv);
 
+        checker();
         Context context = getApplicationContext();
         String output = controlUserconfig.getUsername(context);
 
@@ -176,7 +179,15 @@ public class NewsActivity extends ActionBarActivity {
 
     public void checker() {
         TextView server_tv = (TextView) findViewById(R.id.server_tv);
-        server_tv.setTextColor(Color.GREEN);
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null) {
+            /* TODO: CHECK THAT THE INTERNET CONNECTION TIMES OUT! OTHERWISE IT GETS BLOCKED */
+            server_tv.setTextColor(Color.GREEN);
+        } else {
+            server_tv.setTextColor(Color.RED);
+        }
     }
 
     /** Called when the user clicks the Config button */
