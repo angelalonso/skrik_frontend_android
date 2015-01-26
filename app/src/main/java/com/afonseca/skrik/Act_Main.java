@@ -2,11 +2,8 @@ package com.afonseca.skrik;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 
@@ -28,7 +25,7 @@ public class Act_Main extends ActionBarActivity {
         setContentView(R.layout.activity_skrik);
         Context context = getApplicationContext();
 
-        if (controlUserconfig.userOK(context) == "OK"){
+        if (controlUserconfig.userOK(context).equals("OK")){
             Intent intent = new Intent(this, NewsActivity.class);
             startActivity(intent);
         } else {
@@ -46,7 +43,7 @@ public class Act_Main extends ActionBarActivity {
 
         Context context = getApplicationContext();
 
-        if (controlUserconfig.userOK(context) == "OK"){
+        if (controlUserconfig.userOK(context).equals("OK")){
             Intent intent = new Intent(this, NewsActivity.class);
             startActivity(intent);
         } else {
