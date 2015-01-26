@@ -9,23 +9,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-/*
 
-This checks if we already have a user configured.
-YES -> it passes the ball to "NEWS"
-NO  -> it passes the ball to "USER CONFIG"
-
- */
 
 public class Act_Main extends ActionBarActivity {
-/*
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    SharedPreferences sharedpreferences;
-    public static final String Name = "nameKey";
-    public static final String Email = "emailKey";
-*/
+
     Control_Userconfig controlUserconfig = new Control_Userconfig();
 
+    /* Logic -
+    * - User data local is OK?
+    *   - Goto News
+    * - No User data local?
+    *   - Goto User config
+    * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
