@@ -73,6 +73,14 @@ public class Control_BackendHandler {
     }
 
     public String getnewID() {
+
+        /*TODO:
+        *   CHECK that getting back a user id through the email works.
+        *
+        *   FOR THIS, the getnewID SHOULD ONLY TRIGGER after saving (not after clearing)
+        *       Another option would be a button showing up after a correct email is written (get my ID back)
+        *       Anyway, we need to inform the user of the procedure.
+        * */
         String output = null;
 
         String url_getnewid = URL + "/getnewid/";
@@ -87,6 +95,10 @@ public class Control_BackendHandler {
     }
 
     public String saveUserToBackend(String username, String email, String userid, String regid) {
+
+        /*
+        * Throw a message if the email is already in use (maybe get back the data?
+        * */
         String output = null;
         String url_saveuser = URL + "/saveid/" + userid + "/name/" + username + "/email/" + email + "/regid/" + regid + "/";
         try {
