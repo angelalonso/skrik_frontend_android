@@ -24,15 +24,14 @@ public class NewsActivity extends ActionBarActivity {
     /* Declarations */
 
     Control_NewsDbHandler sqlHandler;
+    Control_Userconfig controlUserconfig = new Control_Userconfig();
+    Control_BackendHandler backend = new Control_BackendHandler();
 
     String serverSide;
 
     ListView NewsList_lv;
     Button btnsubmit;
     Button btndelete;
-
-    Control_Userconfig controlUserconfig = new Control_Userconfig();
-    Control_BackendHandler backend = new Control_BackendHandler();
     TextView username;
 
     /* General Behaviour Methods */

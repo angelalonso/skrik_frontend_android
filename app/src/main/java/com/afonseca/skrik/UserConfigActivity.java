@@ -42,6 +42,11 @@ public class UserConfigActivity extends ActionBarActivity {
 
     /* Declarations */
 
+    Control_BackendHandler backend = new Control_BackendHandler();
+    Control_Userconfig controlUserconfig = new Control_Userconfig();
+
+    String serverSide;
+
     private Toast toast;
     private long lastBackPressTime = 0;
 
@@ -50,9 +55,6 @@ public class UserConfigActivity extends ActionBarActivity {
     TextView uid;
     TextView regid;
     TextView passwd;
-
-    Control_BackendHandler backend = new Control_BackendHandler();
-    Control_Userconfig controlUserconfig = new Control_Userconfig();
 
     /* General Behaviour Methods */
 
@@ -67,17 +69,28 @@ public class UserConfigActivity extends ActionBarActivity {
         regid = (TextView) findViewById(R.id.regid_input);
         passwd = (TextView) findViewById(R.id.passwd_input);
 
-        Context context = getApplicationContext();
+        Context mContext = getApplicationContext();
+        serverSide = serverCheck(mContext);
 
-        String current_uid = controlUserconfig.getUid(context);
-        if (current_uid == ""){
-            current_uid = backend.getnewID();
+        //Starting the update process...TODO: PASS serverSide to A FUNCTION AND DO EVERYTHING THERE WHEN POSSIBLE!! (Also good for onResume)
+        // TODO: BETTER YET: FOLLOW THE LOGIC ABOVE!!
+
+        String current_uid = controlUserconfig.getUid(mContext);
+        if (serverSide.matches("OK")) {
+            if (current_uid == ""){
+                current_uid = backend.getnewID();
+                uid.setText(current_uid);
+            }
+        } else {
+            Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there");
         }
+/*
 
-        name.setText(controlUserconfig.getUsername(context));
-        email.setText(controlUserconfig.getEmail(context));
-        uid.setText(current_uid);
-        regid.setText(controlUserconfig.getRegid(context));
+*/
+        name.setText(controlUserconfig.getUsername(mContext));
+        email.setText(controlUserconfig.getEmail(mContext));
+        //
+        regid.setText(controlUserconfig.getRegid(mContext));
 
     }
 
