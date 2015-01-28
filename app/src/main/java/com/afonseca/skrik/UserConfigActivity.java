@@ -40,6 +40,8 @@ import android.widget.Toast;
  */
 public class UserConfigActivity extends ActionBarActivity {
 
+    /* Declarations */
+
     private Toast toast;
     private long lastBackPressTime = 0;
 
@@ -52,6 +54,8 @@ public class UserConfigActivity extends ActionBarActivity {
     Control_BackendHandler backend = new Control_BackendHandler();
     Control_Userconfig controlUserconfig = new Control_Userconfig();
 
+    /* General Behaviour Methods */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +66,6 @@ public class UserConfigActivity extends ActionBarActivity {
         uid = (TextView) findViewById(R.id.uid_input);
         regid = (TextView) findViewById(R.id.regid_input);
         passwd = (TextView) findViewById(R.id.passwd_input);
-
 
         Context context = getApplicationContext();
 
@@ -77,7 +80,6 @@ public class UserConfigActivity extends ActionBarActivity {
         regid.setText(controlUserconfig.getRegid(context));
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,6 +102,8 @@ public class UserConfigActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /* General Behaviour Methods */
+
     @Override
     public void onBackPressed() {
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
@@ -115,8 +119,10 @@ public class UserConfigActivity extends ActionBarActivity {
         }
     }
 
-    /** Called when the user clicks the Save user button */
+    /* Additional Actions' Methods */
+
     public void saveUser(View view) {
+        /** Called when the user clicks the Save user button */
         String n  = name.getText().toString();
         String em  = email.getText().toString();
         String id  = uid.getText().toString();
@@ -158,8 +164,31 @@ public class UserConfigActivity extends ActionBarActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
-
-
     }
+
+    /* Check Functions */
+
+    public String serverCheck(Context mContext) {
+        TextView server_tv = (TextView) findViewById(R.id.server_tv);
+        String status = backend.testNetwork(mContext);
+        switch(status) {
+            case "OK":
+                server_tv.setTextColor(getResources().getColor(R.color.Lime));
+                break;
+            case "NoServer":
+                server_tv.setTextColor(getResources().getColor(R.color.Gold));
+                break;
+            case "NoNet":
+                server_tv.setTextColor(getResources().getColor(R.color.Red));
+                break;
+            default:
+                server_tv.setTextColor(getResources().getColor(R.color.DarkViolet));
+                break;
+        }
+        return status;
+    }
+
+    /* "GOTO" Calls */
+
 }
 

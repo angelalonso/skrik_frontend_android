@@ -6,18 +6,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 
-
-
-public class Act_Main extends ActionBarActivity {
-
-    Control_Userconfig controlUserconfig = new Control_Userconfig();
-
     /* Logic -
     * - User data local is OK?
     *   - Goto News
     * - No User data local?
     *   - Goto User config
+    *
     * */
+
+public class Act_Main extends ActionBarActivity {
+
+    /* Declarations */
+
+    Control_Userconfig controlUserconfig = new Control_Userconfig();
+
+    /* General Methods */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +38,9 @@ public class Act_Main extends ActionBarActivity {
         }
     }
 
-    /* Same Logic as for onCreate */
-
     @Override
     protected void onResume() {
+    /* Same Logic as for onCreate */
         super.onResume();
         setContentView(R.layout.activity_skrik);
 
@@ -52,10 +55,14 @@ public class Act_Main extends ActionBarActivity {
         }
     }
 
-    /** In case the user lands on the main Activity,
-     *   despite the workflow on Create and Resume,
-     **/
+    /* Check Functions */
+
+    /* "GOTO" Calls */
+
     public void gotoUserConfig(View view) {
+        /** In case the user lands on the main Activity,
+         *   despite the workflow on Create and Resume,
+         **/
         Intent intent = new Intent(this, UserConfigActivity.class);
         startActivity(intent);
     }

@@ -21,6 +21,8 @@ import java.util.ArrayList;
  */
 public class NewsActivity extends ActionBarActivity {
 
+    /* Declarations */
+
     Control_NewsDbHandler sqlHandler;
 
     String serverSide;
@@ -32,6 +34,8 @@ public class NewsActivity extends ActionBarActivity {
     Control_Userconfig controlUserconfig = new Control_Userconfig();
     Control_BackendHandler backend = new Control_BackendHandler();
     TextView username;
+
+    /* General Behaviour Methods */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +154,8 @@ public class NewsActivity extends ActionBarActivity {
 */
     }
 
+    /* Additional Actions' Methods */
+
     private void showList(String user_me) {
 
         ArrayList<Data_NewsListItems> contactList = new ArrayList<>();
@@ -185,6 +191,8 @@ public class NewsActivity extends ActionBarActivity {
 
     }
 
+    /* Check Functions */
+
     public String serverCheck(Context mContext) {
         TextView server_tv = (TextView) findViewById(R.id.server_tv);
         String status = backend.testNetwork(mContext);
@@ -205,8 +213,10 @@ public class NewsActivity extends ActionBarActivity {
         return status;
     }
 
-    /** Called when the user clicks the Config button */
+    /* "GOTO" Calls */
+
     public void gotoUserConfig(View view) {
+        /** Called when the user clicks the Config button */
         Intent intent = new Intent(this, UserConfigActivity.class);
         startActivity(intent);
     }
