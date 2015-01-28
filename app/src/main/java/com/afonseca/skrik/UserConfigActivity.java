@@ -1,6 +1,8 @@
 package com.afonseca.skrik;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -10,10 +12,36 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * Created by aaf on 1/23/15.
+/** LOGIC
+ * - If back button is pressed
+ *   - Show Toast, ask for a second click to exit
+ *   - If another one happens
+ *     - Send app to background
+ *   - Otherwise, nothing happens
+ * - :If CLEAR button is pressed
+ *   - :Ask for confirmation:
+ *     - :If confirmed, clear Textviews AND Shared preferences
+ *     - :If not confirmed, go back
+ * - TODO:If SAVE button is pressed
+ *   - TODO:If Network is OK
+ *     - TODO:If UID or REGID is empty
+ *       - TODO:Give Data to Server, ask for UID and REGID
+ *         - TODO:(serverside) if the email exists, existing UID is given back. TODO: use a password/email auth/whatever here. *
+ *     - TODO:If data was marked as NOT synchronized
+ *       Send
+ *
+ *     - TODO:If data was marked as synchronized
+ *   - TODO:If Network is NOT OK
+ *     - TODO:If UID or REGID is empty
+ *       - TODO:Build temporary values (leave it empty, maybe?)
+ *     - TODO:Mark data as NOT synchronized
+ *     - TODO:Save into sharedpreferences
+ *
  */
 public class UserConfigActivity extends ActionBarActivity {
+
+    private Toast toast;
+    private long lastBackPressTime = 0;
 
     TextView name;
     TextView email;
@@ -72,6 +100,21 @@ public class UserConfigActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
+            toast = Toast.makeText(this, "Press back again to close this app", Toast.LENGTH_SHORT);
+            toast.show();
+            this.lastBackPressTime = System.currentTimeMillis();
+        } else {
+            if (toast != null) {
+                toast.cancel();
+            }
+            super.onBackPressed();
+            moveTaskToBack(true);
+        }
+    }
+
     /** Called when the user clicks the Save user button */
     public void saveUser(View view) {
         String n  = name.getText().toString();
@@ -92,14 +135,29 @@ public class UserConfigActivity extends ActionBarActivity {
     }
     public void clearUser(View view) {
 
-        Context context = getApplicationContext();
-        controlUserconfig.clearUser(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to DELETE your USER DATA?")
+                .setCancelable(false)
+                .setPositiveButton("YES, do it!", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
-        name.setText("");
-        email.setText("");
-        uid.setText(backend.getnewID());
-        regid.setText("");
-        passwd.setText("");
+                        Context mContext = getApplicationContext();
+                        name.setText("");
+                        email.setText("");
+                        uid.setText("");
+                        regid.setText("");
+                        passwd.setText("");
+                        controlUserconfig.clearUser(mContext);
+                    }
+                })
+                .setNegativeButton("Ups, NO!", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
 
 
     }
