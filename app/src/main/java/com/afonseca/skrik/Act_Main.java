@@ -29,7 +29,7 @@ public class Act_Main extends ActionBarActivity {
         setContentView(R.layout.activity_skrik);
         Context context = getApplicationContext();
 
-        if (controlUserconfig.userOK(context).equals("OK")){
+        if (controlUserconfig.userOK_shared_prefs(context).equals("OK")){
             Intent intent = new Intent(this, NewsActivity.class);
             startActivity(intent);
         } else {
@@ -46,7 +46,7 @@ public class Act_Main extends ActionBarActivity {
 
         Context context = getApplicationContext();
 
-        if (controlUserconfig.userOK(context).equals("OK")){
+        if (controlUserconfig.userOK_shared_prefs(context).equals("OK")){
             Intent intent = new Intent(this, NewsActivity.class);
             startActivity(intent);
         } else {

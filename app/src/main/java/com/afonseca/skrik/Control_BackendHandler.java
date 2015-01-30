@@ -27,6 +27,7 @@ public class Control_BackendHandler {
     String PORT = "8000";
     String URL = "http://" + IP + ":" + PORT;
 
+
     public String testNetwork(Context mContext) {
         /* Logic:
          * - If the mobile phone has no network, or deactivated, we get a "NoNet"
@@ -103,6 +104,9 @@ public class Control_BackendHandler {
         String url_saveuser = URL + "/saveid/" + userid + "/name/" + username + "/email/" + email + "/regid/" + regid + "/";
         try {
             output = new Control_StringAsyncTask().execute(url_saveuser).get();
+
+
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

@@ -3,6 +3,7 @@ package com.afonseca.skrik;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -12,32 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/** LOGIC
- * - If back button is pressed
- *   - Show Toast, ask for a second click to exit
- *   - If another one happens
- *     - Send app to background
- *   - Otherwise, nothing happens
- * - :If CLEAR button is pressed
- *   - :Ask for confirmation:
- *     - :If confirmed, clear Textviews AND Shared preferences
- *     - :If not confirmed, go back
- * - TODO:If SAVE button is pressed
- *   - TODO:If Network is OK
- *     - TODO:If UID or REGID is empty
- *       - TODO:Give Data to Server, ask for UID and REGID
- *         - TODO:(serverside) if the email exists, existing UID is given back. TODO: use a password/email auth/whatever here. *
- *     - TODO:If data was marked as NOT synchronized
- *       Send
- *
- *     - TODO:If data was marked as synchronized
- *   - TODO:If Network is NOT OK
- *     - TODO:If UID or REGID is empty
- *       - TODO:Build temporary values (leave it empty, maybe?)
- *     - TODO:Mark data as NOT synchronized
- *     - TODO:Save into sharedpreferences
- *
- */
+
 public class UserConfigActivity extends ActionBarActivity {
 
     /* Declarations */
@@ -72,24 +48,27 @@ public class UserConfigActivity extends ActionBarActivity {
         Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
+        name.setText(controlUserconfig.getUsername(mContext));
+        email.setText(controlUserconfig.getEmail(mContext));
+        uid.setText(controlUserconfig.getUid(mContext));
+        regid.setText(controlUserconfig.getRegid(mContext));
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Context mContext = getApplicationContext();
+        serverSide = serverCheck(mContext);
+
         //Starting the update process...TODO: PASS serverSide to A FUNCTION AND DO EVERYTHING THERE WHEN POSSIBLE!! (Also good for onResume)
         // TODO: BETTER YET: FOLLOW THE LOGIC ABOVE!!
 
-        String current_uid = controlUserconfig.getUid(mContext);
-        if (serverSide.matches("OK")) {
-            if (current_uid == ""){
-                current_uid = backend.getnewID();
-                uid.setText(current_uid);
-            }
-        } else {
-            Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there");
-        }
-/*
-
-*/
         name.setText(controlUserconfig.getUsername(mContext));
         email.setText(controlUserconfig.getEmail(mContext));
-        //
+        uid.setText(controlUserconfig.getUid(mContext));
         regid.setText(controlUserconfig.getRegid(mContext));
 
     }
@@ -119,6 +98,13 @@ public class UserConfigActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+    /* Logic:
+     * - If back button is pressed
+     *   - Show Toast, ask for a second click to exit
+     *   - If another one happens
+     *     - Send app to background
+     *   - Otherwise, nothing happens
+     */
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
             toast = Toast.makeText(this, "Press back again to close this app", Toast.LENGTH_SHORT);
             toast.show();
@@ -135,25 +121,38 @@ public class UserConfigActivity extends ActionBarActivity {
     /* Additional Actions' Methods */
 
     public void saveUser(View view) {
-        /** Called when the user clicks the Save user button */
+    /* Logic:
+    * - If SAVE button is pressed
+    *   - Send to Control User to Save
+    *   - Check answer
+    *   - Go back to Main
+    */
         String n  = name.getText().toString();
         String em  = email.getText().toString();
         String id  = uid.getText().toString();
         String rid  = regid.getText().toString();
         String pwd  = passwd.getText().toString();
+        Log.i("TESTING - EMAIL first", em);
 
-        Context context = getApplicationContext();
-        Log.i(" TESTING REGID 1", rid);
-        controlUserconfig.saveUser(context, n, em, id, rid, pwd);
-        String saveResult = controlUserconfig.userOK(context);
-        if (saveResult == "OK") {
+        Context mContext = getApplicationContext();
+        String dataCheck = controlUserconfig.userOK_newtext(mContext, n, em, id, rid, pwd);
+        if (dataCheck == "OK") {
+            String saveResult = controlUserconfig.saveUserConfig(mContext, n, em, id, rid, pwd);
+            Log.i("TESTING - SAVING CHECK -- ", saveResult);
             finish();
         } else {
-            Toast.makeText(getApplicationContext(), saveResult, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), dataCheck, Toast.LENGTH_LONG).show();
         }
     }
-    public void clearUser(View view) {
 
+
+    public void clearUser(View view) {
+    /* Logic:
+    * - If CLEAR button is pressed
+    *   - Ask for confirmation:
+    *     - If confirmed, clear Textviews AND Shared preferences
+    *     - If not confirmed, go back
+    */
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to DELETE your USER DATA?")
                 .setCancelable(false)
