@@ -36,6 +36,10 @@ public class UserConfigActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    /* Logic:
+      - Initialize the textviews,
+      - Add the data from Shared preferences
+     */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userconfig);
 
@@ -58,13 +62,13 @@ public class UserConfigActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
+    /* Logic:
+      - Add the data from Shared preferences
+     */
         super.onResume();
 
         Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
-
-        //Starting the update process...TODO: PASS serverSide to A FUNCTION AND DO EVERYTHING THERE WHEN POSSIBLE!! (Also good for onResume)
-        // TODO: BETTER YET: FOLLOW THE LOGIC ABOVE!!
 
         name.setText(controlUserconfig.getUsername(mContext));
         email.setText(controlUserconfig.getEmail(mContext));
@@ -73,38 +77,17 @@ public class UserConfigActivity extends ActionBarActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     /* General Behaviour Methods */
 
     @Override
     public void onBackPressed() {
     /* Logic:
-     * - If back button is pressed
-     *   - Show Toast, ask for a second click to exit
-     *   - If another one happens
-     *     - Send app to background
-     *   - Otherwise, nothing happens
-     */
+      - If back button is pressed
+        - Show Toast, ask for a second click to exit
+        - If another one happens
+          - Send app to background
+        - Otherwise, nothing happens
+    */
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
             toast = Toast.makeText(this, "Press back again to close this app", Toast.LENGTH_SHORT);
             toast.show();
@@ -122,23 +105,24 @@ public class UserConfigActivity extends ActionBarActivity {
 
     public void saveUser(View view) {
     /* Logic:
-    * - If SAVE button is pressed
-    *   - Send to Control User to Save
-    *   - Check answer
-    *   - Go back to Main
+     - If SAVE button is pressed
+       - If data SHOWN (not stored! ) is OK:
+         - Send to Control User to Save in Sharedprefs and Backend
+         - TODO:Check answer
+         - Go back to Main
+       - If data SHOWN (not stored! ) is NOT OK:
+         - Show what is missing, go back
     */
         String n  = name.getText().toString();
         String em  = email.getText().toString();
         String id  = uid.getText().toString();
         String rid  = regid.getText().toString();
         String pwd  = passwd.getText().toString();
-        Log.i("TESTING - EMAIL first", em);
 
         Context mContext = getApplicationContext();
         String dataCheck = controlUserconfig.userOK_newtext(mContext, n, em, id, rid, pwd);
         if (dataCheck == "OK") {
             String saveResult = controlUserconfig.saveUserConfig(mContext, n, em, id, rid, pwd);
-            Log.i("TESTING - SAVING CHECK -- ", saveResult);
             finish();
         } else {
             Toast.makeText(getApplicationContext(), dataCheck, Toast.LENGTH_LONG).show();
@@ -148,10 +132,10 @@ public class UserConfigActivity extends ActionBarActivity {
 
     public void clearUser(View view) {
     /* Logic:
-    * - If CLEAR button is pressed
-    *   - Ask for confirmation:
-    *     - If confirmed, clear Textviews AND Shared preferences
-    *     - If not confirmed, go back
+     - If CLEAR button is pressed
+       - Ask for confirmation:
+         - If confirmed, clear Textviews AND Shared preferences
+         - If not confirmed, go back
     */
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to DELETE your USER DATA?")
@@ -181,6 +165,11 @@ public class UserConfigActivity extends ActionBarActivity {
     /* Check Functions */
 
     public String serverCheck(Context mContext) {
+    /* Logic:
+      - Pick the "Status Point" textview
+      - Depending on status, change its color
+      - Return status, for other functions to know it too.
+     */
         TextView server_tv = (TextView) findViewById(R.id.server_tv);
         String status = backend.testNetwork(mContext);
         switch(status) {
@@ -203,4 +192,3 @@ public class UserConfigActivity extends ActionBarActivity {
     /* "GOTO" Calls */
 
 }
-
