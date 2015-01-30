@@ -120,7 +120,7 @@ public class UserConfigActivity extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         Context mContext = getApplicationContext();
-        String dataCheck = controlUserconfig.userOK_newtext(mContext, n, em, id, rid, pwd);
+        String dataCheck = controlUserconfig.userOK_Input(n, em, id, rid, pwd);
         if (dataCheck == "OK") {
             String saveResult = controlUserconfig.saveUserConfig(mContext, n, em, id, rid, pwd);
             finish();

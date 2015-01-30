@@ -30,9 +30,7 @@ public class Control_Userconfig extends Activity {
     public static final String Status = "statusKey";
     public static final String Passwd = "PasswdKey";
 
-    public String userOK_newtext(Context mContext, String username, String email, String uid, String regid, String passwd) {
-
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+    public String userOK_Input(String username, String email, String uid, String regid, String passwd) {
 
         Boolean allOK = true;
         String result = "";
@@ -53,7 +51,6 @@ public class Control_Userconfig extends Activity {
             errors.add("'VALID' Email");
         }
 
-
         if (allOK == true){
             result = "OK";
         } else {
@@ -67,7 +64,7 @@ public class Control_Userconfig extends Activity {
     }
 
 
-    public String userOK_shared_prefs(Context mContext) {
+    public String userOK_SharedPrefs(Context mContext) {
 
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
@@ -148,21 +145,6 @@ public class Control_Userconfig extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Status, data_status);
-
-        editor.commit();
-    }
-
-    public void setUserConfig(Context mContext, String username, String email, String uid, String regid, String passwd) {
-    /* This one is used to update sharedpreferences temporarily */
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-        editor.putString(Name, username);
-        editor.putString(Email, email);
-        editor.putString(Uid, uid);
-        editor.putString(Regid, regid);
-        editor.putString(Status, "unsynced");
-        editor.putString(Passwd, passwd);
 
         editor.commit();
     }
