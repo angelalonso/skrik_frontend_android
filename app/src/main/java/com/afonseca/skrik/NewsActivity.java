@@ -216,7 +216,7 @@ public class NewsActivity extends ActionBarActivity {
 
     public void gotoUserConfig(View view) {
         /** Called when the user clicks the Config button */
-        Intent intent = new Intent(this, UserConfigActivity.class);
+        Intent intent = new Intent(this, Act_UserCfg.class);
         startActivity(intent);
     }
 }

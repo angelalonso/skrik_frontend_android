@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class UserConfigActivity extends ActionBarActivity {
+public class Act_UserCfg extends ActionBarActivity {
 
     /* Declarations */
 

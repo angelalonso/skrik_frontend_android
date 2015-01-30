@@ -6,13 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 
-    /* Logic -
-    * - User data local is OK?
-    *   - Goto News
-    * - No User data local?
-    *   - Goto User config
-    *
-    * */
+
 
 public class Act_Main extends ActionBarActivity {
 
@@ -24,6 +18,13 @@ public class Act_Main extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    /* Logic:
+     - User data local is OK?
+       - Goto News
+     - No User data local?
+       - Goto User config
+
+    */
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_skrik);
@@ -33,7 +34,7 @@ public class Act_Main extends ActionBarActivity {
             Intent intent = new Intent(this, NewsActivity.class);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, UserConfigActivity.class);
+            Intent intent = new Intent(this, Act_UserCfg.class);
             startActivity(intent);
         }
     }
@@ -50,7 +51,7 @@ public class Act_Main extends ActionBarActivity {
             Intent intent = new Intent(this, NewsActivity.class);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, UserConfigActivity.class);
+            Intent intent = new Intent(this, Act_UserCfg.class);
             startActivity(intent);
         }
     }
@@ -63,7 +64,7 @@ public class Act_Main extends ActionBarActivity {
         /** In case the user lands on the main Activity,
          *   despite the workflow on Create and Resume,
          **/
-        Intent intent = new Intent(this, UserConfigActivity.class);
+        Intent intent = new Intent(this, Act_UserCfg.class);
         startActivity(intent);
     }
 }
