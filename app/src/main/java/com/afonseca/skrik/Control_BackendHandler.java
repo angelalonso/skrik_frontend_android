@@ -48,7 +48,7 @@ public class Control_BackendHandler {
             try {
                 /* TODO: TEST that the Timeout is right */
                 /* TODO: Configure the server to avoid DDoS */
-                String knock = new Control_StringAsyncTask().execute(url_checkserver).get(1000, TimeUnit.MILLISECONDS);
+                String knock = new Control_AsyncTask().execute(url_checkserver).get(1000, TimeUnit.MILLISECONDS);
                 if (knock.startsWith("<!DOCTYPE html>")) {
                     output = "OK";
                 } else {
@@ -81,7 +81,7 @@ public class Control_BackendHandler {
         String output = null;
         String url_saveuser = URL + "/saveid/" + userid + "/name/" + username + "/email/" + email + "/regid/" + regid + "/";
         try {
-            output = new Control_StringAsyncTask().execute(url_saveuser).get();
+            output = new Control_AsyncTask().execute(url_saveuser).get();
 
 
 
@@ -99,7 +99,7 @@ public class Control_BackendHandler {
         /* First of all, we make sure we get something from the Backend */
         String url_getnewid = URL + "/getnews/" + userid + "/";
         try {
-            output = new Control_StringAsyncTask().execute(url_getnewid).get();
+            output = new Control_AsyncTask().execute(url_getnewid).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

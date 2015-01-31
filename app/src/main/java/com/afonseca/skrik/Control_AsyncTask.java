@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 /**
  * Created by afonseca on 1/24/2015.
  */
-class Control_StringAsyncTask extends AsyncTask<String, Void, String> {
+class Control_AsyncTask extends AsyncTask<String, Void, String> {
 
 
     @Override
