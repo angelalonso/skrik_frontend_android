@@ -169,11 +169,11 @@ public class NewsActivity extends ActionBarActivity {
                     newsListItems.setTimestamp(c1.getString(c1
                             .getColumnIndex("timestamp_last")));
                     String userid_from = c1.getString(c1.getColumnIndex("userid_from"));
-                    String test = controlNews.getUsername(mContext,userid_from);
-                    Log.i("TESTING NEWSUSER - ",userid_from + " is " + test);
-                    newsListItems.setUsername(userid_from);
-                    newsListItems.setUsername(c1.getString(c1
-                            .getColumnIndex("userid_from")));
+                    String userid_name = controlNews.getUsername(mContext,userid_from);
+                    Log.i("TESTING NEWSUSER - ",userid_from + " is " + userid_name);
+                    newsListItems.setUsername(userid_name);
+                    //newsListItems.setUsername(c1.getString(c1
+                    //        .getColumnIndex("userid_from")));
 
                     contactList.add(newsListItems);
 

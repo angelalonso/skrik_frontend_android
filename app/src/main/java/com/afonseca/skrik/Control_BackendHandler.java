@@ -74,8 +74,17 @@ public class Control_BackendHandler {
     }
 
     public String getUsername(String userid) {
-        String result = "testing";
-        return result;
+        String output = null;
+        String url_getusername = URL + "/getusername/" + userid + "/";
+        try {
+            output = new Control_AsyncTask().execute(url_getusername).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return output;
+
     }
 
     public String saveUserToBackend(String username, String email, String userid, String regid) {

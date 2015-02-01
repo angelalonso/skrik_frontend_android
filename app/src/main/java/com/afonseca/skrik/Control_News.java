@@ -38,6 +38,7 @@ public class Control_News extends Activity {
         }
         if (username.matches("")) {
             username = backend.getUsername(newsUser_id);
+            addUser(mContext,newsUser_id,username);
         }
         return username;
     }
@@ -45,7 +46,7 @@ public class Control_News extends Activity {
     public void addUser(Context mContext,String userid, String username){
         Control_NewsUsersDbHandler newsUsersSQLHandler = new Control_NewsUsersDbHandler(mContext);
 
-        String query = "INSERT INTO NEWSUSER (id, username, blacklisted) VALUES('" + userid + "','" + username + "',False)";
+        String query = "INSERT INTO NEWSUSERS (id, username, blacklisted) VALUES('" + userid + "','" + username + "',0)";
         newsUsersSQLHandler.executeQuery(query);
     }
 }

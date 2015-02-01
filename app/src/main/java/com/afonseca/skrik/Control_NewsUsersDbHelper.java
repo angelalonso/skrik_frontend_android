@@ -18,7 +18,7 @@ public class Control_NewsUsersDbHelper extends SQLiteOpenHelper {
             + DATABASE_TABLE + " ("
             + COLUMN1 + " integer not null, "
             + COLUMN2 + " text not null, "
-            + COLUMN3 + " boolean not null "
+            + COLUMN3 + " integer not null "
             + ");";
 
     public Control_NewsUsersDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
