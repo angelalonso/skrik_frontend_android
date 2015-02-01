@@ -3,7 +3,6 @@ package com.afonseca.skrik;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 
 /*
@@ -22,6 +21,7 @@ public class Control_News extends Activity {
 
     public static final String MyPREFERENCES = "MyPrefs" ;
     Control_Userconfig controlUserconfig = new Control_Userconfig();
+    Control_BackendHandler backend = new Control_BackendHandler();
     Control_NewsDbHandler newsSQLHandler;
 
     public String getUsername(Context mContext,String newsUser_id) {
@@ -35,6 +35,9 @@ public class Control_News extends Activity {
                     username = c1.getString(c1.getColumnIndex("username"));
                 } while (c1.moveToNext());
             }
+        }
+        if (username.matches("")) {
+            username = backend.getUsername(newsUser_id);
         }
         return username;
     }

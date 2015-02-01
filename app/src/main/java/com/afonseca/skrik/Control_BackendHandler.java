@@ -73,6 +73,11 @@ public class Control_BackendHandler {
         return output;
     }
 
+    public String getUsername(String userid) {
+        String result = "testing";
+        return result;
+    }
+
     public String saveUserToBackend(String username, String email, String userid, String regid) {
 
         /*
