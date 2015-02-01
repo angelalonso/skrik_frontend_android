@@ -30,9 +30,7 @@ public class NewsActivity extends ActionBarActivity {
     String serverSide;
 
     ListView NewsList_lv;
-    Button btnsubmit;
-    Button btndelete;
-    TextView username;
+    TextView Username_tv;
 
     /* General Behaviour Methods */
 
@@ -47,12 +45,16 @@ public class NewsActivity extends ActionBarActivity {
         //  So far used in SHOWLIST */
         sqlHandler = new Control_NewsDbHandler(this);
 
+        String username = controlUserconfig.getUsername(context);
         String userid = controlUserconfig.getUid(context);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(sqlHandler, userid); }
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there"); }
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
+        Username_tv = (TextView) findViewById(R.id.username_tv);
+
+        Username_tv.setText(username);
 
         showList(userid);
 /*
@@ -118,15 +120,11 @@ public class NewsActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        username = (TextView) findViewById(R.id.username_tv);
-
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 
-
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
-        sqlHandler = new Control_NewsDbHandler(this);
 
         String userid = controlUserconfig.getUid(context);
 
@@ -135,25 +133,16 @@ public class NewsActivity extends ActionBarActivity {
 
         showList(userid);
 
-      /*  String output = controlUserconfig.getUsername(context);
-
-        String auxquery = "SELECT count(*) as result FROM NEWS ";
-        Cursor c1 = sqlHandler.selectQuery(auxquery);
-        String nr_msgs = "";
-        if (c1 != null && c1.getCount() > 0) {
-            if (c1.moveToFirst()) {
-                do {
-                    nr_msgs = c1.getString(c1.getColumnIndex("result"));
-                } while (c1.moveToNext());
-            }
-        }
-        c1.close();
-
-        username.setText(nr_msgs + " " + output);
-*/
     }
 
     /* Additional Actions' Methods */
+
+
+    public void updateNews(View view) {
+        Context context = getApplicationContext();
+        String userid = controlUserconfig.getUid(context);
+        showList(userid);
+    }
 
     private void showList(String user_me) {
 
