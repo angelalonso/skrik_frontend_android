@@ -23,8 +23,10 @@ public class NewsActivity extends ActionBarActivity {
 
     /* Declarations */
 
-    Control_NewsDbHandler sqlHandler;
+    Control_NewsDbHandler newsSQLHandler;
+    Control_NewsUsersDbHandler newsUsersSQLHandler;
     Control_Userconfig controlUserconfig = new Control_Userconfig();
+    Control_News controlNews = new Control_News();
     Control_BackendHandler backend = new Control_BackendHandler();
 
     String serverSide;
@@ -43,12 +45,13 @@ public class NewsActivity extends ActionBarActivity {
 
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
-        sqlHandler = new Control_NewsDbHandler(this);
+        newsSQLHandler = new Control_NewsDbHandler(this);
+        newsUsersSQLHandler = new Control_NewsUsersDbHandler(this);
 
         String username = controlUserconfig.getUsername(context);
         String userid = controlUserconfig.getUid(context);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(sqlHandler, userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there"); }
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
@@ -128,7 +131,7 @@ public class NewsActivity extends ActionBarActivity {
 
         String userid = controlUserconfig.getUid(context);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(sqlHandler, userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, because the server is not there"); }
 
         showList(userid);
@@ -145,6 +148,7 @@ public class NewsActivity extends ActionBarActivity {
     }
 
     private void showList(String user_me) {
+        Context mContext = getApplicationContext();
 
         ArrayList<Data_NewsListItems> contactList = new ArrayList<>();
         contactList.clear();
@@ -152,7 +156,7 @@ public class NewsActivity extends ActionBarActivity {
         //String query = "SELECT * FROM PHONE_CONTACTS ";
         String query = "SELECT count(*) as msg_nr, userid_from, message, MAX(timestamp) as timestamp_last FROM NEWS GROUP BY userid_from";
 
-        Cursor c1 = sqlHandler.selectQuery(query);
+        Cursor c1 = newsSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {
@@ -160,12 +164,16 @@ public class NewsActivity extends ActionBarActivity {
 
                     newsListItems.setNrOfMsgs(c1.getString(c1
                             .getColumnIndex("msg_nr")));
-                    newsListItems.setUsername(c1.getString(c1
-                            .getColumnIndex("userid_from")));
                     newsListItems.setNews(c1.getString(c1
                             .getColumnIndex("message")));
                     newsListItems.setTimestamp(c1.getString(c1
                             .getColumnIndex("timestamp_last")));
+                    String userid_from = c1.getString(c1.getColumnIndex("userid_from"));
+                    String test = controlNews.getUsername(mContext,userid_from);
+                    Log.i("TESTING NEWSUSER - ",userid_from + " is " + test);
+                    newsListItems.setUsername(userid_from);
+                    newsListItems.setUsername(c1.getString(c1
+                            .getColumnIndex("userid_from")));
 
                     contactList.add(newsListItems);
 

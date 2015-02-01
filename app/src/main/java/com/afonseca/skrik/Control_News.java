@@ -23,12 +23,12 @@ public class Control_News extends Activity {
     public static final String MyPREFERENCES = "MyPrefs" ;
     Control_Userconfig controlUserconfig = new Control_Userconfig();
     Control_NewsDbHandler newsSQLHandler;
-    Control_NewsUsersDbHandler newsUsersSQLHandler;
 
-    public String getUsername(String newsUser_id) {
+    public String getUsername(Context mContext,String newsUser_id) {
+        Control_NewsUsersDbHandler newsUsersSQLHandler = new Control_NewsUsersDbHandler(mContext);
         String query = "SELECT username FROM NEWSUSERS WHERE id = '" + newsUser_id + "'";
         String username = "";
-        Cursor c1 = newsSQLHandler.selectQuery(query);
+        Cursor c1 = newsUsersSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {
@@ -39,7 +39,8 @@ public class Control_News extends Activity {
         return username;
     }
 
-    public void addUser(String userid, String username){
+    public void addUser(Context mContext,String userid, String username){
+        Control_NewsUsersDbHandler newsUsersSQLHandler = new Control_NewsUsersDbHandler(mContext);
 
         String query = "INSERT INTO NEWSUSER (id, username, blacklisted) VALUES('" + userid + "','" + username + "',False)";
         newsUsersSQLHandler.executeQuery(query);

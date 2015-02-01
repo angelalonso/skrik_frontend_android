@@ -10,14 +10,14 @@ import android.database.sqlite.SQLiteDatabase;
 public class Control_NewsUsersDbHandler {
 
     public static final String DATABASE_NAME = "NEWSUSERS_DB";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     //Context context;
     SQLiteDatabase sqlDatabase;
-    Control_NewsDbHelper dbHelper;
+    Control_NewsUsersDbHelper dbHelper;
 
     public Control_NewsUsersDbHandler(Context context) {
 
-        dbHelper = new Control_NewsDbHelper(context, DATABASE_NAME, null,
+        dbHelper = new Control_NewsUsersDbHelper(context, DATABASE_NAME, null,
                 DATABASE_VERSION);
         sqlDatabase = dbHelper.getWritableDatabase();
     }
