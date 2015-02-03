@@ -61,63 +61,6 @@ public class NewsActivity extends ActionBarActivity {
         Username_tv.setText(username);
 
         showList(userid);
-/*
-
-        btnsubmit = (Button) findViewById(R.id.aux_btn);
-        btnsubmit.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Context context = getApplicationContext();
-                String userid = controlUserconfig.getUid(context);
-
-                String message = "good news";
-                String status = "sent";
-                String timestamp = "1422169444";
-
-                String query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('"
-                        + userid + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','444444444444')";
-                sqlHandler.executeQuery(query);
-
-                showList(userid);
-            }
-        });
-        btndelete = (Button) findViewById(R.id.del_btn);
-        btndelete.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                String query = "DELETE FROM NEWS WHERE userid_to = userid_to";
-                sqlHandler.executeQuery(query);
-
-                Context context = getApplicationContext();
-                String userid = controlUserconfig.getUid(context);
-
-                backend.updateNewslist(sqlHandler,userid);
-                showList(userid);
-            }
-        });
-
-        username = (TextView) findViewById(R.id.username_tv);
-
-        String output = controlUserconfig.getUsername(context);
-
-        String auxquery = "SELECT count(*) as result FROM NEWS ";
-        Cursor c1 = sqlHandler.selectQuery(auxquery);
-        String nr_msgs = "";
-        if (c1 != null && c1.getCount() > 0) {
-            if (c1.moveToFirst()) {
-                do {
-                    nr_msgs = c1.getString(c1.getColumnIndex("result"));
-                } while (c1.moveToNext());
-            }
-        }
-        c1.close();
-
-        username.setText(nr_msgs + " " + output);
-
-        */
     }
 
     @Override
@@ -211,9 +154,12 @@ public class NewsActivity extends ActionBarActivity {
     public void listviewClick(View view) {
         TextView userid_tv = (TextView) view.findViewById(R.id.id_tv);
         String userid = userid_tv.getText().toString();
+        TextView username_tv = (TextView) view.findViewById(R.id.username_tv);
+        String username = username_tv.getText().toString();
         Intent intent = new Intent(this, ChatActivity.class);
         Bundle b = new Bundle();
         b.putString("userid", userid);
+        b.putString("username", username);
         intent.putExtras(b);
         startActivity(intent);
     }
