@@ -3,6 +3,7 @@ package com.afonseca.skrik;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 /**
@@ -17,6 +18,7 @@ public class ChatActivity extends ActionBarActivity {
 
     String serverSide;
     String userid;
+    String other_userid;
     String username;
 
     TextView Username_tv;
@@ -27,16 +29,21 @@ public class ChatActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        newsSQLHandler = new Control_NewsDbHandler(this);
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 
         Bundle b = getIntent().getExtras();
-        userid = b.getString("userid");
+        other_userid = b.getString("userid");
+        userid = "";
         username = b.getString("username");
         Username_tv = (TextView) findViewById(R.id.username_tv);
         Username_tv.setText(username);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
+        //if (serverSide.matches("OK")) { Log.i("TESTING", userid); }
+
     }
 
     @Override
@@ -46,7 +53,7 @@ public class ChatActivity extends ActionBarActivity {
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
+        if (serverSide.matches("OK")) { Log.i("TESTING", userid); }
     }
 
     /* Additional Actions' Methods */
