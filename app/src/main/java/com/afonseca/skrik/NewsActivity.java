@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -170,10 +171,8 @@ public class NewsActivity extends ActionBarActivity {
                             .getColumnIndex("timestamp_last")));
                     String userid_from = c1.getString(c1.getColumnIndex("userid_from"));
                     String userid_name = controlNews.getUsername(mContext,userid_from);
-                    Log.i("TESTING NEWSUSER - ",userid_from + " is " + userid_name);
+                    newsListItems.setUserid(userid_from);
                     newsListItems.setUsername(userid_name);
-                    //newsListItems.setUsername(c1.getString(c1
-                    //        .getColumnIndex("userid_from")));
 
                     contactList.add(newsListItems);
 
@@ -209,6 +208,15 @@ public class NewsActivity extends ActionBarActivity {
         return status;
     }
 
+    public void listviewClick(View view) {
+        TextView userid_tv = (TextView) view.findViewById(R.id.id_tv);
+        String userid = userid_tv.getText().toString();
+        Intent intent = new Intent(this, ChatActivity.class);
+        Bundle b = new Bundle();
+        b.putString("userid", userid);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
     /* "GOTO" Calls */
 
     public void gotoUserConfig(View view) {
@@ -216,4 +224,5 @@ public class NewsActivity extends ActionBarActivity {
         Intent intent = new Intent(this, Act_UserCfg.class);
         startActivity(intent);
     }
+
 }

@@ -3,21 +3,38 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:onClick="listviewClick"
+    android:weightSum="1">
 
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/nr_msgs_tv"
-        android:padding="10dp"
-        android:textSize="10dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="36dp"
+        android:layout_height="51dp">
+
+        <TextView
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Nr"
+            android:id="@+id/nr_msgs_tv"
+            android:padding="10dp"
+            android:textSize="10dp" />
+
+        <TextView
+            android:layout_width="47dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/id_tv"
+            android:text="00000"
+            android:textColor="#00ffffff" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3">
+        android:layout_height="49dp"
+        android:layout_weight="1.01">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -25,7 +42,7 @@
 
             <TextView
                 android:id="@+id/username_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="User Name "
@@ -33,21 +50,25 @@
                 android:textStyle="bold"
                 android:textSize="16dp" />
 
-            <TextView
-                android:id="@+id/news_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="News!"
-                android:textColor="#000"
-                android:textSize="14dp"
-                android:textStyle="italic" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/news_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="News!"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="italic"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="20dp" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/timestamp_tv"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="timestamp"
         android:textColor="#000"

@@ -55,6 +55,8 @@ public class Control_NewsListAdapter extends BaseAdapter {
 
         TextView NrMsgs_tv = (TextView) convertView.findViewById(R.id.nr_msgs_tv);
         NrMsgs_tv.setText(contactListItems.getNrOfMsgs());
+        TextView Userid_tv = (TextView) convertView.findViewById(R.id.id_tv);
+        Userid_tv.setText(contactListItems.getUserid());
         TextView Username_tv = (TextView) convertView.findViewById(R.id.username_tv);
         Username_tv.setText(contactListItems.getUsername());
         TextView News_tv = (TextView) convertView.findViewById(R.id.news_tv);
@@ -65,5 +67,4 @@ public class Control_NewsListAdapter extends BaseAdapter {
 
         return convertView;
     }
-
 }

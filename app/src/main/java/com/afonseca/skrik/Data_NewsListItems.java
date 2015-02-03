@@ -6,6 +6,7 @@ package com.afonseca.skrik;
 public class Data_NewsListItems {
 
     String nr_of_msgs;
+    String userid;
     String username;
     String news;
     String timestamp;
@@ -18,6 +19,14 @@ public class Data_NewsListItems {
 
     public void setNrOfMsgs(String nr_of_msgs) {
         this.nr_of_msgs = nr_of_msgs;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getUsername() {

@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".NewsActivity" >
         </activity>
+        <activity android:name=".ChatActivity" >
+        </activity>
         <activity android:name=".Control_News" >
         </activity>
     </application>
