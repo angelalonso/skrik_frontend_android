@@ -71,6 +71,6 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/newslist_lv" />
+        android:id="@+id/chatlist_lv" />
 
 </LinearLayout>

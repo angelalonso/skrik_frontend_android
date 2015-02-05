@@ -49,18 +49,12 @@ public class Control_ChatListAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.news_item, null);
+            convertView = inflater.inflate(R.layout.chat_item, null);
 
         }
 
-        TextView NrMsgs_tv = (TextView) convertView.findViewById(R.id.nr_msgs_tv);
-        NrMsgs_tv.setText(chatListItems.getNrOfMsgs());
-        TextView Userid_tv = (TextView) convertView.findViewById(R.id.id_tv);
-        Userid_tv.setText(chatListItems.getUserid());
-        TextView Username_tv = (TextView) convertView.findViewById(R.id.username_tv);
-        Username_tv.setText(chatListItems.getUsername());
-        TextView News_tv = (TextView) convertView.findViewById(R.id.news_tv);
-        News_tv.setText(chatListItems.getNews());
+        TextView Message_tv = (TextView) convertView.findViewById(R.id.message_tv);
+        Message_tv.setText(chatListItems.getMsg());
         TextView Timestamp_tv = (TextView) convertView.findViewById(R.id.timestamp_tv);
         Timestamp_tv.setText(chatListItems.getTimestamp());
 

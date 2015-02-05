@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class ChatActivity extends ActionBarActivity {
     String username;
 
     TextView Username_tv;
+    ListView ChatList_lv;
 
     /* General Behaviour Methods */
 
@@ -41,6 +43,7 @@ public class ChatActivity extends ActionBarActivity {
         other_userid = b.getString("userid");
         userid = "";
         username = b.getString("username");
+        ChatList_lv = (ListView) findViewById(R.id.chatlist_lv);
         Username_tv = (TextView) findViewById(R.id.username_tv);
         Username_tv.setText(username);
 
@@ -71,7 +74,7 @@ public class ChatActivity extends ActionBarActivity {
         chatList.clear();
 
         //String query = "SELECT * FROM PHONE_CONTACTS ";
-        String query = "SELECT CASE WHEN userid_from =30660416779715 THEN 'FROM' ELSE 'TO' END as to_or_from, id, message, timestamp, status from msging where userid_from ='" + user_other + "' or userid_to ='" + user_other + "' order by timestamp;";
+        String query = "SELECT CASE WHEN userid_from =30660416779715 THEN 'FROM' ELSE 'TO' END as to_or_from, id, message, timestamp, status from NEWS where userid_from ='" + user_other + "' or userid_to ='" + user_other + "' order by timestamp;";
 
         Cursor c1 = newsSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
@@ -92,9 +95,9 @@ public class ChatActivity extends ActionBarActivity {
             }
         }
 //TODO: Continue here
-        Control_NewsListAdapter contactListAdapter = new Control_NewsListAdapter(
-                NewsActivity.this, contactList);
-        NewsList_lv.setAdapter(contactListAdapter);
+        Control_ChatListAdapter chatListAdapter = new Control_ChatListAdapter(
+                ChatActivity.this, chatList);
+        ChatList_lv.setAdapter(chatListAdapter);
 
     }
 
