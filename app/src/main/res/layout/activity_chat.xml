@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:weightSum="1"
-        android:background="#ff000000">
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#ff000000"
+        android:gravity="center" >
 
         <TextView
             android:layout_width="15dp"
@@ -22,36 +25,22 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:gravity="center" />
-
         <TextView
             android:layout_width="182dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/username_tv"
-            android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#ffefefef"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/server_tv"
+            android:layout_toStartOf="@+id/update_btn"
             android:layout_toLeftOf="@+id/update_btn"
-            android:layout_toStartOf="@+id/update_btn" />
-
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            />
         <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Config"
-            android:id="@+id/cfg_btn"
-            android:singleLine="true"
-            android:onClick="gotoUserConfig"
-            android:textColor="#ffefefef"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-
-       <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,17 +49,50 @@
             android:textColor="#ffefefef"
             android:onClick="updateNews"
             android:layout_gravity="right|top"
-           android:layout_toLeftOf="@+id/cfg_btn"
-            android:layout_toStartOf="@+id/cfg_btn"
-           android:layout_alignParentTop="true"
-           android:layout_alignParentBottom="true" />
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentLeft="false"
+            />
+    </RelativeLayout>
 
+    <!-- Footer aligned to bottom -->
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFF"
+        android:gravity="center" >
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/message_et"
+            android:layout_weight="0.96"
+            android:layout_toLeftOf="@+id/send_btn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/send_btn" />
+        <Button
+            android:layout_width="84dp"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:id="@+id/send_btn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="sendMessage"/>
 
     </RelativeLayout>
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chatlist_lv" />
+        android:layout_width="fill_parent"
+        android:id="@+id/chatlist_lv"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/header"
+        android:layout_above="@id/footer"
+        />
 
-</LinearLayout>
+
+</RelativeLayout>

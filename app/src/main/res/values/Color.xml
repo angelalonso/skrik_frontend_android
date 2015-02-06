@@ -155,4 +155,6 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
+    <drawable name="focused">#008B8B</drawable>
+    <drawable name="selected">#008000</drawable>
 </resources>

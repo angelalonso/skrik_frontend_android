@@ -34,7 +34,8 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="49dp"
-        android:layout_weight="1.01">
+        android:layout_weight="1.01"
+        >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"

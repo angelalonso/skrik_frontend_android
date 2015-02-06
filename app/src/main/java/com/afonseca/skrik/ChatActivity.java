@@ -5,8 +5,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,8 +24,8 @@ public class ChatActivity extends ActionBarActivity {
     Control_BackendHandler backend = new Control_BackendHandler();
 
     String serverSide;
-    String userid;
     String other_userid;
+    String me_userid;
     String username;
 
     TextView Username_tv;
@@ -40,14 +43,14 @@ public class ChatActivity extends ActionBarActivity {
         serverSide = serverCheck(context);
 
         Bundle b = getIntent().getExtras();
-        other_userid = b.getString("userid");
-        userid = "";
+        other_userid = b.getString("userid_other");
+        me_userid = b.getString("userid_me");
         username = b.getString("username");
         ChatList_lv = (ListView) findViewById(R.id.chatlist_lv);
         Username_tv = (TextView) findViewById(R.id.username_tv);
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, me_userid); }
         //if (serverSide.matches("OK")) { Log.i("TESTING", userid); }
         showMessages(other_userid);
 
@@ -60,7 +63,7 @@ public class ChatActivity extends ActionBarActivity {
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 
-        if (serverSide.matches("OK")) { Log.i("TESTING", userid); }
+        if (serverSide.matches("OK")) { Log.i("TESTING", me_userid); }
 
         showMessages(other_userid);
     }
@@ -74,7 +77,7 @@ public class ChatActivity extends ActionBarActivity {
         chatList.clear();
 
         //String query = "SELECT * FROM PHONE_CONTACTS ";
-        String query = "SELECT CASE WHEN userid_from =30660416779715 THEN 'FROM' ELSE 'TO' END as to_or_from, id, message, timestamp, status from NEWS where userid_from ='" + user_other + "' or userid_to ='" + user_other + "' order by timestamp;";
+        String query = "SELECT CASE WHEN userid_from ='" + user_other + "' THEN 'FROM' ELSE 'TO' END as to_or_from, id, message, timestamp, status from NEWS where userid_from ='" + user_other + "' or userid_to ='" + user_other + "' order by timestamp;";
 
         Cursor c1 = newsSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
@@ -94,13 +97,21 @@ public class ChatActivity extends ActionBarActivity {
                 } while (c1.moveToNext());
             }
         }
-//TODO: Continue here
+
         Control_ChatListAdapter chatListAdapter = new Control_ChatListAdapter(
                 ChatActivity.this, chatList);
         ChatList_lv.setAdapter(chatListAdapter);
 
     }
 
+    public void sendMessage(View view) {
+        EditText message_et = (EditText) findViewById(R.id.message_et);
+        String message = message_et.getText().toString();
+        //TODO: We avoid sending millis here, but might be better to do so.
+        String timestamp = String.valueOf(System.currentTimeMillis()/1000);
+        backend.sendMessageToBackend(message,me_userid,other_userid,timestamp);
+        message_et.setText("");
+    }
     /* Check Functions */
 
     public String serverCheck(Context mContext) {

@@ -174,4 +174,21 @@ public class Control_BackendHandler {
             }
         }
     }
+
+    public String sendMessageToBackend(String message, String userid_from, String userid_to, String timestamp) {
+
+        /*
+        * Throw a message if the email is already in use (maybe get back the data?
+        * */
+        String output = null;
+        String url_saveuser = URL + "/newmessage/" + message + "/userfrom/" + userid_from + "/userto/" + userid_to + "/timestamp/" + timestamp + "/";
+        try {
+            output = new Control_AsyncTask().execute(url_saveuser).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
 }

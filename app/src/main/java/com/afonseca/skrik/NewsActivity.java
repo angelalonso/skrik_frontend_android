@@ -58,6 +58,7 @@ public class NewsActivity extends ActionBarActivity {
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
         Username_tv = (TextView) findViewById(R.id.username_tv);
 
+
         Username_tv.setText(username);
 
         showList(userid);
@@ -152,13 +153,16 @@ public class NewsActivity extends ActionBarActivity {
     }
 
     public void listviewClick(View view) {
+        Context mContext = getApplicationContext();
         TextView userid_tv = (TextView) view.findViewById(R.id.id_tv);
-        String userid = userid_tv.getText().toString();
+        String userid_other = userid_tv.getText().toString();
+        String userid_me = controlUserconfig.getUid(mContext);
         TextView username_tv = (TextView) view.findViewById(R.id.username_tv);
         String username = username_tv.getText().toString();
         Intent intent = new Intent(this, ChatActivity.class);
         Bundle b = new Bundle();
-        b.putString("userid", userid);
+        b.putString("userid_other", userid_other);
+        b.putString("userid_me", userid_me);
         b.putString("username", username);
         intent.putExtras(b);
         startActivity(intent);
