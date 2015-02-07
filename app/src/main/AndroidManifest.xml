@@ -19,13 +19,13 @@
         </activity>
         <activity android:name=".Act_UserCfg" >
         </activity>
-        <activity android:name=".Control_Userconfig" >
+        <activity android:name=".Funcs_UserCfg" >
         </activity>
-        <activity android:name=".NewsActivity" >
+        <activity android:name=".Act_Overview" >
         </activity>
-        <activity android:name=".ChatActivity" >
+        <activity android:name=".Funcs_Overview" >
         </activity>
-        <activity android:name=".Control_News" >
+        <activity android:name=".Act_Channel" >
         </activity>
     </application>
 

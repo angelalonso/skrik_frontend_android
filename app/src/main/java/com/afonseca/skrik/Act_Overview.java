@@ -3,31 +3,29 @@ package com.afonseca.skrik;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
  * This Activity should show the News for the configured user
  */
-public class NewsActivity extends ActionBarActivity {
+public class Act_Overview extends ActionBarActivity {
 
     /* Declarations */
+    //Extender Activity
+    Funcs_Overview functionsOverview = new Funcs_Overview();
 
     Control_NewsDbHandler newsSQLHandler;
     Control_NewsUsersDbHandler newsUsersSQLHandler;
-    Control_Userconfig controlUserconfig = new Control_Userconfig();
-    Control_News controlNews = new Control_News();
+    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
     Control_BackendHandler backend = new Control_BackendHandler();
 
     String serverSide;
@@ -49,8 +47,8 @@ public class NewsActivity extends ActionBarActivity {
         newsSQLHandler = new Control_NewsDbHandler(this);
         newsUsersSQLHandler = new Control_NewsUsersDbHandler(this);
 
-        String username = controlUserconfig.getUsername(context);
-        String userid = controlUserconfig.getUid(context);
+        String username = funcsUserCfg.getUsername(context);
+        String userid = funcsUserCfg.getUid(context);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there"); }
@@ -74,7 +72,7 @@ public class NewsActivity extends ActionBarActivity {
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
 
-        String userid = controlUserconfig.getUid(context);
+        String userid = funcsUserCfg.getUid(context);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, because the server is not there"); }
@@ -88,12 +86,14 @@ public class NewsActivity extends ActionBarActivity {
 
     public void updateNews(View view) {
         Context context = getApplicationContext();
-        String userid = controlUserconfig.getUid(context);
+        String userid = funcsUserCfg.getUid(context);
         showList(userid);
     }
 
     private void showList(String user_me) {
         Context mContext = getApplicationContext();
+
+        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
 
         ArrayList<Data_NewsListItems> contactList = new ArrayList<>();
         contactList.clear();
@@ -111,10 +111,13 @@ public class NewsActivity extends ActionBarActivity {
                             .getColumnIndex("msg_nr")));
                     newsListItems.setNews(c1.getString(c1
                             .getColumnIndex("message")));
-                    newsListItems.setTimestamp(c1.getString(c1
-                            .getColumnIndex("timestamp_last")));
+
+                    String timestamp_raw = c1.getString(c1.getColumnIndex("timestamp_last"));
+                    String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
+
+                    newsListItems.setTimestamp(timestamp);
                     String userid_from = c1.getString(c1.getColumnIndex("userid_from"));
-                    String userid_name = controlNews.getUsername(mContext,userid_from);
+                    String userid_name = functionsOverview.getUsername(mContext,userid_from);
                     newsListItems.setUserid(userid_from);
                     newsListItems.setUsername(userid_name);
 
@@ -125,7 +128,7 @@ public class NewsActivity extends ActionBarActivity {
         }
 
         Control_NewsListAdapter contactListAdapter = new Control_NewsListAdapter(
-                NewsActivity.this, contactList);
+                Act_Overview.this, contactList);
         NewsList_lv.setAdapter(contactListAdapter);
 
     }
@@ -156,10 +159,10 @@ public class NewsActivity extends ActionBarActivity {
         Context mContext = getApplicationContext();
         TextView userid_tv = (TextView) view.findViewById(R.id.id_tv);
         String userid_other = userid_tv.getText().toString();
-        String userid_me = controlUserconfig.getUid(mContext);
+        String userid_me = funcsUserCfg.getUid(mContext);
         TextView username_tv = (TextView) view.findViewById(R.id.username_tv);
         String username = username_tv.getText().toString();
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, Act_Channel.class);
         Bundle b = new Bundle();
         b.putString("userid_other", userid_other);
         b.putString("userid_me", userid_me);

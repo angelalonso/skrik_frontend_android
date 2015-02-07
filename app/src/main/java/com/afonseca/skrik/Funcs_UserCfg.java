@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * REALLY, REALLY Check the values of userid and regid and handle that offline AND online
  *
  */
-public class Control_Userconfig extends Activity {
+public class Funcs_UserCfg extends Activity {
 
     Control_BackendHandler backend = new Control_BackendHandler();
 

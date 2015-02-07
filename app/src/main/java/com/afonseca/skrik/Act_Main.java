@@ -12,7 +12,7 @@ public class Act_Main extends ActionBarActivity {
 
     /* Declarations */
 
-    Control_Userconfig controlUserconfig = new Control_Userconfig();
+    Funcs_UserCfg controlUserconfig = new Funcs_UserCfg();
 
     /* General Methods */
 
@@ -31,7 +31,7 @@ public class Act_Main extends ActionBarActivity {
         Context context = getApplicationContext();
 
         if (controlUserconfig.userOK_SharedPrefs(context).equals("OK")){
-            Intent intent = new Intent(this, NewsActivity.class);
+            Intent intent = new Intent(this, Act_Overview.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, Act_UserCfg.class);
@@ -48,7 +48,7 @@ public class Act_Main extends ActionBarActivity {
         Context context = getApplicationContext();
 
         if (controlUserconfig.userOK_SharedPrefs(context).equals("OK")){
-            Intent intent = new Intent(this, NewsActivity.class);
+            Intent intent = new Intent(this, Act_Overview.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, Act_UserCfg.class);

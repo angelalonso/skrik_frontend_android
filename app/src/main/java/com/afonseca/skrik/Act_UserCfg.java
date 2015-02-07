@@ -19,7 +19,7 @@ public class Act_UserCfg extends ActionBarActivity {
     /* Declarations */
 
     Control_BackendHandler backend = new Control_BackendHandler();
-    Control_Userconfig controlUserconfig = new Control_Userconfig();
+    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
 
     String serverSide;
 
@@ -52,10 +52,10 @@ public class Act_UserCfg extends ActionBarActivity {
         Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
-        name.setText(controlUserconfig.getUsername(mContext));
-        email.setText(controlUserconfig.getEmail(mContext));
-        uid.setText(controlUserconfig.getUid(mContext));
-        regid.setText(controlUserconfig.getRegid(mContext));
+        name.setText(funcsUserCfg.getUsername(mContext));
+        email.setText(funcsUserCfg.getEmail(mContext));
+        uid.setText(funcsUserCfg.getUid(mContext));
+        regid.setText(funcsUserCfg.getRegid(mContext));
 
     }
 
@@ -70,10 +70,10 @@ public class Act_UserCfg extends ActionBarActivity {
         Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
-        name.setText(controlUserconfig.getUsername(mContext));
-        email.setText(controlUserconfig.getEmail(mContext));
-        uid.setText(controlUserconfig.getUid(mContext));
-        regid.setText(controlUserconfig.getRegid(mContext));
+        name.setText(funcsUserCfg.getUsername(mContext));
+        email.setText(funcsUserCfg.getEmail(mContext));
+        uid.setText(funcsUserCfg.getUid(mContext));
+        regid.setText(funcsUserCfg.getRegid(mContext));
 
     }
 
@@ -120,9 +120,9 @@ public class Act_UserCfg extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         Context mContext = getApplicationContext();
-        String dataCheck = controlUserconfig.userOK_Input(n, em, id, rid, pwd);
+        String dataCheck = funcsUserCfg.userOK_Input(n, em, id, rid, pwd);
         if (dataCheck == "OK") {
-            String saveResult = controlUserconfig.saveUserConfig(mContext, n, em, id, rid, pwd);
+            String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, id, rid, pwd);
             finish();
         } else {
             Toast.makeText(getApplicationContext(), dataCheck, Toast.LENGTH_LONG).show();
@@ -149,7 +149,7 @@ public class Act_UserCfg extends ActionBarActivity {
                         uid.setText("");
                         regid.setText("");
                         passwd.setText("");
-                        controlUserconfig.clearUser(mContext);
+                        funcsUserCfg.clearUser(mContext);
                     }
                 })
                 .setNegativeButton("Ups, NO!", new DialogInterface.OnClickListener() {

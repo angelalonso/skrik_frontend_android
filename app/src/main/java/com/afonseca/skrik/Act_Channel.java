@@ -11,12 +11,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
  * Created by afonseca on 2/3/2015.
  */
-public class ChatActivity extends ActionBarActivity {
+public class Act_Channel extends ActionBarActivity {
 
     /* Declarations */
 
@@ -71,7 +73,9 @@ public class ChatActivity extends ActionBarActivity {
     /* Additional Actions' Methods */
 
     private void showMessages(String user_other) {
-        Context mContext = getApplicationContext();
+        //Context mContext = getApplicationContext();
+
+        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
 
         ArrayList<Data_ChatListItems> chatList = new ArrayList<>();
         chatList.clear();
@@ -89,8 +93,11 @@ public class ChatActivity extends ActionBarActivity {
                             .getColumnIndex("message")));
                     chatListItems.setToOrFromMe(c1.getString(c1
                             .getColumnIndex("to_or_from")));
-                    chatListItems.setTimestamp(c1.getString(c1
-                            .getColumnIndex("timestamp")));
+
+                    String timestamp_raw = c1.getString(c1.getColumnIndex("timestamp"));
+                    String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
+
+                    chatListItems.setTimestamp(timestamp);
 
                     chatList.add(chatListItems);
 
@@ -98,8 +105,8 @@ public class ChatActivity extends ActionBarActivity {
             }
         }
 
-        Control_ChatListAdapter chatListAdapter = new Control_ChatListAdapter(
-                ChatActivity.this, chatList);
+        Ctrl_ChannelListAdapter chatListAdapter = new Ctrl_ChannelListAdapter(
+                Act_Channel.this, chatList);
         ChatList_lv.setAdapter(chatListAdapter);
 
     }

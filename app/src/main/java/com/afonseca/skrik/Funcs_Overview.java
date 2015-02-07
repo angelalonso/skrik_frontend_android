@@ -17,12 +17,9 @@ This one is a more "personalized" controller of what's shown in the News list
 *   TODO: If the username is there, send it back
 *
 * */
-public class Control_News extends Activity {
+public class Funcs_Overview extends Activity {
 
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    Control_Userconfig controlUserconfig = new Control_Userconfig();
     Control_BackendHandler backend = new Control_BackendHandler();
-    Control_NewsDbHandler newsSQLHandler;
 
     public String getUsername(Context mContext,String newsUser_id) {
         Control_NewsUsersDbHandler newsUsersSQLHandler = new Control_NewsUsersDbHandler(mContext);
