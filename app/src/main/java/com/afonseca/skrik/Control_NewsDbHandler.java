@@ -10,8 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Control_NewsDbHandler {
 
-    public static final String DATABASE_NAME = "MSGING_DB";
-    public static final int DATABASE_VERSION = 2;
+    public static final String DATABASE_NAME = "MSGS_DB";
+    public static final int DATABASE_VERSION = 3;
     //Context context;
     SQLiteDatabase sqlDatabase;
     Control_NewsDbHelper dbHelper;

@@ -48,7 +48,7 @@ public class Ctrl_Backend {
             try {
                 /* TODO: TEST that the Timeout is right */
                 /* TODO: Configure the server to avoid DDoS */
-                String knock = new Control_AsyncTask().execute(url_checkserver).get(1000, TimeUnit.MILLISECONDS);
+                String knock = new Tool_AsyncTask().execute(url_checkserver).get(1000, TimeUnit.MILLISECONDS);
                 if (knock.startsWith("<!DOCTYPE html>")) {
                     output = "OK";
                 } else {
@@ -77,7 +77,7 @@ public class Ctrl_Backend {
         String output = null;
         String url_getusername = URL + "/getusername/" + userid + "/";
         try {
-            output = new Control_AsyncTask().execute(url_getusername).get();
+            output = new Tool_AsyncTask().execute(url_getusername).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -95,7 +95,7 @@ public class Ctrl_Backend {
         String output = null;
         String url_saveuser = URL + "/saveid/" + userid + "/name/" + username + "/email/" + email + "/regid/" + regid + "/";
         try {
-            output = new Control_AsyncTask().execute(url_saveuser).get();
+            output = new Tool_AsyncTask().execute(url_saveuser).get();
 
 
 
@@ -113,7 +113,7 @@ public class Ctrl_Backend {
         /* First of all, we make sure we get something from the Backend */
         String url_getnewid = URL + "/getnews/" + userid + "/";
         try {
-            output = new Control_AsyncTask().execute(url_getnewid).get();
+            output = new Tool_AsyncTask().execute(url_getnewid).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -141,17 +141,17 @@ public class Ctrl_Backend {
                 String status = jsonLine.getString(2);
                 String timestamp = jsonLine.getString(3);
                 String backend_id = jsonLine.getString(4);
-                String query = "SELECT count(*) as result FROM NEWS WHERE backend_id = '" + backend_id + "' ";
+                String query = "SELECT count(*) AS result FROM MSGS WHERE backend_id = '" + backend_id + "' ";
                 Cursor c1 = sqlHandler.selectQuery(query);
                 if (c1 == null){
-                    String insert_query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
+                    String insert_query = "INSERT INTO MSGS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
                     sqlHandler.executeQuery(insert_query);
                 } else {
                     String test = Integer.toString(c1.getCount());
                     if (c1.moveToFirst()) {
                         Integer nr_msgs = Integer.parseInt(c1.getString(c1.getColumnIndex("result")));
                         if (nr_msgs == 0){
-                            String insert_query = "INSERT INTO NEWS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
+                            String insert_query = "INSERT INTO MSGS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
                             sqlHandler.executeQuery(insert_query);
                         }
                     }
@@ -183,7 +183,7 @@ public class Ctrl_Backend {
         String output = null;
         String url_saveuser = URL + "/newmessage/" + message + "/userfrom/" + userid_from + "/userto/" + userid_to + "/timestamp/" + timestamp + "/";
         try {
-            output = new Control_AsyncTask().execute(url_saveuser).get();
+            output = new Tool_AsyncTask().execute(url_saveuser).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

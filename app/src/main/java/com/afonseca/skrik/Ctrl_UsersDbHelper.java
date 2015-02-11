@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by afonseca on 2/1/2015.
  */
 
-public class Control_NewsUsersDbHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_TABLE = "NEWSUSERS";
+public class Ctrl_UsersDbHelper extends SQLiteOpenHelper {
+    public static final String DATABASE_TABLE = "USERS";
 
     public static final String COLUMN1 = "id";
     public static final String COLUMN2 = "username";
@@ -21,7 +21,7 @@ public class Control_NewsUsersDbHelper extends SQLiteOpenHelper {
             + COLUMN3 + " integer not null "
             + ");";
 
-    public Control_NewsUsersDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
+    public Ctrl_UsersDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
                                 int version) {
         super(context, name, factory, version);
         // TODO Auto-generated constructor stub

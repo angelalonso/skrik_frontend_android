@@ -22,8 +22,8 @@ public class Funcs_Overview extends Activity {
     Ctrl_Backend backend = new Ctrl_Backend();
 
     public String getUsername(Context mContext,String newsUser_id) {
-        Control_NewsUsersDbHandler newsUsersSQLHandler = new Control_NewsUsersDbHandler(mContext);
-        String query = "SELECT username FROM NEWSUSERS WHERE id = '" + newsUser_id + "'";
+        Ctrl_UsersDbHandler newsUsersSQLHandler = new Ctrl_UsersDbHandler(mContext);
+        String query = "SELECT username FROM USERS WHERE id = '" + newsUser_id + "'";
         String username = "";
         Cursor c1 = newsUsersSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
@@ -41,9 +41,9 @@ public class Funcs_Overview extends Activity {
     }
 
     public void addUser(Context mContext,String userid, String username){
-        Control_NewsUsersDbHandler newsUsersSQLHandler = new Control_NewsUsersDbHandler(mContext);
+        Ctrl_UsersDbHandler newsUsersSQLHandler = new Ctrl_UsersDbHandler(mContext);
 
-        String query = "INSERT INTO NEWSUSERS (id, username, blacklisted) VALUES('" + userid + "','" + username + "',0)";
+        String query = "INSERT INTO USERS (id, username, blacklisted) VALUES('" + userid + "','" + username + "',0)";
         newsUsersSQLHandler.executeQuery(query);
     }
 }

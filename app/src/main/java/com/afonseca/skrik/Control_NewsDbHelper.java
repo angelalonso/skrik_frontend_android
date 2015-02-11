@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class Control_NewsDbHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_TABLE = "NEWS";
+    public static final String DATABASE_TABLE = "MSGS";
 
     public static final String COLUMN1 = "id";
     public static final String COLUMN2 = "userid_from";

@@ -24,7 +24,7 @@ public class Act_Overview extends ActionBarActivity {
     Funcs_Overview functionsOverview = new Funcs_Overview();
 
     Control_NewsDbHandler newsSQLHandler;
-    Control_NewsUsersDbHandler newsUsersSQLHandler;
+    Ctrl_UsersDbHandler newsUsersSQLHandler;
     Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
     Ctrl_Backend backend = new Ctrl_Backend();
 
@@ -45,7 +45,7 @@ public class Act_Overview extends ActionBarActivity {
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
         newsSQLHandler = new Control_NewsDbHandler(this);
-        newsUsersSQLHandler = new Control_NewsUsersDbHandler(this);
+        newsUsersSQLHandler = new Ctrl_UsersDbHandler(this);
 
         String username = funcsUserCfg.getUsername(context);
         String userid = funcsUserCfg.getUid(context);
@@ -98,8 +98,7 @@ public class Act_Overview extends ActionBarActivity {
         ArrayList<Data_NewsListItems> contactList = new ArrayList<>();
         contactList.clear();
 
-        //String query = "SELECT * FROM PHONE_CONTACTS ";
-        String query = "SELECT count(*) as msg_nr, userid_from, message, MAX(timestamp) as timestamp_last FROM NEWS GROUP BY userid_from";
+        String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
 
         Cursor c1 = newsSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {

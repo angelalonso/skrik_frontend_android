@@ -80,8 +80,7 @@ public class Act_Channel extends ActionBarActivity {
         ArrayList<Data_ChatListItems> chatList = new ArrayList<>();
         chatList.clear();
 
-        //String query = "SELECT * FROM PHONE_CONTACTS ";
-        String query = "SELECT CASE WHEN userid_from ='" + user_other + "' THEN 'FROM' ELSE 'TO' END as to_or_from, id, message, timestamp, status from NEWS where userid_from ='" + user_other + "' or userid_to ='" + user_other + "' order by timestamp;";
+        String query = "SELECT CASE WHEN userid_from ='" + user_other + "' THEN 'FROM' ELSE 'TO' END AS to_or_from, id, message, timestamp, status FROM MSGS WHERE userid_from ='" + user_other + "' OR userid_to ='" + user_other + "' ORDER BY timestamp;";
 
         Cursor c1 = newsSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
