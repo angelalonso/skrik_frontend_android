@@ -18,7 +18,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     /* Declarations */
 
-    Control_BackendHandler backend = new Control_BackendHandler();
+    Ctrl_Backend backend = new Ctrl_Backend();
     Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
 
     String serverSide;

@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public class Funcs_UserCfg extends Activity {
 
-    Control_BackendHandler backend = new Control_BackendHandler();
+    Ctrl_Backend backend = new Ctrl_Backend();
 
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Name = "nameKey";

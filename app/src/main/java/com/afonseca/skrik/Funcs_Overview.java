@@ -19,7 +19,7 @@ This one is a more "personalized" controller of what's shown in the News list
 * */
 public class Funcs_Overview extends Activity {
 
-    Control_BackendHandler backend = new Control_BackendHandler();
+    Ctrl_Backend backend = new Ctrl_Backend();
 
     public String getUsername(Context mContext,String newsUser_id) {
         Control_NewsUsersDbHandler newsUsersSQLHandler = new Control_NewsUsersDbHandler(mContext);

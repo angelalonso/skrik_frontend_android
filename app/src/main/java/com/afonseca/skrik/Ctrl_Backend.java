@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * Created by afonseca on 1/24/2015.
  */
-public class Control_BackendHandler {
+public class Ctrl_Backend {
 
     /* I keep these separated, just in case */
     String IP = "192.168.10.229";

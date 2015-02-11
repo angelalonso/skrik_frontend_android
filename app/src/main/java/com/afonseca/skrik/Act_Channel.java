@@ -23,7 +23,7 @@ public class Act_Channel extends ActionBarActivity {
     /* Declarations */
 
     Control_NewsDbHandler newsSQLHandler;
-    Control_BackendHandler backend = new Control_BackendHandler();
+    Ctrl_Backend backend = new Ctrl_Backend();
 
     String serverSide;
     String other_userid;

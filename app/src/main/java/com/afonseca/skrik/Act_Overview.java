@@ -26,7 +26,7 @@ public class Act_Overview extends ActionBarActivity {
     Control_NewsDbHandler newsSQLHandler;
     Control_NewsUsersDbHandler newsUsersSQLHandler;
     Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
-    Control_BackendHandler backend = new Control_BackendHandler();
+    Ctrl_Backend backend = new Ctrl_Backend();
 
     String serverSide;
 
