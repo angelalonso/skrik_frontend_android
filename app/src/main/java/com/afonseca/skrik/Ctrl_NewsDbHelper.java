@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class Control_NewsDbHelper extends SQLiteOpenHelper {
+public class Ctrl_NewsDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_TABLE = "MSGS";
 
     public static final String COLUMN1 = "id";
@@ -30,7 +30,7 @@ public class Control_NewsDbHelper extends SQLiteOpenHelper {
             + COLUMN7 + " text not null "
             + ");";
 
-    public Control_NewsDbHelper(Context context, String name, CursorFactory factory,
+    public Ctrl_NewsDbHelper(Context context, String name, CursorFactory factory,
                                int version) {
         super(context, name, factory, version);
         // TODO Auto-generated constructor stub

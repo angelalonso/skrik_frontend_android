@@ -22,7 +22,7 @@ public class Act_Channel extends ActionBarActivity {
 
     /* Declarations */
 
-    Control_NewsDbHandler newsSQLHandler;
+    Ctrl_NewsDbHandler newsSQLHandler;
     Ctrl_Backend backend = new Ctrl_Backend();
 
     String serverSide;
@@ -40,7 +40,7 @@ public class Act_Channel extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        newsSQLHandler = new Control_NewsDbHandler(this);
+        newsSQLHandler = new Ctrl_NewsDbHandler(this);
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 
@@ -77,8 +77,9 @@ public class Act_Channel extends ActionBarActivity {
 
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
 
-        ArrayList<Data_ChatListItems> chatList = new ArrayList<>();
+        ArrayList<Data_ChannelItems> chatList = new ArrayList<>();
         chatList.clear();
+
 
         String query = "SELECT CASE WHEN userid_from ='" + user_other + "' THEN 'FROM' ELSE 'TO' END AS to_or_from, id, message, timestamp, status FROM MSGS WHERE userid_from ='" + user_other + "' OR userid_to ='" + user_other + "' ORDER BY timestamp;";
 
@@ -86,27 +87,27 @@ public class Act_Channel extends ActionBarActivity {
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {
-                    Data_ChatListItems chatListItems = new Data_ChatListItems();
+                    Data_ChannelItems channelItems = new Data_ChannelItems();
 
-                    chatListItems.setMsg(c1.getString(c1
+                    channelItems.setMsg(c1.getString(c1
                             .getColumnIndex("message")));
-                    chatListItems.setToOrFromMe(c1.getString(c1
-                            .getColumnIndex("to_or_from")));
+                    channelItems.setToOrFromMe(c1.getString(c1
+                            .getColumnIndex("to_or_from,")));
 
                     String timestamp_raw = c1.getString(c1.getColumnIndex("timestamp"));
                     String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
 
-                    chatListItems.setTimestamp(timestamp);
+                    channelItems.setTimestamp(timestamp);
 
-                    chatList.add(chatListItems);
+                    chatList.add(channelItems);
 
                 } while (c1.moveToNext());
             }
         }
 
-        Ctrl_ChannelListAdapter chatListAdapter = new Ctrl_ChannelListAdapter(
+        Ctrl_ChannelListAdapter channelAdapter = new Ctrl_ChannelListAdapter(
                 Act_Channel.this, chatList);
-        ChatList_lv.setAdapter(chatListAdapter);
+        ChatList_lv.setAdapter(channelAdapter);
 
     }
 

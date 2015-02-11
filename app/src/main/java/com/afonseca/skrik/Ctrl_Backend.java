@@ -107,7 +107,7 @@ public class Ctrl_Backend {
         return output;
     }
 
-    public void updateNewslist(Control_NewsDbHandler sqlHandler,String userid) {
+    public void updateNewslist(Ctrl_NewsDbHandler sqlHandler,String userid) {
         String output = null;
 
         /* First of all, we make sure we get something from the Backend */

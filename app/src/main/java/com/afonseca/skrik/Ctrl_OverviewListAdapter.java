@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class Control_NewsListAdapter extends BaseAdapter {
+public class Ctrl_OverviewListAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<Data_NewsListItems> contactList;
+    ArrayList<Data_OverviewItems> contactList;
 
-    public Control_NewsListAdapter(Context context, ArrayList<Data_NewsListItems> list) {
+    public Ctrl_OverviewListAdapter(Context context, ArrayList<Data_OverviewItems> list) {
 
         this.context = context;
         contactList = list;
@@ -44,7 +44,7 @@ public class Control_NewsListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup arg2) {
-        Data_NewsListItems contactListItems = contactList.get(position);
+        Data_OverviewItems contactListItems = contactList.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context

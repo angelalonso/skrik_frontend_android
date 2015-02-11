@@ -23,7 +23,7 @@ public class Act_Overview extends ActionBarActivity {
     //Extender Activity
     Funcs_Overview functionsOverview = new Funcs_Overview();
 
-    Control_NewsDbHandler newsSQLHandler;
+    Ctrl_NewsDbHandler newsSQLHandler;
     Ctrl_UsersDbHandler newsUsersSQLHandler;
     Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
     Ctrl_Backend backend = new Ctrl_Backend();
@@ -44,7 +44,7 @@ public class Act_Overview extends ActionBarActivity {
 
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
-        newsSQLHandler = new Control_NewsDbHandler(this);
+        newsSQLHandler = new Ctrl_NewsDbHandler(this);
         newsUsersSQLHandler = new Ctrl_UsersDbHandler(this);
 
         String username = funcsUserCfg.getUsername(context);
@@ -95,7 +95,7 @@ public class Act_Overview extends ActionBarActivity {
 
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
 
-        ArrayList<Data_NewsListItems> contactList = new ArrayList<>();
+        ArrayList<Data_OverviewItems> contactList = new ArrayList<>();
         contactList.clear();
 
         String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
@@ -104,29 +104,29 @@ public class Act_Overview extends ActionBarActivity {
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {
-                    Data_NewsListItems newsListItems = new Data_NewsListItems();
+                    Data_OverviewItems overviewItems = new Data_OverviewItems();
 
-                    newsListItems.setNrOfMsgs(c1.getString(c1
+                    overviewItems.setNrOfMsgs(c1.getString(c1
                             .getColumnIndex("msg_nr")));
-                    newsListItems.setNews(c1.getString(c1
+                    overviewItems.setNews(c1.getString(c1
                             .getColumnIndex("message")));
 
                     String timestamp_raw = c1.getString(c1.getColumnIndex("timestamp_last"));
                     String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
 
-                    newsListItems.setTimestamp(timestamp);
+                    overviewItems.setTimestamp(timestamp);
                     String userid_from = c1.getString(c1.getColumnIndex("userid_from"));
                     String userid_name = functionsOverview.getUsername(mContext,userid_from);
-                    newsListItems.setUserid(userid_from);
-                    newsListItems.setUsername(userid_name);
+                    overviewItems.setUserid(userid_from);
+                    overviewItems.setUsername(userid_name);
 
-                    contactList.add(newsListItems);
+                    contactList.add(overviewItems);
 
                 } while (c1.moveToNext());
             }
         }
 
-        Control_NewsListAdapter contactListAdapter = new Control_NewsListAdapter(
+        Ctrl_OverviewListAdapter contactListAdapter = new Ctrl_OverviewListAdapter(
                 Act_Overview.this, contactList);
         NewsList_lv.setAdapter(contactListAdapter);
 

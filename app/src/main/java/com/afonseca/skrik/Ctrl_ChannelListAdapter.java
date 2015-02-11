@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class Ctrl_ChannelListAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<Data_ChatListItems> chatList;
+    ArrayList<Data_ChannelItems> chatList;
 
-    public Ctrl_ChannelListAdapter(Context context, ArrayList<Data_ChatListItems> list) {
+    public Ctrl_ChannelListAdapter(Context context, ArrayList<Data_ChannelItems> list) {
 
         this.context = context;
         chatList = list;
@@ -44,7 +44,7 @@ public class Ctrl_ChannelListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup arg2) {
-        Data_ChatListItems chatListItems = chatList.get(position);
+        Data_ChannelItems channelItems = chatList.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context
@@ -54,9 +54,9 @@ public class Ctrl_ChannelListAdapter extends BaseAdapter {
         }
 
         TextView Message_tv = (TextView) convertView.findViewById(R.id.message_tv);
-        Message_tv.setText(chatListItems.getMsg());
+        Message_tv.setText(channelItems.getMsg());
         TextView Timestamp_tv = (TextView) convertView.findViewById(R.id.timestamp_tv);
-        Timestamp_tv.setText(chatListItems.getTimestamp());
+        Timestamp_tv.setText(channelItems.getTimestamp());
 
 
         return convertView;

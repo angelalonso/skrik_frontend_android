@@ -8,17 +8,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class Control_NewsDbHandler {
+public class Ctrl_NewsDbHandler {
 
     public static final String DATABASE_NAME = "MSGS_DB";
     public static final int DATABASE_VERSION = 3;
     //Context context;
     SQLiteDatabase sqlDatabase;
-    Control_NewsDbHelper dbHelper;
+    Ctrl_NewsDbHelper dbHelper;
 
-    public Control_NewsDbHandler(Context context) {
+    public Ctrl_NewsDbHandler(Context context) {
 
-        dbHelper = new Control_NewsDbHelper(context, DATABASE_NAME, null,
+        dbHelper = new Ctrl_NewsDbHelper(context, DATABASE_NAME, null,
                 DATABASE_VERSION);
         sqlDatabase = dbHelper.getWritableDatabase();
     }

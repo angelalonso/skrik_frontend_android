@@ -3,7 +3,7 @@ package com.afonseca.skrik;
 /**
  * Created by aaf on 2/5/15.
  */
-public class Data_ChatListItems {
+public class Data_ChannelItems {
 
     String message;
     String to_or_from_me;
