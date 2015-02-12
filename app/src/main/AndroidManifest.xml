@@ -3,6 +3,7 @@
     package="com.afonseca.skrik" >
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,7 +20,11 @@
         </activity>
         <activity android:name=".Act_UserCfg" >
         </activity>
+        <activity android:name=".Aux_Act_UserCfg" >
+        </activity>
         <activity android:name=".Funcs_UserCfg" >
+        </activity>
+        <activity android:name=".Aux_Funcs_UserCfg" >
         </activity>
         <activity android:name=".Act_Overview" >
         </activity>

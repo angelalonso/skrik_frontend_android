@@ -15,7 +15,7 @@ public class Aux_Act_UserCfg extends ActionBarActivity {
     /* Declarations */
 
     Ctrl_Backend backend = new Ctrl_Backend();
-    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
+    Aux_Funcs_UserCfg funcsUserCfg = new Aux_Funcs_UserCfg();
 
     String serverSide;
 
@@ -24,9 +24,11 @@ public class Aux_Act_UserCfg extends ActionBarActivity {
 
     TextView name;
     TextView email;
+    TextView passwd;
+    TextView phone;
     TextView uid;
     TextView regid;
-    TextView passwd;
+
 
     /* General Behaviour Methods */
 
@@ -41,15 +43,17 @@ public class Aux_Act_UserCfg extends ActionBarActivity {
 
         name = (TextView) findViewById(R.id.name_input);
         email = (TextView) findViewById(R.id.email_input);
+        passwd = (TextView) findViewById(R.id.passwd_input);
+        phone = (TextView) findViewById(R.id.phone_input);
         uid = (TextView) findViewById(R.id.uid_input);
         regid = (TextView) findViewById(R.id.regid_input);
-        passwd = (TextView) findViewById(R.id.passwd_input);
 
         Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
         name.setText(funcsUserCfg.getUsername(mContext));
         email.setText(funcsUserCfg.getEmail(mContext));
+        phone.setText(funcsUserCfg.getPhone(mContext));
         uid.setText(funcsUserCfg.getUid(mContext));
         regid.setText(funcsUserCfg.getRegid(mContext));
 
