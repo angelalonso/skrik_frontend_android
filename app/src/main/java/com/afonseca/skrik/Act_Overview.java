@@ -25,7 +25,7 @@ public class Act_Overview extends ActionBarActivity {
 
     Ctrl_NewsDbHandler newsSQLHandler;
     Ctrl_UsersDbHandler newsUsersSQLHandler;
-    Aux_Funcs_UserCfg funcsUserCfg = new Aux_Funcs_UserCfg();
+    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
     Ctrl_Backend backend = new Ctrl_Backend();
 
     String serverSide;
@@ -173,7 +173,7 @@ public class Act_Overview extends ActionBarActivity {
 
     public void gotoUserConfig(View view) {
         /** Called when the user clicks the Config button */
-        Intent intent = new Intent(this, Aux_Act_UserCfg.class);
+        Intent intent = new Intent(this, Act_UserCfg.class);
         startActivity(intent);
     }
 

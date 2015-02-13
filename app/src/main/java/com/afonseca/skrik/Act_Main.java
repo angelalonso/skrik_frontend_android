@@ -12,7 +12,7 @@ public class Act_Main extends ActionBarActivity {
 
     /* Declarations */
 
-    Aux_Funcs_UserCfg controlUserconfig = new Aux_Funcs_UserCfg();
+    Funcs_UserCfg controlUserconfig = new Funcs_UserCfg();
 
     /* General Methods */
 
@@ -34,7 +34,7 @@ public class Act_Main extends ActionBarActivity {
             Intent intent = new Intent(this, Act_Overview.class);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, Aux_Act_UserCfg.class);
+            Intent intent = new Intent(this, Act_UserCfg.class);
             startActivity(intent);
         }
     }
@@ -51,7 +51,7 @@ public class Act_Main extends ActionBarActivity {
             Intent intent = new Intent(this, Act_Overview.class);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, Aux_Act_UserCfg.class);
+            Intent intent = new Intent(this, Act_UserCfg.class);
             startActivity(intent);
         }
     }
@@ -64,7 +64,7 @@ public class Act_Main extends ActionBarActivity {
         /** In case the user lands on the main Activity,
          *   despite the workflow on Create and Resume,
          **/
-        Intent intent = new Intent(this, Aux_Act_UserCfg.class);
+        Intent intent = new Intent(this, Act_UserCfg.class);
         startActivity(intent);
     }
 }
