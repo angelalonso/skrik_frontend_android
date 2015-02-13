@@ -1,5 +1,7 @@
 package com.afonseca.skrik;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,11 +9,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class Act_UserCfg extends ActionBarActivity {
@@ -120,6 +127,38 @@ public class Act_UserCfg extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         Context mContext = getApplicationContext();
+
+        //TODO: If there is only one:
+        //        - Build list
+        //        - ask for confirmation
+        //TODO: If there are more:
+        //        - check they are unique - DONE
+        //        - Ask user for confirmation on which to use (if any)
+
+        List<String> emailAccounts = new ArrayList<String>();
+        List<String> phoneAccounts = new ArrayList<String>();
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        Pattern phonePattern = Patterns.PHONE;
+        Account[] accounts = AccountManager.get(mContext).getAccounts();
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                String possibleEmail = account.name;
+                if (!emailAccounts.contains( possibleEmail )) {
+                    emailAccounts.add(possibleEmail);
+                }
+            }
+            if (phonePattern.matcher(account.name).matches()) {
+                String possiblePhone = account.name;
+                if (!phoneAccounts.contains( possiblePhone )) {
+                    phoneAccounts.add(possiblePhone);
+                }
+            }
+        }
+        Log.i("TESTING, amount of emails found:",String.valueOf(emailAccounts.size()));
+        Log.i("TESTING, amount of phones found:",String.valueOf(phoneAccounts.size()));
+
+
+
         String dataCheck = funcsUserCfg.userOK_Input(n, em, id, rid, pwd);
         if (dataCheck == "OK") {
             String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, id, rid, pwd);
