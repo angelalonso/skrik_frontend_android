@@ -83,21 +83,23 @@ public class Act_UserCfg extends ActionBarActivity {
                 }
             }
         }
+        List<String> allAccounts = new ArrayList<String>(emailAccounts);
+        allAccounts.addAll(phoneAccounts);
+        if (allAccounts.size() > 0){
 
-        Log.i("TESTING, amount of emails found:",String.valueOf(emailAccounts.size()));
-        Log.i("TESTING, amount of phones found:",String.valueOf(phoneAccounts.size()));
+            CharSequence[] foundAccounts = allAccounts.toArray(new
+                    CharSequence[allAccounts.size()]);
 
-        CharSequence colors[] = new CharSequence[] {"red", "green", "blue", "black"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("We need something Pick a color");
-        builder.setItems(colors, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // the user clicked on colors[which]
-            }
-        });
-        builder.show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("What do you want to link your account to?");
+            builder.setItems(foundAccounts, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // the user clicked on colors[which]
+                }
+            });
+            builder.show();
+        }
 
     }
 
