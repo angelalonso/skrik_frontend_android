@@ -64,6 +64,41 @@ public class Act_UserCfg extends ActionBarActivity {
         uid.setText(funcsUserCfg.getUid(mContext));
         regid.setText(funcsUserCfg.getRegid(mContext));
 
+        List<String> emailAccounts = new ArrayList<String>();
+        List<String> phoneAccounts = new ArrayList<String>();
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        Pattern phonePattern = Patterns.PHONE;
+        Account[] accounts = AccountManager.get(mContext).getAccounts();
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                String possibleEmail = account.name;
+                if (!emailAccounts.contains( possibleEmail )) {
+                    emailAccounts.add(possibleEmail);
+                }
+            }
+            if (phonePattern.matcher(account.name).matches()) {
+                String possiblePhone = account.name;
+                if (!phoneAccounts.contains( possiblePhone )) {
+                    phoneAccounts.add(possiblePhone);
+                }
+            }
+        }
+
+        Log.i("TESTING, amount of emails found:",String.valueOf(emailAccounts.size()));
+        Log.i("TESTING, amount of phones found:",String.valueOf(phoneAccounts.size()));
+
+        CharSequence colors[] = new CharSequence[] {"red", "green", "blue", "black"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("We need something Pick a color");
+        builder.setItems(colors, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // the user clicked on colors[which]
+            }
+        });
+        builder.show();
+
     }
 
 
@@ -134,30 +169,6 @@ public class Act_UserCfg extends ActionBarActivity {
         //TODO: If there are more:
         //        - check they are unique - DONE
         //        - Ask user for confirmation on which to use (if any)
-
-        List<String> emailAccounts = new ArrayList<String>();
-        List<String> phoneAccounts = new ArrayList<String>();
-        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
-        Pattern phonePattern = Patterns.PHONE;
-        Account[] accounts = AccountManager.get(mContext).getAccounts();
-        for (Account account : accounts) {
-            if (emailPattern.matcher(account.name).matches()) {
-                String possibleEmail = account.name;
-                if (!emailAccounts.contains( possibleEmail )) {
-                    emailAccounts.add(possibleEmail);
-                }
-            }
-            if (phonePattern.matcher(account.name).matches()) {
-                String possiblePhone = account.name;
-                if (!phoneAccounts.contains( possiblePhone )) {
-                    phoneAccounts.add(possiblePhone);
-                }
-            }
-        }
-        Log.i("TESTING, amount of emails found:",String.valueOf(emailAccounts.size()));
-        Log.i("TESTING, amount of phones found:",String.valueOf(phoneAccounts.size()));
-
-
 
         String dataCheck = funcsUserCfg.userOK_Input(n, em, id, rid, pwd);
         if (dataCheck == "OK") {
