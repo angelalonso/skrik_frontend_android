@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
@@ -120,48 +121,6 @@ public class Act_UserCfg extends ActionBarActivity {
 
     /* Additional Actions' Methods */
 
-    public void newUser() {
-
-        Context mContext = getApplicationContext();
-        List<String> emailAccounts = new ArrayList<String>();
-        List<String> phoneAccounts = new ArrayList<String>();
-        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
-        Pattern phonePattern = Patterns.PHONE;
-        Account[] accounts = AccountManager.get(mContext).getAccounts();
-        for (Account account : accounts) {
-            if (emailPattern.matcher(account.name).matches()) {
-                String possibleEmail = account.name;
-                if (!emailAccounts.contains( possibleEmail )) {
-                    emailAccounts.add(possibleEmail);
-                }
-            }
-            if (phonePattern.matcher(account.name).matches()) {
-                String possiblePhone = account.name;
-                if (!phoneAccounts.contains( possiblePhone )) {
-                    phoneAccounts.add(possiblePhone);
-                }
-            }
-        }
-        List<String> allAccounts = new ArrayList<>(emailAccounts);
-        allAccounts.addAll(phoneAccounts);
-        if (allAccounts.size() > 0){
-
-            CharSequence[] foundAccounts = allAccounts.toArray(new
-                    CharSequence[allAccounts.size()]);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("What do you want to link your account to?");
-            builder.setItems(foundAccounts, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // the user clicked on colors[which]
-                }
-            });
-            builder.show();
-        }
-    }
-
-
     public void saveUser(View view) {
     /* Logic:
      - If SAVE button is pressed
@@ -197,7 +156,6 @@ public class Act_UserCfg extends ActionBarActivity {
         }
     }
 
-
     public void clearUser(View view) {
     /* Logic:
      - If CLEAR button is pressed
@@ -230,8 +188,68 @@ public class Act_UserCfg extends ActionBarActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
-
     }
+
+    public void newUser() {
+
+        Context mContext = getApplicationContext();
+        List<String> foundAccounts = new ArrayList<>();
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        Pattern phonePattern = Patterns.PHONE;
+        Account[] accounts = AccountManager.get(mContext).getAccounts();
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                String possibleEmail = account.name;
+                if (!foundAccounts.contains( possibleEmail )) {
+                    foundAccounts.add(possibleEmail);
+                }
+            }
+            if (phonePattern.matcher(account.name).matches()) {
+                String possiblePhone = account.name;
+                if (!foundAccounts.contains( possiblePhone )) {
+                    foundAccounts.add(possiblePhone);
+                }
+            }
+        }
+        if (foundAccounts.size() > 0){
+            foundAccounts.add("Enter manually");
+            final CharSequence[] allAccounts = foundAccounts.toArray(new
+                    CharSequence[foundAccounts.size()]);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("What do you want to link your account to?");
+            builder.setItems(allAccounts, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+                    Pattern phonePattern = Patterns.PHONE;
+                    String Chosen = allAccounts[which].toString();
+                    if (emailPattern.matcher(Chosen).matches()) {
+                        email.setEnabled(true);
+                        email.setText(Chosen);
+                        phone.setText(" ");
+                        phone.setEnabled(false);
+                    } else if (phonePattern.matcher(Chosen).matches())
+                    {
+                        phone.setEnabled(true);
+                        phone.setText(Chosen);
+                        email.setText(" ");
+                        email.setEnabled(false);
+                    }
+                    else {
+                        email.setEnabled(true);
+                        phone.setEnabled(true);
+                        email.setText("");
+                        phone.setText("");
+                    }
+
+                }
+            });
+            builder.show();
+        }
+    }
+
+
 
     /* Check Functions */
 
