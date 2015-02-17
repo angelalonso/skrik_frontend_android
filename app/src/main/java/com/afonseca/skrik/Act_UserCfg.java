@@ -127,6 +127,7 @@ public class Act_UserCfg extends ActionBarActivity {
        - If data SHOWN (not stored! ) is OK:
          - Send to Control User to Save in Sharedprefs and Backend
          - TODO:Check answer
+         - TODO: If user clicks on phone, email is deleted and vice-versa
          - Go back to Main
        - If data SHOWN (not stored! ) is NOT OK:
          - Show what is missing, go back
