@@ -25,12 +25,13 @@ public class Funcs_UserCfg extends Activity {
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Name = "nameKey";
     public static final String Email = "emailKey";
+    public static final String Phone = "phoneKey";
     public static final String Uid = "uidKey";
     public static final String Regid = "regidKey";
     public static final String Status = "statusKey";
     public static final String Passwd = "PasswdKey";
 
-    public String userOK_Input(String username, String email, String uid, String regid, String passwd) {
+    public String userOK_Input(String username, String email, String phone, String uid, String regid, String passwd) {
 
         Boolean allOK = true;
         String result = "";
@@ -122,6 +123,12 @@ public class Funcs_UserCfg extends Activity {
         return sharedpreferences.getString(Email, "");
     }
 
+    public String getPhone(Context mContext) {
+
+        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        return sharedpreferences.getString(Phone, "");
+    }
+
     public String getUid(Context mContext) {
 
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
@@ -149,7 +156,7 @@ public class Funcs_UserCfg extends Activity {
         editor.commit();
     }
 
-        public String saveUserConfig(Context mContext, String username, String email, String uid, String regid, String passwd) {
+    public String saveUserConfig(Context mContext, String username, String email, String phone, String uid, String regid, String passwd) {
     /* Logic:
     *   - If Network is OK
     *     - If UID or REGID is empty TODO: REGID?? Also, maybe this control should go into the backend controller

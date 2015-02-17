@@ -35,6 +35,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     TextView name;
     TextView email;
+    TextView phone;
     TextView uid;
     TextView regid;
     TextView passwd;
@@ -52,6 +53,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
         name = (TextView) findViewById(R.id.name_input);
         email = (TextView) findViewById(R.id.email_input);
+        phone = (TextView) findViewById(R.id.phone_input);
         uid = (TextView) findViewById(R.id.uid_input);
         regid = (TextView) findViewById(R.id.regid_input);
         passwd = (TextView) findViewById(R.id.passwd_input);
@@ -61,46 +63,13 @@ public class Act_UserCfg extends ActionBarActivity {
 
         name.setText(funcsUserCfg.getUsername(mContext));
         email.setText(funcsUserCfg.getEmail(mContext));
+        phone.setText(funcsUserCfg.getPhone(mContext));
         uid.setText(funcsUserCfg.getUid(mContext));
         regid.setText(funcsUserCfg.getRegid(mContext));
 
-        List<String> emailAccounts = new ArrayList<String>();
-        List<String> phoneAccounts = new ArrayList<String>();
-        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
-        Pattern phonePattern = Patterns.PHONE;
-        Account[] accounts = AccountManager.get(mContext).getAccounts();
-        for (Account account : accounts) {
-            if (emailPattern.matcher(account.name).matches()) {
-                String possibleEmail = account.name;
-                if (!emailAccounts.contains( possibleEmail )) {
-                    emailAccounts.add(possibleEmail);
-                }
-            }
-            if (phonePattern.matcher(account.name).matches()) {
-                String possiblePhone = account.name;
-                if (!phoneAccounts.contains( possiblePhone )) {
-                    phoneAccounts.add(possiblePhone);
-                }
-            }
+        if (email.getText() == ""  && phone.getText() == "" ){
+            newUser();
         }
-        List<String> allAccounts = new ArrayList<String>(emailAccounts);
-        allAccounts.addAll(phoneAccounts);
-        if (allAccounts.size() > 0){
-
-            CharSequence[] foundAccounts = allAccounts.toArray(new
-                    CharSequence[allAccounts.size()]);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("What do you want to link your account to?");
-            builder.setItems(foundAccounts, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // the user clicked on colors[which]
-                }
-            });
-            builder.show();
-        }
-
     }
 
 
@@ -116,9 +85,13 @@ public class Act_UserCfg extends ActionBarActivity {
 
         name.setText(funcsUserCfg.getUsername(mContext));
         email.setText(funcsUserCfg.getEmail(mContext));
+        phone.setText(funcsUserCfg.getPhone(mContext));
         uid.setText(funcsUserCfg.getUid(mContext));
         regid.setText(funcsUserCfg.getRegid(mContext));
 
+        if (email.getText() == ""  && phone.getText() == "" ){
+            newUser();
+        }
     }
 
     /* General Behaviour Methods */
@@ -147,6 +120,48 @@ public class Act_UserCfg extends ActionBarActivity {
 
     /* Additional Actions' Methods */
 
+    public void newUser() {
+
+        Context mContext = getApplicationContext();
+        List<String> emailAccounts = new ArrayList<String>();
+        List<String> phoneAccounts = new ArrayList<String>();
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        Pattern phonePattern = Patterns.PHONE;
+        Account[] accounts = AccountManager.get(mContext).getAccounts();
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                String possibleEmail = account.name;
+                if (!emailAccounts.contains( possibleEmail )) {
+                    emailAccounts.add(possibleEmail);
+                }
+            }
+            if (phonePattern.matcher(account.name).matches()) {
+                String possiblePhone = account.name;
+                if (!phoneAccounts.contains( possiblePhone )) {
+                    phoneAccounts.add(possiblePhone);
+                }
+            }
+        }
+        List<String> allAccounts = new ArrayList<>(emailAccounts);
+        allAccounts.addAll(phoneAccounts);
+        if (allAccounts.size() > 0){
+
+            CharSequence[] foundAccounts = allAccounts.toArray(new
+                    CharSequence[allAccounts.size()]);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("What do you want to link your account to?");
+            builder.setItems(foundAccounts, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // the user clicked on colors[which]
+                }
+            });
+            builder.show();
+        }
+    }
+
+
     public void saveUser(View view) {
     /* Logic:
      - If SAVE button is pressed
@@ -159,6 +174,7 @@ public class Act_UserCfg extends ActionBarActivity {
     */
         String n  = name.getText().toString();
         String em  = email.getText().toString();
+        String ph = phone.getText().toString();
         String id  = uid.getText().toString();
         String rid  = regid.getText().toString();
         String pwd  = passwd.getText().toString();
@@ -172,9 +188,9 @@ public class Act_UserCfg extends ActionBarActivity {
         //        - check they are unique - DONE
         //        - Ask user for confirmation on which to use (if any)
 
-        String dataCheck = funcsUserCfg.userOK_Input(n, em, id, rid, pwd);
+        String dataCheck = funcsUserCfg.userOK_Input(n, em, ph, id, rid, pwd);
         if (dataCheck == "OK") {
-            String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, id, rid, pwd);
+            String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
             finish();
         } else {
             Toast.makeText(getApplicationContext(), dataCheck, Toast.LENGTH_LONG).show();
@@ -198,10 +214,12 @@ public class Act_UserCfg extends ActionBarActivity {
                         Context mContext = getApplicationContext();
                         name.setText("");
                         email.setText("");
+                        phone.setText("");
                         uid.setText("");
                         regid.setText("");
                         passwd.setText("");
                         funcsUserCfg.clearUser(mContext);
+                        newUser();
                     }
                 })
                 .setNegativeButton("Ups, NO!", new DialogInterface.OnClickListener() {
@@ -211,6 +229,7 @@ public class Act_UserCfg extends ActionBarActivity {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+
 
     }
 
