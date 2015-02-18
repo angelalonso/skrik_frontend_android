@@ -69,8 +69,6 @@ public class Funcs_UserCfg extends Activity {
 
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
-        Log.i("TESTING EMAIL second",sharedpreferences.getString(Email, ""));
-
         Boolean allOK = true;
         String result = "";
         ArrayList<String> errors = new ArrayList<>();
@@ -90,7 +88,6 @@ public class Funcs_UserCfg extends Activity {
         {
             allOK = false;
             errors.add("'VALID' Email");
-            Log.i("TESTING EMAIL third",sharedpreferences.getString(Email, ""));
         }
 
 
@@ -110,6 +107,33 @@ public class Funcs_UserCfg extends Activity {
         return result;
     }
 
+    public String userLinkedAccount_SharedPrefs(Context mContext) {
+
+        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+
+        String Result = "";
+
+        if (sharedpreferences.contains(Phone)
+                && sharedpreferences.getString(Phone, "") != "")
+        {
+            Result = Result + "Phone ";
+        }  else {Log.i("TESTING - No Phone found",sharedpreferences.getString(Phone, ""));}
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(sharedpreferences.getString(Email, ""));
+        if (sharedpreferences.contains(Email)
+                && sharedpreferences.getString(Email, "") != ""
+                && !matcher.matches())
+        {
+            Result = Result + "Email";
+        } else {Log.i("TESTING - No Email found",sharedpreferences.getString(Email, ""));}
+
+        if (Result.matches("")){
+            Result = "None";
+        }
+
+        return Result;
+    }
 
     public String getUsername(Context mContext) {
 

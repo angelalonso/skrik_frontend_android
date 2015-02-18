@@ -49,6 +49,8 @@ public class Act_UserCfg extends ActionBarActivity {
       - Initialize the textviews,
       - Add the data from Shared preferences
      */
+        Context mContext = getApplicationContext();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userconfig);
 
@@ -59,7 +61,6 @@ public class Act_UserCfg extends ActionBarActivity {
         regid = (TextView) findViewById(R.id.regid_input);
         passwd = (TextView) findViewById(R.id.passwd_input);
 
-        Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
         name.setText(funcsUserCfg.getUsername(mContext));
@@ -68,7 +69,7 @@ public class Act_UserCfg extends ActionBarActivity {
         uid.setText(funcsUserCfg.getUid(mContext));
         regid.setText(funcsUserCfg.getRegid(mContext));
 
-        if (email.getText() == ""  && phone.getText() == "" ){
+        if (funcsUserCfg.userLinkedAccount_SharedPrefs(mContext) == "None"){
             newUser();
         }
     }
