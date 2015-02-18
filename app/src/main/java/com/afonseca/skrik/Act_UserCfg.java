@@ -152,6 +152,8 @@ public class Act_UserCfg extends ActionBarActivity {
         String dataCheck = funcsUserCfg.userOK_Input(n, em, ph, id, rid, pwd);
         if (dataCheck == "OK") {
             String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
+            //TODO: Find out why I need TWO FINSHES here
+            finish();
             finish();
         } else {
             Toast.makeText(getApplicationContext(), dataCheck, Toast.LENGTH_LONG).show();
