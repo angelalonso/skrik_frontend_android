@@ -32,6 +32,46 @@ public class Funcs_UserCfg extends Activity {
     public static final String Status = "statusKey";
     public static final String Passwd = "PasswdKey";
 
+    public String userOK_onSave (String username, String email, String phone, String uid, String regid, String passwd) {
+
+        Boolean allOK = true;
+        String result = "";
+        ArrayList<String> errors = new ArrayList<>();
+
+        // Checking there is a USERNAME
+        if (username.matches(""))
+        {
+            allOK = false;
+            errors.add("username");
+        }
+
+        // Checking there is a valid e-Mail OR phone
+        // TODO: Check there is a valid phone (either this or the email is needed)
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        if (email.matches("")
+                || !matcher.matches())
+        {
+            Pattern PhonePattern = Patterns.PHONE;
+            if (!PhonePattern.matcher(phone).matches()) {
+                allOK = false;
+                errors.add("'VALID' Email or Phone");
+            }
+        }
+
+        if (allOK == true){
+            result = "OK";
+        } else {
+            result = "You need to provide: ";
+            for (String iterable_element : errors) {
+                result = result + iterable_element + " ";
+            }
+        }
+
+        return result;
+    }
+
     public String userOK_Input(String username, String email, String phone, String uid, String regid, String passwd) {
 
         Boolean allOK = true;
@@ -233,13 +273,9 @@ public class Funcs_UserCfg extends Activity {
         }
 
         if (serverSide.matches("OK")){
-            /* I BELIEVE I DONT NEED THIS
-            if (current_uid.matches("")) {
-                current_uid = backend.getnewID();
-                result = result + "UPDATE uid " + current_uid +"||";
+
                 // TODO: uid.setText(current_uid);
-            }
-            */
+
             if (current_uid.matches("")) {
                 current_uid = "99999999999999";
             }
@@ -261,6 +297,7 @@ public class Funcs_UserCfg extends Activity {
 
         editor.putString(Name, username);
         editor.putString(Email, email);
+        editor.putString(Phone, phone);
         editor.putString(Uid, current_uid);
         editor.putString(Regid, regid);
         editor.putString(Status, data_status);

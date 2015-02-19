@@ -98,7 +98,7 @@ public class Act_UserCfg extends ActionBarActivity {
         // Does it actually make sense?
         if (funcsUserCfg.userHasLinkedAccount(mContext) == "None"){
             offerAccount(mContext);
-        } else {Log.i("TESTING:   ",funcsUserCfg.userHasLinkedAccount(mContext));}
+        }
         name.setText(funcsUserCfg.getUsername(mContext));
         email.setText(funcsUserCfg.getEmail(mContext));
         phone.setText(funcsUserCfg.getPhone(mContext));
@@ -191,6 +191,7 @@ public class Act_UserCfg extends ActionBarActivity {
                         regid.setText("");
                         passwd.setText("");
                         funcsUserCfg.clearUser(mContext);
+                        String saveResult = funcsUserCfg.saveUserConfig(mContext, "", "", "", "", "", "");
                         loadUserData(mContext);
                     }
                 })
@@ -204,16 +205,6 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
     public void saveUser(View view) {
-    /* Logic:
-     - If SAVE button is pressed
-       - If data SHOWN (not stored! ) is OK:
-         - Send to Control User to Save in Sharedprefs and Backend
-         - TODO:Check answer
-         - TODO: If user clicks on phone, email is deleted(not just greyed) and vice-versa
-         - Go back to Main
-       - If data SHOWN (not stored! ) is NOT OK:
-         - Show what is missing, go back
-    */
         //Log.i("TESTING, Running", " saveUser");
 
         String n  = name.getText().toString();
@@ -225,14 +216,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
         Context mContext = getApplicationContext();
 
-        //If there is only one:
-        //        - Build list
-        //        - ask for confirmation
-        //If there are more:
-        //        - check they are unique
-        //        - Ask user for confirmation on which to use (if any)
-
-        String dataCheck = funcsUserCfg.userOK_Input(n, em, ph, id, rid, pwd);
+        String dataCheck = funcsUserCfg.userOK_onSave(n, em, ph, id, rid, pwd);
         if (dataCheck == "OK") {
             String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
             //TODO: Find out why I need TWO FINISHES here
