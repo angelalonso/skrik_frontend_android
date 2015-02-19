@@ -24,7 +24,6 @@ public class Act_UserCfg extends ActionBarActivity {
     Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
 
     String serverSide;
-
     private Toast toast;
     private long lastBackPressTime = 0;
 
@@ -35,14 +34,11 @@ public class Act_UserCfg extends ActionBarActivity {
     TextView regid;
     TextView passwd;
 
-    /* General Behaviour Methods */
+    /* LOADING Methods */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("TESTING, Running", " onCreate");
-
         Context mContext = getApplicationContext();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userconfig);
 
@@ -60,22 +56,18 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        Log.i("TESTING, Running", " onResume");
-
         super.onResume();
-
         Context mContext = getApplicationContext();
+
         serverSide = serverCheck(mContext);
         funcsUserCfg.checkSavedData(mContext);
         loadUserData(mContext);
     }
 
-    /* General Behaviour Methods */
+    /* onSOMETHING Methods */
 
     @Override
     public void onBackPressed() {
-        //Log.i("TESTING, Running", " onBackPressed");
-
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
             toast = Toast.makeText(this, "Press back again to close this app", Toast.LENGTH_SHORT);
             toast.show();
@@ -89,13 +81,11 @@ public class Act_UserCfg extends ActionBarActivity {
         }
     }
 
-    /* Additional Actions' Methods */
+    /* ACTION Methods */
 
-    ////////// NEW ONE
+
     public void loadUserData(Context mContext){
-        Log.i("TESTING, Running", " loadUserData");
-        // TODO: Check correct data AND linked account
-        // Does it actually make sense?
+
         if (funcsUserCfg.userHasLinkedAccount(mContext) == "None"){
             offerAccount(mContext);
         }
@@ -106,10 +96,7 @@ public class Act_UserCfg extends ActionBarActivity {
         regid.setText(funcsUserCfg.getRegid(mContext));
     }
 
-    /////////////// CHANGED ONE
     public void offerAccount(Context mContext) {
-
-        //Log.i("TESTING, Running", " offerAccount");
 
         List<String> foundAccounts = new ArrayList<>();
         Pattern emailPattern = Patterns.EMAIL_ADDRESS;
@@ -168,16 +155,7 @@ public class Act_UserCfg extends ActionBarActivity {
         }
     }
 
-
     public void clearUser(View view) {
-    /* Logic:
-     - If CLEAR button is pressed
-       - Ask for confirmation:
-         - If confirmed, clear Textviews AND Shared preferences
-         - If not confirmed, go back
-    */
-        //Log.i("TESTING, Running", " clearUser");
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to DELETE your USER DATA?")
                 .setCancelable(false)
@@ -205,8 +183,6 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
     public void saveUser(View view) {
-        //Log.i("TESTING, Running", " saveUser");
-
         String n  = name.getText().toString();
         String em  = email.getText().toString();
         String ph = phone.getText().toString();
@@ -227,16 +203,9 @@ public class Act_UserCfg extends ActionBarActivity {
         }
     }
 
-    /* Check Functions */
+    /* CHECK Methods */
 
     public String serverCheck(Context mContext) {
-    /* Logic:
-      - Pick the "Status Point" textview
-      - Depending on status, change its color
-      - Return status, for other functions to know it too.
-     */
-        //Log.i("TESTING, Running", " serverCheck");
-
         TextView server_tv = (TextView) findViewById(R.id.server_tv);
         String status = backend.testNetwork(mContext);
         switch(status) {
@@ -257,6 +226,6 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
 
-    /* "GOTO" Calls */
+    /* "GOTO" Methods */
 
 }

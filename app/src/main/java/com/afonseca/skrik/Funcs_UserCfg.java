@@ -11,13 +11,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by afonseca on 1/24/2015.
- *
- * TODO:
- * REALLY, REALLY Check the values of username and email before saving
- * REALLY, REALLY Check the values of userid and regid and handle that offline AND online
- *
+/** TODO:
+ * Check the values of userid and regid and handle that offline AND online
  */
 public class Funcs_UserCfg extends Activity {
 
@@ -39,20 +34,15 @@ public class Funcs_UserCfg extends Activity {
         ArrayList<String> errors = new ArrayList<>();
 
         // Checking there is a USERNAME
-        if (username.matches(""))
-        {
+        if (username.matches("")){
             allOK = false;
             errors.add("username");
         }
-
         // Checking there is a valid e-Mail OR phone
-        // TODO: Check there is a valid phone (either this or the email is needed)
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
-        if (email.matches("")
-                || !matcher.matches())
-        {
+        if (email.matches("") || !matcher.matches()) {
             Pattern PhonePattern = Patterns.PHONE;
             if (!PhonePattern.matcher(phone).matches()) {
                 allOK = false;
@@ -60,7 +50,7 @@ public class Funcs_UserCfg extends Activity {
             }
         }
 
-        if (allOK == true){
+        if (allOK) {
             result = "OK";
         } else {
             result = "You need to provide: ";
@@ -71,44 +61,6 @@ public class Funcs_UserCfg extends Activity {
 
         return result;
     }
-
-    public String userOK_Input(String username, String email, String phone, String uid, String regid, String passwd) {
-
-        Boolean allOK = true;
-        String result = "";
-        ArrayList<String> errors = new ArrayList<>();
-
-        // Checking there is a USERNAME
-        if (username.matches(""))
-        {
-            allOK = false;
-            errors.add("username");
-        }
-
-        // Checking there is a valid e-Mail
-        // TODO: Check there is a valid phone (either this or the email is needed)
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
-        if (email.matches("")
-                || !matcher.matches())
-        {
-            allOK = false;
-            errors.add("'VALID' Email");
-        }
-
-        if (allOK == true){
-            result = "OK";
-        } else {
-            result = "You need to provide: ";
-            for (String iterable_element : errors) {
-                result = result + iterable_element + " ";
-            }
-        }
-
-        return result;
-    }
-
 
     public String userOK_SharedPrefs(Context mContext) {
 
@@ -119,7 +71,7 @@ public class Funcs_UserCfg extends Activity {
         ArrayList<String> errors = new ArrayList<>();
 
         if (!sharedpreferences.contains(Name)
-                || sharedpreferences.getString(Name, "") == "")
+                || sharedpreferences.getString(Name, "").equals(""))
         {
             allOK = false;
             errors.add("username");
@@ -128,7 +80,7 @@ public class Funcs_UserCfg extends Activity {
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(sharedpreferences.getString(Email, ""));
         if (!sharedpreferences.contains(Email)
-                || sharedpreferences.getString(Email, "") == ""
+                || sharedpreferences.getString(Email, "").equals("")
                 || !matcher.matches())
         {
             allOK = false;
@@ -136,18 +88,14 @@ public class Funcs_UserCfg extends Activity {
         }
 
 
-        if (allOK == true){
+        if (allOK){
             result = "OK";
-            Log.i(" ---  OK", sharedpreferences.getString(Name, "") + "//" + sharedpreferences.getString(Email, ""));
         } else {
             result = "You need to provide: ";
             for (String iterable_element : errors) {
                 result = result + iterable_element + " ";
             }
-            Log.i(" ---  ERROR", result + "//" +sharedpreferences.getString(Name, "") + "//" + sharedpreferences.getString(Email, ""));
         }
-
-        Log.i(" ---  ", sharedpreferences.getString(Name, "") + "//" + sharedpreferences.getString(Email, ""));
 
         return result;
     }
@@ -162,18 +110,15 @@ public class Funcs_UserCfg extends Activity {
 
         String phone_prev = sharedpreferences.getString(Phone, "");
         String email_prev = sharedpreferences.getString(Email, "");
-        if (!phone_prev.matches("") && phonePattern.matcher(phone_prev).matches())
-        {
+        if (!phone_prev.matches("") && phonePattern.matcher(phone_prev).matches()) {
             Result = Result + "Phone" + phone_prev + " ";
         }
-        if (!email_prev.matches("") && emailPattern.matcher(email_prev).matches())
-        {
+        if (!email_prev.matches("") && emailPattern.matcher(email_prev).matches()) {
             Result = Result + "Email" + email_prev;
         }
-        if (Result.matches("")){
+        if (Result.matches("")) {
             Result = "None";
         }
-        //Log.i("TESTING, - result: ", Result);
         return Result;
     }
 
@@ -194,7 +139,8 @@ public class Funcs_UserCfg extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Email, email);
-        editor.commit();
+        //editor.commit();
+        editor.apply();
     }
 
     public String getPhone(Context mContext) {
@@ -208,7 +154,8 @@ public class Funcs_UserCfg extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Phone, phone);
-        editor.commit();
+        //editor.commit();
+        editor.apply();
     }
 
     public String getUid(Context mContext) {
@@ -234,30 +181,26 @@ public class Funcs_UserCfg extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Status, data_status);
+        //editor.commit();
+        editor.apply();
+    }
 
-        editor.commit();
+    public void clearUser(Context mContext) {
+
+        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        editor.remove(Name);
+        editor.remove(Email);
+        editor.remove(Uid);
+        editor.remove(Regid);
+        editor.remove(Passwd);
+        //editor.commit();
+        editor.apply();
     }
 
     public String saveUserConfig(Context mContext, String username, String email, String phone, String uid, String regid, String passwd) {
-    /* Logic:
-    *   - If Network is OK
-    *     - If UID or REGID is empty TODO: REGID?? Also, maybe this control should go into the backend controller
-    *       - Give Data to Server, ask for UID and REGID
-    *         - (serverside) if the email exists, existing UID is given back. TODO: use a password/email auth/whatever here. *
-    *     - If data is OK
-    *       - Send
-    *       - Save into sharedpreferences
-    *       - Go back to main
-    *   - If Network is NOT OK
-    *     - If UID or REGID is empty TODO: Same as above with REGID
-    *       - Build temporary values (leave it empty, maybe?) TODO: Same as above, maybe done in the backend controller
-    *     - If data is OK
-    *       - Mark data as NOT synchronized
-    *       - Save into sharedpreferences
-    *       - Go back to main
-    *     - Save into sharedpreferences
-    *     - Return result
-    */
+
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
 
@@ -272,15 +215,13 @@ public class Funcs_UserCfg extends Activity {
             result = result + "UPDATE regid 4444||";
         }
 
-        if (serverSide.matches("OK")){
-
-                // TODO: uid.setText(current_uid);
-
+        if (serverSide.matches("OK")) {
+            // TODO: uid.setText(current_uid);
             if (current_uid.matches("")) {
                 current_uid = "99999999999999";
             }
             String saveResult = backend.saveUserToBackend(username, email, current_uid, regid);
-            if (saveResult.contains("Email found, NEW ID = ")){
+            if (saveResult.contains("Email found, NEW ID = ")) {
                 current_uid = saveResult.replace("Email found, NEW ID = ","");
             } else if (saveResult.contains("NEW ID = ")){
                 current_uid = saveResult.replace("NEW ID = ","");
@@ -302,8 +243,8 @@ public class Funcs_UserCfg extends Activity {
         editor.putString(Regid, regid);
         editor.putString(Status, data_status);
         editor.putString(Passwd, passwd);
-
-        editor.commit();
+        //editor.commit();
+        editor.apply();
 
         if (result.contains("ERROR")) {
             return result;
@@ -311,21 +252,6 @@ public class Funcs_UserCfg extends Activity {
             result = result + "OK";
             return result;
         }
-    }
-
-
-    public void clearUser(Context mContext) {
-
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-        editor.remove(Name);
-        editor.remove(Email);
-        editor.remove(Uid);
-        editor.remove(Regid);
-        editor.remove(Passwd);
-        editor.commit();
-
     }
 
     //JUST FOR TESTING WHAT IS ON THE SHAREDPREFS
