@@ -5,7 +5,6 @@ import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
 
 public class Act_UserCfg extends ActionBarActivity {
 
@@ -41,10 +39,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    /* Logic:
-      - Add/Update the data from Shared preferences
-     */
-    //Log.i("TESTING, Running", " onCreate");
+        Log.i("TESTING, Running", " onCreate");
 
         Context mContext = getApplicationContext();
 
@@ -65,10 +60,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-    /* Logic:
-      - Add/Update the data from Shared preferences
-     */
-        //Log.i("TESTING, Running", " onResume");
+        Log.i("TESTING, Running", " onResume");
 
         super.onResume();
 
@@ -82,13 +74,6 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-    /* Logic:
-      - If back button is pressed
-        - Show Toast, ask for a second click to exit
-        - If another one happens
-          - Send app to background
-        - Otherwise, nothing happens
-    */
         //Log.i("TESTING, Running", " onBackPressed");
 
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
@@ -108,19 +93,17 @@ public class Act_UserCfg extends ActionBarActivity {
 
     ////////// NEW ONE
     public void loadUserData(Context mContext){
-
-        //Log.i("TESTING, Running", " loadUserData");
-
+        Log.i("TESTING, Running", " loadUserData");
+        // TODO: Check correct data AND linked account
+        // Does it actually make sense?
+        if (funcsUserCfg.userHasLinkedAccount(mContext) == "None"){
+            offerAccount(mContext);
+        } else {Log.i("TESTING:   ",funcsUserCfg.userHasLinkedAccount(mContext));}
         name.setText(funcsUserCfg.getUsername(mContext));
         email.setText(funcsUserCfg.getEmail(mContext));
         phone.setText(funcsUserCfg.getPhone(mContext));
         uid.setText(funcsUserCfg.getUid(mContext));
         regid.setText(funcsUserCfg.getRegid(mContext));
-        // TODO: Check correct data AND linked account
-        // Does it actually make sense?
-        if (funcsUserCfg.userHasLinkedAccount(mContext) == "None"){
-            offerAccount(mContext);
-        }
     }
 
     /////////////// CHANGED ONE
@@ -179,9 +162,9 @@ public class Act_UserCfg extends ActionBarActivity {
 
                 }
             });
+            builder.show();
             funcsUserCfg.setPhone(mContext, phone.getText().toString());
             funcsUserCfg.setEmail(mContext, email.getText().toString());
-            builder.show();
         }
     }
 
@@ -200,7 +183,6 @@ public class Act_UserCfg extends ActionBarActivity {
                 .setCancelable(false)
                 .setPositiveButton("YES, do it!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
                         Context mContext = getApplicationContext();
                         name.setText("");
                         email.setText("");
@@ -219,7 +201,6 @@ public class Act_UserCfg extends ActionBarActivity {
                 });
         AlertDialog alert = builder.create();
         alert.show();
-
     }
 
     public void saveUser(View view) {

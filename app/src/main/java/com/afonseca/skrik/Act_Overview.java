@@ -72,7 +72,10 @@ public class Act_Overview extends ActionBarActivity {
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
 
+        String username = funcsUserCfg.getUsername(context);
         String userid = funcsUserCfg.getUid(context);
+
+        Username_tv.setText(username);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, because the server is not there"); }

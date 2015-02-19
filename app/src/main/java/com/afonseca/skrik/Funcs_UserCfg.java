@@ -115,18 +115,20 @@ public class Funcs_UserCfg extends Activity {
     public String userHasLinkedAccount(Context mContext) {
 
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-
         String Result = "";
 
-        if (sharedpreferences.contains(Phone)
-                && sharedpreferences.getString(Phone, "") != "")
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        Pattern phonePattern = Patterns.PHONE;
+
+        String phone_prev = sharedpreferences.getString(Phone, "");
+        String email_prev = sharedpreferences.getString(Email, "");
+        if (!phone_prev.matches("") && phonePattern.matcher(phone_prev).matches())
         {
-            Result = Result + "Phone ";
+            Result = Result + "Phone" + phone_prev + " ";
         }
-        if (sharedpreferences.contains(Email)
-                && sharedpreferences.getString(Email, "") != "")
+        if (!email_prev.matches("") && emailPattern.matcher(email_prev).matches())
         {
-            Result = Result + "Email";
+            Result = Result + "Email" + email_prev;
         }
         if (Result.matches("")){
             Result = "None";
