@@ -107,7 +107,7 @@ public class Funcs_UserCfg extends Activity {
         return result;
     }
 
-    public String userLinkedAccount_SharedPrefs(Context mContext) {
+    public String userHasLinkedAccount(Context mContext) {
 
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
@@ -147,10 +147,26 @@ public class Funcs_UserCfg extends Activity {
         return sharedpreferences.getString(Email, "");
     }
 
+    public void setEmail(Context mContext, String email) {
+
+        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Email, email);
+        editor.commit();
+    }
+
     public String getPhone(Context mContext) {
 
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Phone, "");
+    }
+
+    public void setPhone(Context mContext, String phone) {
+
+        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Phone, phone);
+        editor.commit();
     }
 
     public String getUid(Context mContext) {
