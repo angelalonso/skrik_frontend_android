@@ -41,7 +41,10 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Log.i("TESTING, Running", " onCreate");
+    /* Logic:
+      - Add/Update the data from Shared preferences
+     */
+    //Log.i("TESTING, Running", " onCreate");
 
         Context mContext = getApplicationContext();
 
@@ -63,7 +66,7 @@ public class Act_UserCfg extends ActionBarActivity {
     @Override
     protected void onResume() {
     /* Logic:
-      - Add the data from Shared preferences
+      - Add/Update the data from Shared preferences
      */
         //Log.i("TESTING, Running", " onResume");
 
@@ -72,7 +75,6 @@ public class Act_UserCfg extends ActionBarActivity {
         Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
         funcsUserCfg.checkSavedData(mContext);
-
         loadUserData(mContext);
     }
 
@@ -226,7 +228,7 @@ public class Act_UserCfg extends ActionBarActivity {
        - If data SHOWN (not stored! ) is OK:
          - Send to Control User to Save in Sharedprefs and Backend
          - TODO:Check answer
-         - TODO: If user clicks on phone, email is deleted and vice-versa
+         - TODO: If user clicks on phone, email is deleted(not just greyed) and vice-versa
          - Go back to Main
        - If data SHOWN (not stored! ) is NOT OK:
          - Show what is missing, go back
@@ -242,11 +244,11 @@ public class Act_UserCfg extends ActionBarActivity {
 
         Context mContext = getApplicationContext();
 
-        //TODO: If there is only one:
+        //If there is only one:
         //        - Build list
         //        - ask for confirmation
-        //TODO: If there are more:
-        //        - check they are unique - DONE
+        //If there are more:
+        //        - check they are unique
         //        - Ask user for confirmation on which to use (if any)
 
         String dataCheck = funcsUserCfg.userOK_Input(n, em, ph, id, rid, pwd);

@@ -38,11 +38,15 @@ public class Funcs_UserCfg extends Activity {
         String result = "";
         ArrayList<String> errors = new ArrayList<>();
 
+        // Checking there is a USERNAME
         if (username.matches(""))
         {
             allOK = false;
             errors.add("username");
         }
+
+        // Checking there is a valid e-Mail
+        // TODO: Check there is a valid phone (either this or the email is needed)
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
