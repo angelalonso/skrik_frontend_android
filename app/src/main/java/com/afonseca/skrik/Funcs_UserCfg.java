@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -117,21 +118,16 @@ public class Funcs_UserCfg extends Activity {
                 && sharedpreferences.getString(Phone, "") != "")
         {
             Result = Result + "Phone ";
-        }  else {Log.i("TESTING - No Phone found",sharedpreferences.getString(Phone, ""));}
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(sharedpreferences.getString(Email, ""));
+        }
         if (sharedpreferences.contains(Email)
-                && sharedpreferences.getString(Email, "") != ""
-                && !matcher.matches())
+                && sharedpreferences.getString(Email, "") != "")
         {
             Result = Result + "Email";
-        } else {Log.i("TESTING - No Email found",sharedpreferences.getString(Email, ""));}
-
+        }
         if (Result.matches("")){
             Result = "None";
         }
-
+        //Log.i("TESTING, - result: ", Result);
         return Result;
     }
 
@@ -287,5 +283,14 @@ public class Funcs_UserCfg extends Activity {
         editor.remove(Passwd);
         editor.commit();
 
+    }
+
+    //JUST FOR TESTING WHAT IS ON THE SHAREDPREFS
+    public void checkSavedData(Context mContext){
+        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        String phone = sharedpreferences.getString(Phone, "");
+        String email = sharedpreferences.getString(Email, "");
+        Log.i("TESTING, DATA-phone:",phone);
+        Log.i("TESTING, DATA-email:",email);
     }
 }

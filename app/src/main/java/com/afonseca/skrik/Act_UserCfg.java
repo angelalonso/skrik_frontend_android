@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("TESTING, Running", " onCreate");
+        //Log.i("TESTING, Running", " onCreate");
 
         Context mContext = getApplicationContext();
 
@@ -55,7 +56,7 @@ public class Act_UserCfg extends ActionBarActivity {
         passwd = (TextView) findViewById(R.id.passwd_input);
 
         serverSide = serverCheck(mContext);
-
+        funcsUserCfg.checkSavedData(mContext);
         loadUserData(mContext);
     }
 
@@ -64,12 +65,13 @@ public class Act_UserCfg extends ActionBarActivity {
     /* Logic:
       - Add the data from Shared preferences
      */
-        Log.i("TESTING, Running", " onResume");
+        //Log.i("TESTING, Running", " onResume");
 
         super.onResume();
 
         Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
+        funcsUserCfg.checkSavedData(mContext);
 
         loadUserData(mContext);
     }
@@ -85,7 +87,7 @@ public class Act_UserCfg extends ActionBarActivity {
           - Send app to background
         - Otherwise, nothing happens
     */
-        Log.i("TESTING, Running", " onBackPressed");
+        //Log.i("TESTING, Running", " onBackPressed");
 
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
             toast = Toast.makeText(this, "Press back again to close this app", Toast.LENGTH_SHORT);
@@ -105,7 +107,7 @@ public class Act_UserCfg extends ActionBarActivity {
     ////////// NEW ONE
     public void loadUserData(Context mContext){
 
-        Log.i("TESTING, Running", " loadUserData");
+        //Log.i("TESTING, Running", " loadUserData");
 
         name.setText(funcsUserCfg.getUsername(mContext));
         email.setText(funcsUserCfg.getEmail(mContext));
@@ -122,7 +124,7 @@ public class Act_UserCfg extends ActionBarActivity {
     /////////////// CHANGED ONE
     public void offerAccount(Context mContext) {
 
-        Log.i("TESTING, Running", " offerAccount");
+        //Log.i("TESTING, Running", " offerAccount");
 
         List<String> foundAccounts = new ArrayList<>();
         Pattern emailPattern = Patterns.EMAIL_ADDRESS;
@@ -146,7 +148,6 @@ public class Act_UserCfg extends ActionBarActivity {
             foundAccounts.add("Enter manually");
             final CharSequence[] allAccounts = foundAccounts.toArray(new
                     CharSequence[foundAccounts.size()]);
-            final String accountType = "";
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("What do you want to link your account to?");
             builder.setItems(allAccounts, new DialogInterface.OnClickListener() {
@@ -166,7 +167,6 @@ public class Act_UserCfg extends ActionBarActivity {
                         phone.setText(Chosen);
                         email.setText(" ");
                         email.setEnabled(false);
-
                     }
                     else {
                         email.setEnabled(true);
@@ -191,7 +191,7 @@ public class Act_UserCfg extends ActionBarActivity {
          - If confirmed, clear Textviews AND Shared preferences
          - If not confirmed, go back
     */
-        Log.i("TESTING, Running", " clearUser");
+        //Log.i("TESTING, Running", " clearUser");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to DELETE your USER DATA?")
@@ -207,7 +207,7 @@ public class Act_UserCfg extends ActionBarActivity {
                         regid.setText("");
                         passwd.setText("");
                         funcsUserCfg.clearUser(mContext);
-                        //newUser();
+                        loadUserData(mContext);
                     }
                 })
                 .setNegativeButton("Ups, NO!", new DialogInterface.OnClickListener() {
@@ -231,7 +231,7 @@ public class Act_UserCfg extends ActionBarActivity {
        - If data SHOWN (not stored! ) is NOT OK:
          - Show what is missing, go back
     */
-        Log.i("TESTING, Running", " saveUser");
+        //Log.i("TESTING, Running", " saveUser");
 
         String n  = name.getText().toString();
         String em  = email.getText().toString();
@@ -268,7 +268,7 @@ public class Act_UserCfg extends ActionBarActivity {
       - Depending on status, change its color
       - Return status, for other functions to know it too.
      */
-        Log.i("TESTING, Running", " serverCheck");
+        //Log.i("TESTING, Running", " serverCheck");
 
         TextView server_tv = (TextView) findViewById(R.id.server_tv);
         String status = backend.testNetwork(mContext);
@@ -288,6 +288,7 @@ public class Act_UserCfg extends ActionBarActivity {
         }
         return status;
     }
+
 
     /* "GOTO" Calls */
 
