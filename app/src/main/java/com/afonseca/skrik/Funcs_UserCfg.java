@@ -220,7 +220,7 @@ public class Funcs_UserCfg extends Activity {
             if (current_uid.matches("")) {
                 current_uid = "99999999999999";
             }
-            String saveResult = backend.saveUserToBackend(username, email, current_uid, regid);
+            String saveResult = backend.saveUserToBackend(username, email, phone, current_uid, regid);
             if (saveResult.contains("Email found, NEW ID = ")) {
                 current_uid = saveResult.replace("Email found, NEW ID = ","");
             } else if (saveResult.contains("NEW ID = ")){
