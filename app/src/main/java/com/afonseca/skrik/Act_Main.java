@@ -18,13 +18,6 @@ public class Act_Main extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    /* Logic:
-     - User data local is OK?
-       - Goto News
-     - No User data local?
-       - Goto User config
-
-    */
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_skrik);
@@ -41,7 +34,6 @@ public class Act_Main extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-    /* Same Logic as for onCreate */
         super.onResume();
         setContentView(R.layout.activity_skrik);
 

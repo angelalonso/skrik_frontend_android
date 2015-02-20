@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.Patterns;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -30,7 +29,7 @@ public class Funcs_UserCfg extends Activity {
     public String userOK_onSave (String username, String email, String phone, String uid, String regid, String passwd) {
 
         Boolean allOK = true;
-        String result = "";
+        String result;
         ArrayList<String> errors = new ArrayList<>();
 
         // Checking there is a USERNAME
@@ -67,7 +66,7 @@ public class Funcs_UserCfg extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
         Boolean allOK = true;
-        String result = "";
+        String result;
         ArrayList<String> errors = new ArrayList<>();
 
         if (!sharedpreferences.contains(Name)

@@ -14,9 +14,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-/**
- * This Activity should show the News for the configured user
- */
+
 public class Act_Overview extends ActionBarActivity {
 
     /* Declarations */

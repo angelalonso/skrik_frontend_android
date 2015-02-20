@@ -9,15 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-/**
- * Created by afonseca on 2/3/2015.
- */
+
 public class Act_Channel extends ActionBarActivity {
 
     /* Declarations */

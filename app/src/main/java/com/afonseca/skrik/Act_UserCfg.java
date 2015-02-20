@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
@@ -86,7 +85,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     public void loadUserData(Context mContext){
 
-        if (funcsUserCfg.userHasLinkedAccount(mContext) == "None"){
+        if (funcsUserCfg.userHasLinkedAccount(mContext).equals("None")){
             offerAccount(mContext);
         }
         name.setText(funcsUserCfg.getUsername(mContext));
@@ -193,7 +192,7 @@ public class Act_UserCfg extends ActionBarActivity {
         Context mContext = getApplicationContext();
 
         String dataCheck = funcsUserCfg.userOK_onSave(n, em, ph, id, rid, pwd);
-        if (dataCheck == "OK") {
+        if (dataCheck.equals("OK")) {
             String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
             //TODO: Find out why I need TWO FINISHES here
             finish();
