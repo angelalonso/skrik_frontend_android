@@ -3,14 +3,18 @@ package com.afonseca.skrik;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 
 
 public class Act_SearchUser extends ActionBarActivity {
 
     EditText name2Search;
+    ListView userList_lv;
     Ctrl_Backend backend = new Ctrl_Backend();
 
     /* General Behaviour Methods */
@@ -21,6 +25,7 @@ public class Act_SearchUser extends ActionBarActivity {
         setContentView(R.layout.activity_searchuser);
 
         name2Search = (EditText) findViewById(R.id.search_et);
+        userList_lv = (ListView) findViewById(R.id.userlist_lv);
     }
 
     public void updateUserList(View view) {
@@ -29,10 +34,22 @@ public class Act_SearchUser extends ActionBarActivity {
     }
 
     private void showUserList(String user2search) {
-        ArrayList<Data_OverviewItems> contactList = new ArrayList<>();
-        contactList.clear();
+        ArrayList<Data_UserListItems> userList = new ArrayList<>();
+        userList.clear();
 
-        String userlist = backend.searchUser(user2search);
+        ArrayList<String> resultList = backend.searchUser(user2search);
+
+        for (int i=0; i < resultList.size(); i++) {
+            Data_UserListItems userItem = new Data_UserListItems();
+            userItem.setUsername(resultList.get(i).toString());
+            Log.i("TESTING - List view : ",resultList.get(i).toString());
+            userItem.setStatus("Connected");
+            userList.add(userItem);
+        }
+
+        Ctrl_UserSearchListAdapter userlistAdapter = new Ctrl_UserSearchListAdapter(
+                Act_SearchUser.this, userList);
+        userList_lv.setAdapter(userlistAdapter);
 
     }
 }

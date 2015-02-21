@@ -203,8 +203,42 @@ public class Ctrl_Backend {
         return output;
     }
 
-    public String searchUser(String user2Search){
-        String result = "";
+    public ArrayList<String> searchUser(String word2Search){
+        ArrayList<String> result = new ArrayList<String>();
+        String output = null;
+        if (!word2Search.matches("")) {
+            String url_searchuser = URL + "/searchusers/" + word2Search + "/";
+            try {
+                output = new Tool_AsyncTask().execute(url_searchuser).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        /*  Work on the result */
+            ArrayList<String> stringArray = new ArrayList<String>();
+            if (output != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(output);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        stringArray.add(jsonArray.getString(i));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (String s : stringArray) {
+                try {
+                    JSONArray jsonLine = new JSONArray(s);
+                    result.add(jsonLine.getString(0));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        for (int i=0; i < result.size(); i++) {
+            Log.i("TESTING - user found: ", result.get(i).toString());
+        }
         return result;
     }
 }
