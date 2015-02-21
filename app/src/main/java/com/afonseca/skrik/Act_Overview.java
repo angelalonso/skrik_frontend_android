@@ -36,7 +36,7 @@ public class Act_Overview extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        setContentView(R.layout.activity_overview);
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 
@@ -85,7 +85,7 @@ public class Act_Overview extends ActionBarActivity {
     /* Additional Actions' Methods */
 
 
-    public void updateNews(View view) {
+    public void updateOverview(View view) {
         Context context = getApplicationContext();
         String userid = funcsUserCfg.getUid(context);
         showList(userid);
@@ -175,6 +175,13 @@ public class Act_Overview extends ActionBarActivity {
     public void gotoUserConfig(View view) {
         /** Called when the user clicks the Config button */
         Intent intent = new Intent(this, Act_UserCfg.class);
+        startActivity(intent);
+    }
+
+
+    public void gotoSearchUser(View view) {
+        /** Called when the user clicks the Config button */
+        Intent intent = new Intent(this, Act_SearchUser.class);
         startActivity(intent);
     }
 

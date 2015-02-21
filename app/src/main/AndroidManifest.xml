@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".Funcs_Overview" >
         </activity>
+        <activity android:name=".Act_SearchUser" >
+        </activity>
         <activity android:name=".Act_Channel" >
         </activity>
     </application>

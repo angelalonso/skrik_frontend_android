@@ -51,20 +51,33 @@
             android:layout_alignParentEnd="true" />
 
 
-       <Button
+        <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="update"
             android:id="@+id/update_btn"
             android:textColor="#ffefefef"
-            android:onClick="updateNews"
+            android:onClick="updateOverview"
             android:layout_gravity="right|top"
-           android:layout_toLeftOf="@+id/cfg_btn"
+            android:layout_toLeftOf="@+id/cfg_btn"
             android:layout_toStartOf="@+id/cfg_btn"
-           android:layout_alignParentTop="true"
-           android:layout_alignParentBottom="true" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New"
+            android:id="@+id/search_btn"
+            android:textColor="#ffefefef"
+            android:onClick="gotoSearchUser"
+            android:layout_gravity="right|top"
+            android:layout_toLeftOf="@+id/update_btn"
+            android:layout_toStartOf="@+id/update_btn"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true" />
 
     </RelativeLayout>
 

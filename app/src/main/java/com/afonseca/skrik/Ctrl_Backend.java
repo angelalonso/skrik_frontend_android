@@ -202,4 +202,9 @@ public class Ctrl_Backend {
         }
         return output;
     }
+
+    public String searchUser(String user2Search){
+        String result = "";
+        return result;
+    }
 }

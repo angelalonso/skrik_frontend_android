@@ -34,7 +34,7 @@ public class Act_Channel extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_channel);
 
         newsSQLHandler = new Ctrl_NewsDbHandler(this);
         Context context = getApplicationContext();
