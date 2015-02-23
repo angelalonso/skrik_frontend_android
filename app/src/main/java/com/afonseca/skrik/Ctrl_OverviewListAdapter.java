@@ -57,7 +57,7 @@ public class Ctrl_OverviewListAdapter extends BaseAdapter {
         NrMsgs_tv.setText(contactListItems.getNrOfMsgs());
         TextView Userid_tv = (TextView) convertView.findViewById(R.id.id_tv);
         Userid_tv.setText(contactListItems.getUserid());
-        TextView Username_tv = (TextView) convertView.findViewById(R.id.username_tv);
+        TextView Username_tv = (TextView) convertView.findViewById(R.id.username_search_tv);
         Username_tv.setText(contactListItems.getUsername());
         TextView News_tv = (TextView) convertView.findViewById(R.id.news_tv);
         News_tv.setText(contactListItems.getNews());

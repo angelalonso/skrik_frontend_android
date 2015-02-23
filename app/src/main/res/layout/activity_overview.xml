@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/username_tv"
+            android:id="@+id/username_search_tv"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#ffefefef"

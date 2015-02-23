@@ -52,7 +52,7 @@ public class Act_Overview extends ActionBarActivity {
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there"); }
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
-        Username_tv = (TextView) findViewById(R.id.username_tv);
+        Username_tv = (TextView) findViewById(R.id.username_search_tv);
 
 
         Username_tv.setText(username);
@@ -160,7 +160,7 @@ public class Act_Overview extends ActionBarActivity {
         TextView userid_tv = (TextView) view.findViewById(R.id.id_tv);
         String userid_other = userid_tv.getText().toString();
         String userid_me = funcsUserCfg.getUid(mContext);
-        TextView username_tv = (TextView) view.findViewById(R.id.username_tv);
+        TextView username_tv = (TextView) view.findViewById(R.id.username_search_tv);
         String username = username_tv.getText().toString();
         Intent intent = new Intent(this, Act_Channel.class);
         Bundle b = new Bundle();

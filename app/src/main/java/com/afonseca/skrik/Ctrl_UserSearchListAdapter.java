@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class Ctrl_UserSearchListAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<Data_UserListItems> userList;
+    ArrayList<Data_UserSearchListItems> userList;
 
-    public Ctrl_UserSearchListAdapter(Context context, ArrayList<Data_UserListItems> list) {
+    public Ctrl_UserSearchListAdapter(Context context, ArrayList<Data_UserSearchListItems> list) {
 
         this.context = context;
         userList = list;
@@ -44,7 +44,7 @@ public class Ctrl_UserSearchListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup arg2) {
-        Data_UserListItems channelItems = userList.get(position);
+        Data_UserSearchListItems channelItems = userList.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context
@@ -53,12 +53,15 @@ public class Ctrl_UserSearchListAdapter extends BaseAdapter {
 
         }
 
-        TextView Username_tv = (TextView) convertView.findViewById(R.id.username_tv);
+        TextView Username_tv = (TextView) convertView.findViewById(R.id.username_search_tv);
         Username_tv.setText(channelItems.getUsername());
-        TextView Status_tv = (TextView) convertView.findViewById(R.id.status_tv);
+        TextView UserID_tv = (TextView) convertView.findViewById(R.id.userid_search_tv);
+        UserID_tv.setText(channelItems.getUserID());
+        TextView Status_tv = (TextView) convertView.findViewById(R.id.status_search_tv);
         Status_tv.setText(channelItems.getStatus());
 
 
         return convertView;
     }
+
 }

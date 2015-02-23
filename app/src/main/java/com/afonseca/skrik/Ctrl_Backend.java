@@ -92,7 +92,7 @@ public class Ctrl_Backend {
     public String saveUserToBackend(String username, String email, String phone, String userid, String regid) {
 
         /*
-        * Throw a message if the email is already in use (maybe get back the data?
+        * Throw a message if the email is already in use (maybe get back the data? WELL...
         * */
         String output = null;
         String url_saveuser = "";
@@ -203,8 +203,8 @@ public class Ctrl_Backend {
         return output;
     }
 
-    public ArrayList<String> searchUser(String word2Search){
-        ArrayList<String> result = new ArrayList<String>();
+    public ArrayList<Data_UserSearchListItems> searchUser(String word2Search){
+        ArrayList<Data_UserSearchListItems> result = new ArrayList<Data_UserSearchListItems>();
         String output = null;
         if (!word2Search.matches("")) {
             String url_searchuser = URL + "/searchusers/" + word2Search + "/";
@@ -230,7 +230,12 @@ public class Ctrl_Backend {
             for (String s : stringArray) {
                 try {
                     JSONArray jsonLine = new JSONArray(s);
-                    result.add(jsonLine.getString(0));
+                    Data_UserSearchListItems item = new Data_UserSearchListItems();
+                    item.setUsername(jsonLine.getString(0));
+                    item.setUserID(jsonLine.getString(1));
+                    item.setStatus(jsonLine.getString(2));
+                    item.setOrder(Integer.parseInt(jsonLine.getString(3)));
+                    result.add(item);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

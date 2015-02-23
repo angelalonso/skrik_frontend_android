@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:onClick="addChannel"
+    android:onClick="gotoChannel"
     android:weightSum="1">
 
     <RelativeLayout
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/username_tv"
+                android:id="@+id/username_search_tv"
                 android:layout_width="367dp"
                 android:layout_height="49dp"
                 android:layout_marginLeft="10dp"
@@ -26,7 +26,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/status_tv"
+                android:id="@+id/status_search_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="status"
@@ -35,9 +35,19 @@
                 android:layout_gravity="right"
                 android:textSize="10dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/username_tv"
-                android:layout_alignEnd="@+id/username_tv"
+                android:layout_alignRight="@+id/username_search_tv"
+                android:layout_alignEnd="@+id/username_search_tv"
                 android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="User ID"
+                android:id="@+id/userid_search_tv"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/status_search_tv"
+                android:layout_alignEnd="@+id/status_search_tv" />
 
         </RelativeLayout>
 

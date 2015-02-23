@@ -45,7 +45,7 @@ public class Act_Channel extends ActionBarActivity {
         me_userid = b.getString("userid_me");
         username = b.getString("username");
         ChatList_lv = (ListView) findViewById(R.id.chatlist_lv);
-        Username_tv = (TextView) findViewById(R.id.username_tv);
+        Username_tv = (TextView) findViewById(R.id.username_search_tv);
         Username_tv.setText(username);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, me_userid); }

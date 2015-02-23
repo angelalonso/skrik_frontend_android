@@ -3,9 +3,11 @@ package com.afonseca.skrik;
 /**
  * Created by aaf on 2/5/15.
  */
-public class Data_UserListItems {
+public class Data_UserSearchListItems {
 
     String username;
+    String userid;
+    Integer order;
     String status;
 
 
@@ -16,6 +18,22 @@ public class Data_UserListItems {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUserID() {
+        return userid;
+    }
+
+    public void setUserID(String userid) {
+        this.userid = userid;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     public String getStatus() {

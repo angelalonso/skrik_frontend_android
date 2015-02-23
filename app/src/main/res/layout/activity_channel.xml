@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/username_tv"
+            android:id="@+id/username_search_tv"
             android:paddingLeft="10dp"
             android:textColor="#ffefefef"
             android:layout_alignParentTop="true"
