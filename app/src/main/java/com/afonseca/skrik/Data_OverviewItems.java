@@ -1,8 +1,6 @@
 package com.afonseca.skrik;
 
-/**
- * Created by aaf on 1/24/15.
- */
+
 public class Data_OverviewItems {
 
     String nr_of_msgs;

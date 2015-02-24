@@ -4,9 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by afonseca on 2/1/2015.
- */
 
 public class Ctrl_UsersDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_TABLE = "USERS";

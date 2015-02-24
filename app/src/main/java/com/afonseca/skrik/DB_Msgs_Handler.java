@@ -1,24 +1,19 @@
 package com.afonseca.skrik;
 
-/**
- * Created by aaf on 1/24/15.
- */
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class Ctrl_NewsDbHandler {
+public class DB_Msgs_Handler {
 
     public static final String DATABASE_NAME = "MSGS_DB";
     public static final int DATABASE_VERSION = 3;
-    //Context context;
     SQLiteDatabase sqlDatabase;
-    Ctrl_NewsDbHelper dbHelper;
+    DB_Msgs_Helper dbHelper;
 
-    public Ctrl_NewsDbHandler(Context context) {
+    public DB_Msgs_Handler(Context context) {
 
-        dbHelper = new Ctrl_NewsDbHelper(context, DATABASE_NAME, null,
+        dbHelper = new DB_Msgs_Helper(context, DATABASE_NAME, null,
                 DATABASE_VERSION);
         sqlDatabase = dbHelper.getWritableDatabase();
     }

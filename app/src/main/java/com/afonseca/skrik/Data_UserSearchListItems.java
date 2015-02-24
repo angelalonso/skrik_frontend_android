@@ -1,8 +1,6 @@
 package com.afonseca.skrik;
 
-/**
- * Created by aaf on 2/5/15.
- */
+
 public class Data_UserSearchListItems {
 
     String username;

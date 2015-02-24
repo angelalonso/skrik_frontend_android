@@ -1,8 +1,5 @@
 package com.afonseca.skrik;
 
-/**
- * Created by aaf on 1/24/15.
- */
 
 import java.util.ArrayList;
 
@@ -49,7 +46,7 @@ public class Ctrl_OverviewListAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.news_item, null);
+            convertView = inflater.inflate(R.layout.item_overview, null);
 
         }
 

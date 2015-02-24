@@ -18,7 +18,7 @@ public class Act_Channel extends ActionBarActivity {
 
     /* Declarations */
 
-    Ctrl_NewsDbHandler newsSQLHandler;
+    DB_Msgs_Handler newsSQLHandler;
     Ctrl_Backend backend = new Ctrl_Backend();
 
     String serverSide;
@@ -36,7 +36,7 @@ public class Act_Channel extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
 
-        newsSQLHandler = new Ctrl_NewsDbHandler(this);
+        newsSQLHandler = new DB_Msgs_Handler(this);
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 

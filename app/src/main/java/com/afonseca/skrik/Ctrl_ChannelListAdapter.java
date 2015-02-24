@@ -1,9 +1,5 @@
 package com.afonseca.skrik;
 
-/**
- * Created by aaf on 1/24/15.
- */
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +45,7 @@ public class Ctrl_ChannelListAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.chat_item, null);
+            convertView = inflater.inflate(R.layout.item_channel, null);
 
         }
 

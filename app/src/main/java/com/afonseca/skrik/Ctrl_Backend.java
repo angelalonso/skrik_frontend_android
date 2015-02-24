@@ -4,7 +4,6 @@ package com.afonseca.skrik;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -19,9 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Pattern;
 
-/**
- * Created by afonseca on 1/24/2015.
- */
+
 public class Ctrl_Backend {
 
     /* I keep these separated, just in case */
@@ -118,7 +115,7 @@ public class Ctrl_Backend {
         return output;
     }
 
-    public void updateNewslist(Ctrl_NewsDbHandler sqlHandler,String userid) {
+    public void updateNewslist(DB_Msgs_Handler sqlHandler,String userid) {
         String output = null;
 
         /* First of all, we make sure we get something from the Backend */

@@ -21,7 +21,7 @@ public class Act_Overview extends ActionBarActivity {
     //Extender Activity
     Funcs_Overview functionsOverview = new Funcs_Overview();
 
-    Ctrl_NewsDbHandler newsSQLHandler;
+    DB_Msgs_Handler newsSQLHandler;
     Ctrl_UsersDbHandler newsUsersSQLHandler;
     Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
     Ctrl_Backend backend = new Ctrl_Backend();
@@ -42,7 +42,7 @@ public class Act_Overview extends ActionBarActivity {
 
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
-        newsSQLHandler = new Ctrl_NewsDbHandler(this);
+        newsSQLHandler = new DB_Msgs_Handler(this);
         newsUsersSQLHandler = new Ctrl_UsersDbHandler(this);
 
         String username = funcsUserCfg.getUsername(context);
