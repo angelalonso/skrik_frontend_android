@@ -22,7 +22,7 @@ public class Funcs_Overview extends Activity {
     Ctrl_Backend backend = new Ctrl_Backend();
 
     public String getUsername(Context mContext,String newsUser_id) {
-        Ctrl_UsersDbHandler newsUsersSQLHandler = new Ctrl_UsersDbHandler(mContext);
+        DB_Users_Handler newsUsersSQLHandler = new DB_Users_Handler(mContext);
         String query = "SELECT username FROM USERS WHERE id = '" + newsUser_id + "'";
         String username = "";
         Cursor c1 = newsUsersSQLHandler.selectQuery(query);
@@ -41,7 +41,7 @@ public class Funcs_Overview extends Activity {
     }
 
     public void addUser(Context mContext,String userid, String username){
-        Ctrl_UsersDbHandler newsUsersSQLHandler = new Ctrl_UsersDbHandler(mContext);
+        DB_Users_Handler newsUsersSQLHandler = new DB_Users_Handler(mContext);
 
         String query = "INSERT INTO USERS (id, username, blacklisted) VALUES('" + userid + "','" + username + "',0)";
         newsUsersSQLHandler.executeQuery(query);

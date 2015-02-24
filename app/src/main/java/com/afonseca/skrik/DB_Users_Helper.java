@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-public class Ctrl_UsersDbHelper extends SQLiteOpenHelper {
+public class DB_Users_Helper extends SQLiteOpenHelper {
     public static final String DATABASE_TABLE = "USERS";
 
     public static final String COLUMN1 = "id";
@@ -18,8 +18,8 @@ public class Ctrl_UsersDbHelper extends SQLiteOpenHelper {
             + COLUMN3 + " integer not null "
             + ");";
 
-    public Ctrl_UsersDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
-                                int version) {
+    public DB_Users_Helper(Context context, String name, SQLiteDatabase.CursorFactory factory,
+                           int version) {
         super(context, name, factory, version);
         // TODO Auto-generated constructor stub
 

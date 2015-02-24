@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -38,12 +37,12 @@ public class Act_SearchUser extends ActionBarActivity {
     }
 
     private void showUserList(String user2search) {
-        ArrayList<Data_UserSearchListItems> userList = new ArrayList<>();
+        ArrayList<Data_SearchUser_ListItems> userList = new ArrayList<>();
         userList.clear();
 
         userList = backend.searchUser(user2search);
 
-        Ctrl_UserSearchListAdapter userlistAdapter = new Ctrl_UserSearchListAdapter(
+        Ctrl_SearchUser_ListAdapter userlistAdapter = new Ctrl_SearchUser_ListAdapter(
                 Act_SearchUser.this, userList);
         userList_lv.setAdapter(userlistAdapter);
 

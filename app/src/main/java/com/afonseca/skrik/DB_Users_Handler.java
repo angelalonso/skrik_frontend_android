@@ -7,17 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * Created by afonseca on 2/1/2015.
  */
-public class Ctrl_UsersDbHandler {
+public class DB_Users_Handler {
 
     public static final String DATABASE_NAME = "USERS_DB";
     public static final int DATABASE_VERSION = 5;
     //Context context;
     SQLiteDatabase sqlDatabase;
-    Ctrl_UsersDbHelper dbHelper;
+    DB_Users_Helper dbHelper;
 
-    public Ctrl_UsersDbHandler(Context context) {
+    public DB_Users_Handler(Context context) {
 
-        dbHelper = new Ctrl_UsersDbHelper(context, DATABASE_NAME, null,
+        dbHelper = new DB_Users_Helper(context, DATABASE_NAME, null,
                 DATABASE_VERSION);
         sqlDatabase = dbHelper.getWritableDatabase();
     }
