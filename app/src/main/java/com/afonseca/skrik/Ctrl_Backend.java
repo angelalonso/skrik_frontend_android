@@ -21,11 +21,11 @@ import java.util.regex.Pattern;
 
 public class Ctrl_Backend {
 
-    /* I keep these separated, just in case */
     String IP = "192.168.10.229";
     String PORT = "8000";
     String URL = "http://" + IP + ":" + PORT;
 
+/* SERVER CHECK */
 
     public String testNetwork(Context mContext) {
         /* Logic:
@@ -72,6 +72,8 @@ public class Ctrl_Backend {
         return output;
     }
 
+/* USER DATA */
+
     public String getUsername(String userid) {
         String output = null;
         String url_getusername = URL + "/getusername/" + userid + "/";
@@ -104,9 +106,6 @@ public class Ctrl_Backend {
         }
         try {
             output = new Tool_AsyncTask().execute(url_saveuser).get();
-
-
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -114,6 +113,53 @@ public class Ctrl_Backend {
         }
         return output;
     }
+
+
+    public ArrayList<Data_SearchUser_ListItems> searchUser(String word2Search){
+        ArrayList<Data_SearchUser_ListItems> result = new ArrayList<Data_SearchUser_ListItems>();
+        String output = null;
+        if (!word2Search.matches("")) {
+            String url_searchuser = URL + "/searchusers/" + word2Search + "/";
+            try {
+                output = new Tool_AsyncTask().execute(url_searchuser).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        /*  Work on the result */
+            ArrayList<String> stringArray = new ArrayList<String>();
+            if (output != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(output);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        stringArray.add(jsonArray.getString(i));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (String s : stringArray) {
+                try {
+                    JSONArray jsonLine = new JSONArray(s);
+                    Data_SearchUser_ListItems item = new Data_SearchUser_ListItems();
+                    item.setUsername(jsonLine.getString(0));
+                    item.setUserID(jsonLine.getString(1));
+                    item.setStatus(jsonLine.getString(2));
+                    item.setOrder(Integer.parseInt(jsonLine.getString(3)));
+                    result.add(item);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        for (int i=0; i < result.size(); i++) {
+            Log.i("TESTING - user found: ", result.get(i).toString());
+        }
+        return result;
+    }
+
+/* MSGS DATA */
 
     public void updateNewslist(DB_Msgs_Handler sqlHandler,String userid) {
         String output = null;
@@ -200,47 +246,4 @@ public class Ctrl_Backend {
         return output;
     }
 
-    public ArrayList<Data_SearchUser_ListItems> searchUser(String word2Search){
-        ArrayList<Data_SearchUser_ListItems> result = new ArrayList<Data_SearchUser_ListItems>();
-        String output = null;
-        if (!word2Search.matches("")) {
-            String url_searchuser = URL + "/searchusers/" + word2Search + "/";
-            try {
-                output = new Tool_AsyncTask().execute(url_searchuser).get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-        /*  Work on the result */
-            ArrayList<String> stringArray = new ArrayList<String>();
-            if (output != null) {
-                try {
-                    JSONArray jsonArray = new JSONArray(output);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        stringArray.add(jsonArray.getString(i));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            for (String s : stringArray) {
-                try {
-                    JSONArray jsonLine = new JSONArray(s);
-                    Data_SearchUser_ListItems item = new Data_SearchUser_ListItems();
-                    item.setUsername(jsonLine.getString(0));
-                    item.setUserID(jsonLine.getString(1));
-                    item.setStatus(jsonLine.getString(2));
-                    item.setOrder(Integer.parseInt(jsonLine.getString(3)));
-                    result.add(item);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        for (int i=0; i < result.size(); i++) {
-            Log.i("TESTING - user found: ", result.get(i).toString());
-        }
-        return result;
-    }
 }

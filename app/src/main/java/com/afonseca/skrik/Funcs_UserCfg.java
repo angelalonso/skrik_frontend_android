@@ -224,6 +224,8 @@ public class Funcs_UserCfg extends Activity {
                 current_uid = saveResult.replace("Email found, NEW ID = ","");
             } else if (saveResult.contains("Phone found, NEW ID = ")){
                 current_uid = saveResult.replace("Phone found, NEW ID = ","");
+            } else if (saveResult.contains("NEW ID = ")){
+                current_uid = saveResult.replace("NEW ID = ","");
             }
             data_status = "synced";
         } else {
