@@ -18,7 +18,7 @@ public class Act_Channel extends ActionBarActivity {
 
     /* Declarations */
 
-    DB_Msgs_Handler newsSQLHandler;
+    DB_Msgs_Handler msgsSQLHandler;
     Ctrl_Backend backend = new Ctrl_Backend();
 
     String serverSide;
@@ -36,7 +36,7 @@ public class Act_Channel extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
 
-        newsSQLHandler = new DB_Msgs_Handler(this);
+        msgsSQLHandler = new DB_Msgs_Handler(this);
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 
@@ -48,7 +48,7 @@ public class Act_Channel extends ActionBarActivity {
         Username_tv = (TextView) findViewById(R.id.username_search_tv);
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, me_userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(msgsSQLHandler, me_userid); }
         //if (serverSide.matches("OK")) { Log.i("TESTING", userid); }
         showMessages(other_userid);
 
@@ -58,8 +58,8 @@ public class Act_Channel extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        Context context = getApplicationContext();
-        serverSide = serverCheck(context);
+        Context mContext = getApplicationContext();
+        serverSide = serverCheck(mContext);
 
         if (serverSide.matches("OK")) { Log.i("TESTING", me_userid); }
 
@@ -71,24 +71,23 @@ public class Act_Channel extends ActionBarActivity {
     private void showMessages(String user_other) {
         //Context mContext = getApplicationContext();
 
+
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
 
         ArrayList<Data_ChannelItems> chatList = new ArrayList<>();
         chatList.clear();
 
-
         String query = "SELECT CASE WHEN userid_from ='" + user_other + "' THEN 'FROM' ELSE 'TO' END AS to_or_from, id, message, timestamp, status FROM MSGS WHERE userid_from ='" + user_other + "' OR userid_to ='" + user_other + "' ORDER BY timestamp;";
 
-        Cursor c1 = newsSQLHandler.selectQuery(query);
+        Cursor c1 = msgsSQLHandler.selectQuery(query);
+        Log.i("TESTING - Looking for the other user COUNT->", String.valueOf(c1.getCount()));
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {
                     Data_ChannelItems channelItems = new Data_ChannelItems();
 
-                    channelItems.setMsg(c1.getString(c1
-                            .getColumnIndex("message")));
-                    channelItems.setToOrFromMe(c1.getString(c1
-                            .getColumnIndex("to_or_from,")));
+                    channelItems.setMsg(c1.getString(c1.getColumnIndex("message")));
+                    channelItems.setToOrFromMe(c1.getString(c1.getColumnIndex("to_or_from")));
 
                     String timestamp_raw = c1.getString(c1.getColumnIndex("timestamp"));
                     String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
@@ -108,12 +107,37 @@ public class Act_Channel extends ActionBarActivity {
     }
 
     public void sendMessage(View view) {
+        Context mContext = getApplicationContext();
         EditText message_et = (EditText) findViewById(R.id.message_et);
         String message = message_et.getText().toString();
         //TODO: We avoid sending millis here, but might be better to do so.
         String timestamp = String.valueOf(System.currentTimeMillis()/1000);
-        backend.sendMessageToBackend(message,me_userid,other_userid,timestamp);
+
+        // DEPRECATED: String Insertquery = "INSERT INTO MSGS (userid_from, userid_to, message, status, timestamp, backend_id) VALUES('" + me_userid + "','" + other_userid + "','" + message + "','created','" + timestamp + "','')";
+        //DEPRECATED: long messageID = msgsSQLHandler.executeInsertgetID(me_userid,other_userid,message,"created",timestamp,"none");
+        msgsSQLHandler.addNewMessage(me_userid,other_userid,message,timestamp);
+        serverSide = serverCheck(mContext);
+        if (serverSide.matches("OK")) {
+            syncMessages();
+        }
+        //TODO: Check if there is network first,
+        //TODO: If trying to send, then mark as sending locally
+        String sendResult = backend.sendMessageToBackend(message,me_userid,other_userid,timestamp);
         message_et.setText("");
+        showMessages(other_userid);
+    }
+
+    public void clearChannel(View view) {
+        String Clearquery = "DELETE FROM MSGS where id = id;";
+        msgsSQLHandler.executeQuery(Clearquery);
+    }
+
+    public void updateChannel(View view) {
+
+    }
+
+    public void syncMessages(){
+
     }
     /* Check Functions */
 

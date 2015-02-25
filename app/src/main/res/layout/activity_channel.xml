@@ -47,13 +47,24 @@
             android:text="update"
             android:id="@+id/update_btn"
             android:textColor="#ffefefef"
-            android:onClick="updateNews"
+            android:onClick="updateChannel"
             android:layout_gravity="right|top"
             android:layout_alignParentStart="false"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="false"
             android:layout_alignParentLeft="false"
             />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="clear all"
+            android:id="@+id/clear_btn"
+            android:onClick="clearChannel"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/update_btn"
+            android:layout_toStartOf="@+id/update_btn" />
     </RelativeLayout>
 
     <!-- Footer aligned to bottom -->

@@ -1,5 +1,6 @@
 package com.afonseca.skrik;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -53,6 +54,24 @@ public class DB_Msgs_Handler {
         }
         return c1;
 
+    }
+
+    //MAYBE UNNEEDED?
+    public long executeInsertgetID(String me_userid, String other_userid, String message, String status, String timestamp, String backend_id) {
+        ContentValues newValues = new ContentValues();
+        newValues.put("userid_from", me_userid);
+        newValues.put("userid_to", other_userid);
+        newValues.put("message", message);
+        newValues.put("status", status);
+        newValues.put("timestamp", timestamp);
+        newValues.put("backend_id", backend_id);
+        long newID = sqlDatabase.insert("MSGS",null,newValues);
+        return newID;
+    }
+
+    public void addNewMessage(String me_userid, String other_userid, String message,String timestamp) {
+        String Insertquery = "INSERT INTO MSGS (userid_from, userid_to, message, status, timestamp, backend_id) VALUES('" + me_userid + "','" + other_userid + "','" + message + "','created','" + timestamp + "','none')";
+        executeQuery(Insertquery);
     }
 
 }

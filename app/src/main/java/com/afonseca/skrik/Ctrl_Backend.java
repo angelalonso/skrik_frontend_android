@@ -211,7 +211,7 @@ public class Ctrl_Backend {
                     }
                 }
                 c1.close();
-                String auxquery = "SELECT count(*) as result FROM NEWS ";
+                String auxquery = "SELECT count(*) as result FROM MSGS ";
                 Cursor c2 = sqlHandler.selectQuery(auxquery);
                 String nr_msgs = "";
                 if (c2 != null && c2.getCount() > 0) {

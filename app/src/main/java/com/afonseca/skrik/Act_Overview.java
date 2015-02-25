@@ -23,6 +23,7 @@ public class Act_Overview extends ActionBarActivity {
 
     DB_Msgs_Handler newsSQLHandler;
     DB_Users_Handler newsUsersSQLHandler;
+
     Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
     Ctrl_Backend backend = new Ctrl_Backend();
 
@@ -185,4 +186,13 @@ public class Act_Overview extends ActionBarActivity {
         startActivity(intent);
     }
 
+    //TODO: BE DELETED
+
+    public void clearDB(View view) {
+
+        Context mContext = getApplicationContext();
+        DB_Msgs_Handler msgsSQLHandler = new DB_Msgs_Handler(mContext);
+        String Clearquery = "DELETE FROM MSGS WHERE id=id;";
+        msgsSQLHandler.executeQuery(Clearquery);
+    }
 }
