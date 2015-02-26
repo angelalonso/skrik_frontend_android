@@ -39,6 +39,16 @@
                 android:layout_alignEnd="@+id/message_tv"
                 android:paddingRight="10dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="status"
+                android:id="@+id/status_tv"
+                android:layout_alignParentTop="true"
+                android:layout_alignLeft="@+id/timestamp_tv"
+                android:layout_alignStart="@+id/timestamp_tv" />
+
         </RelativeLayout>
 
     </RelativeLayout>

@@ -51,6 +51,8 @@ public class Ctrl_ChannelListAdapter extends BaseAdapter {
 
         TextView Message_tv = (TextView) convertView.findViewById(R.id.message_tv);
         Message_tv.setText(channelItems.getMsg());
+        TextView Status_tv = (TextView) convertView.findViewById(R.id.status_tv);
+        Status_tv.setText(channelItems.getStatus());
         TextView Timestamp_tv = (TextView) convertView.findViewById(R.id.timestamp_tv);
         Timestamp_tv.setText(channelItems.getTimestamp());
 

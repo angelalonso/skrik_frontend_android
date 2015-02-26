@@ -88,7 +88,7 @@ public class Act_Channel extends ActionBarActivity {
 
                     channelItems.setMsg(c1.getString(c1.getColumnIndex("message")));
                     channelItems.setToOrFromMe(c1.getString(c1.getColumnIndex("to_or_from")));
-
+                    channelItems.setStatus(c1.getString(c1.getColumnIndex("status")));
                     String timestamp_raw = c1.getString(c1.getColumnIndex("timestamp"));
                     String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
 

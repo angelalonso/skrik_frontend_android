@@ -5,6 +5,7 @@ public class Data_ChannelItems {
 
     String message;
     String to_or_from_me;
+    String status;
     String timestamp;
 
 
@@ -23,6 +24,14 @@ public class Data_ChannelItems {
 
     public void setToOrFromMe(String to_or_from_me) {
         this.to_or_from_me = to_or_from_me;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getTimestamp() {
