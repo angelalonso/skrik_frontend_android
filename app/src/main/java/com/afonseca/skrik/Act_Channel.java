@@ -80,7 +80,6 @@ public class Act_Channel extends ActionBarActivity {
         String query = "SELECT CASE WHEN userid_from ='" + user_other + "' THEN 'FROM' ELSE 'TO' END AS to_or_from, id, message, timestamp, status FROM MSGS WHERE userid_from ='" + user_other + "' OR userid_to ='" + user_other + "' ORDER BY timestamp;";
 
         Cursor c1 = msgsSQLHandler.selectQuery(query);
-        Log.i("TESTING - Looking for the other user COUNT->", String.valueOf(c1.getCount()));
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {
@@ -120,24 +119,49 @@ public class Act_Channel extends ActionBarActivity {
         if (serverSide.matches("OK")) {
             syncMessages();
         }
-        //TODO: Check if there is network first,
-        //TODO: If trying to send, then mark as sending locally
-        String sendResult = backend.sendMessageToBackend(message,me_userid,other_userid,timestamp);
+
         message_et.setText("");
         showMessages(other_userid);
     }
 
     public void clearChannel(View view) {
-        String Clearquery = "DELETE FROM MSGS where id = id;";
-        msgsSQLHandler.executeQuery(Clearquery);
+        String clearQuery = "DELETE FROM MSGS where id = id;";
+        msgsSQLHandler.executeQuery(clearQuery);
     }
 
     public void updateChannel(View view) {
-
+        showMessages(other_userid);
     }
 
     public void syncMessages(){
+        //Check if there is network first,
+        //If trying to send, then mark as sending locally
+        // TODO: Before even trying to send the messages: CHECK THE USER IS SYNCED AS WELL!
+        Cursor c1 = msgsSQLHandler.getMsgsWStatus("created");
+        if (c1 != null && c1.getCount() > 0) {
+            if (c1.moveToFirst()) {
+                do {
 
+                    String item_id = c1.getString(c1.getColumnIndex("id"));
+                    String itemMessage = c1.getString(c1.getColumnIndex("message"));
+                    String item_userid_from = c1.getString(c1.getColumnIndex("userid_from"));
+                    String item_userid_to = c1.getString(c1.getColumnIndex("userid_to"));
+                    String item_timestamp = c1.getString(c1.getColumnIndex("timestamp"));
+                    String sendResult = backend.sendMessageToBackend(itemMessage,item_userid_from,item_userid_to,item_timestamp);
+                    String updateQuery = "UPDATE MSGS SET status='sending' WHERE id='" + item_id + "';";
+                    msgsSQLHandler.executeQuery(updateQuery);
+                    if (sendResult.matches("received")){
+                        updateQuery = "UPDATE MSGS SET status='sent' WHERE id='" + item_id + "';";
+                        msgsSQLHandler.executeQuery(updateQuery);
+                    }
+                } while (c1.moveToNext());
+            }
+        }
+        /*
+        get list of messages with status = sending
+         */
+        //msgsSQLHandler
+        //String sendResult = backend.sendMessageToBackend(message,me_userid,other_userid,timestamp);
     }
     /* Check Functions */
 

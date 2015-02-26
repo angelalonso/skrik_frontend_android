@@ -74,6 +74,14 @@ public class DB_Msgs_Handler {
         executeQuery(Insertquery);
     }
 
+    public Cursor getMsgsWStatus(String status) {
+        Cursor c1 = null;
+        String query = "SELECT id,message,userid_from, userid_to,timestamp FROM MSGS WHERE status ='" + status + "';";
+        c1 = selectQuery(query);
+
+        return c1;
+    }
+
 }
 
 
