@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DB_Msgs_Handler {
 
@@ -76,7 +77,15 @@ public class DB_Msgs_Handler {
 
     public Cursor getMsgsWStatus(String status) {
         Cursor c1 = null;
-        String query = "SELECT id,message,userid_from, userid_to,timestamp FROM MSGS WHERE status ='" + status + "';";
+        String query;
+        if (status.contains(" OR ") || status.contains(" or ")){
+            String status_1 = status.replace(" OR ","' OR status='");
+            Log.i("TESTING QUERY   ", status_1);
+            query = "SELECT id,message,userid_from, userid_to,timestamp FROM MSGS WHERE status ='" + status_1 + "';";
+
+        } else {
+            query = "SELECT id,message,userid_from, userid_to,timestamp FROM MSGS WHERE status ='" + status + "';";
+        }
         c1 = selectQuery(query);
 
         return c1;
