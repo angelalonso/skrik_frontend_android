@@ -186,13 +186,17 @@ public class Ctrl_Backend {
             }
 
         }
-
+        String received_key = "";
         for (String s : stringArray) {
             try {
                 JSONArray jsonLine = new JSONArray(s);
                 String userfrom = jsonLine.getString(0);
                 String message = jsonLine.getString(1);
                 String status = jsonLine.getString(2);
+                if (status.contains("fwding-")){
+                    received_key = status.replace("fwding-","");
+                    status = "received";
+                }
                 String timestamp = jsonLine.getString(3);
                 String backend_id = jsonLine.getString(4);
                 String query = "SELECT count(*) AS result FROM MSGS WHERE backend_id = '" + backend_id + "' ";
@@ -227,6 +231,22 @@ public class Ctrl_Backend {
                 e.printStackTrace();
             }
         }
+        if (!received_key.matches("")) {
+            confirmReceivedBackend(received_key);
+        }
+    }
+
+    public String confirmReceivedBackend(String key) {
+        String output = null;
+        String url_gotmsg = URL + "/gotmsg/" + key + "/";
+        try {
+            output = new Tool_AsyncTask().execute(url_gotmsg).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return output;
     }
 
     public String sendMessageToBackend(String message, String userid_from, String userid_to, String timestamp) {
