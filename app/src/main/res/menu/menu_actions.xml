@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/action_user_settings"
+        android:title="User Settings"/>
+    <item android:id="@+id/action_check_tables"
+        android:title="Check Tables" />
+</menu>

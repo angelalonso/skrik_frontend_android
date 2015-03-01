@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,7 +24,7 @@ public class Act_Overview extends ActionBarActivity {
     //Extender Activity
     Funcs_Overview functionsOverview = new Funcs_Overview();
 
-    DB_Msgs_Handler newsSQLHandler;
+    DB_Msgs_Handler newsMsgsSQLHandler;
     DB_Users_Handler newsUsersSQLHandler;
 
     Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
@@ -43,13 +46,13 @@ public class Act_Overview extends ActionBarActivity {
 
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
-        newsSQLHandler = new DB_Msgs_Handler(this);
+        newsMsgsSQLHandler = new DB_Msgs_Handler(this);
         newsUsersSQLHandler = new DB_Users_Handler(this);
 
         String username = funcsUserCfg.getUsername(context);
         String userid = funcsUserCfg.getUid(context);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there"); }
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
@@ -76,13 +79,35 @@ public class Act_Overview extends ActionBarActivity {
 
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsSQLHandler, userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
         else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, because the server is not there"); }
 
         showList(userid);
-
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_user_settings:
+                gotoUserConfig();
+                return true;
+            case R.id.action_check_tables:
+                gotoShowDB();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     /* Additional Actions' Methods */
 
 
@@ -102,7 +127,7 @@ public class Act_Overview extends ActionBarActivity {
 
         String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
 
-        Cursor c1 = newsSQLHandler.selectQuery(query);
+        Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {
@@ -173,18 +198,24 @@ public class Act_Overview extends ActionBarActivity {
     }
     /* "GOTO" Calls */
 
-    public void gotoUserConfig(View view) {
+    public void gotoUserConfig() {
         /** Called when the user clicks the Config button */
         Intent intent = new Intent(this, Act_UserCfg.class);
         startActivity(intent);
     }
 
+    public void gotoShowDB() {
+        /** Called when the user clicks the Config button */
+        Intent intent = new Intent(this, Act_Tables.class);
+        startActivity(intent);
+    }
 
     public void gotoSearchUser(View view) {
         /** Called when the user clicks the Config button */
         Intent intent = new Intent(this, Act_SearchUser.class);
         startActivity(intent);
     }
+
 
     //TODO: BE DELETED
 
@@ -195,4 +226,8 @@ public class Act_Overview extends ActionBarActivity {
         String Clearquery = "DELETE FROM MSGS WHERE id=id;";
         msgsSQLHandler.executeQuery(Clearquery);
     }
+
+    //http://developer.android.com/guide/topics/ui/actionbar.html
+
+
 }

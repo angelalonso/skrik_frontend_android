@@ -30,6 +30,8 @@
         </activity>
         <activity android:name=".Act_Channel" >
         </activity>
+        <activity android:name=".Act_Tables" >
+        </activity>
     </application>
 
 </manifest>

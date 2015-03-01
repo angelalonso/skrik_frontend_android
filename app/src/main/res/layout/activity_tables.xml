@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:weightSum="1"
-        android:background="#ff000000">
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#ff000000"
+        android:gravity="center" >
 
         <TextView
             android:layout_width="15dp"
@@ -22,68 +25,55 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:gravity="center" />
-
         <TextView
             android:layout_width="182dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/username_search_tv"
-            android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#ffefefef"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/server_tv"
-            android:layout_toLeftOf="@+id/update_btn"
-            android:layout_toStartOf="@+id/update_btn" />
-
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="update"
-            android:id="@+id/update_btn"
-            android:textColor="#ffefefef"
-            android:onClick="updateOverview"
-            android:layout_gravity="right|top"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New"
-            android:id="@+id/search_btn"
-            android:textColor="#ffefefef"
-            android:onClick="gotoSearchUser"
-            android:layout_gravity="right|top"
-            android:layout_toLeftOf="@+id/update_btn"
             android:layout_toStartOf="@+id/update_btn"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true" />
+            android:layout_toLeftOf="@+id/update_btn"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="msgs"
+            android:id="@+id/msgstable_btn"
+            android:textColor="#ffefefef"
+            android:onClick="msgsLoad"
+            android:layout_gravity="right|top"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentLeft="false"
+            />
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DEL"
-            android:id="@+id/del_btn"
-            android:onClick="clearDB"
+            android:text="users"
+            android:id="@+id/userstable_btn"
+            android:textColor="#ffefefef"
+            android:onClick="usersLoad"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/search_btn"
-            android:layout_toStartOf="@+id/search_btn"
-            android:layout_alignParentBottom="true" />
-
-
+            android:layout_toLeftOf="@+id/msgstable_btn"
+            android:layout_toStartOf="@+id/msgstable_btn" />
     </RelativeLayout>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/newslist_lv" />
+        android:id="@+id/table_content_lv"
+        android:layout_below="@+id/header"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-</LinearLayout>
+</RelativeLayout>
