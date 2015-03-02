@@ -7,6 +7,16 @@
     <string name="action_settings">Settings</string>
 
     <string name="title_usercfg">User details</string>
-    <string name="msg_user_not_registered">Your user is not yet registered. Get connected to Internet and retry to save.</string>
+
+    <string name="btn_usercfg_clear">Clear</string>
+    <string name="btn_usercfg_save">Save</string>
+
+    <string name="hint_usercfg_email">Enter your e-mail here</string>
+    <string name="hint_usercfg_name">Enter your name here</string>
+    <string name="hint_usercfg_pass">Add a password</string>
+    <string name="hint_usercfg_phone">Enter your phone number here</string>
+
+
+    <string name="msg_user_not_registered">Your user is not yet registered. Get connected to Internet and retry to save</string>
 
 </resources>
