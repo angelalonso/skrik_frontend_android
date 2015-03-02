@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Skrik</string>
+
+    <string name="hello_world">Hola Mundo!</string>
+    <string name="action_settings">Configuración</string>
+
+    <string name="title_usercfg">Detalles de usuario</string>
+    <string name="msg_user_not_registered">Tu usuario aun no ha sido registrado. Conéctate a Internet e intenta guardar de nuevo.</string>
+
+</resources>
+
