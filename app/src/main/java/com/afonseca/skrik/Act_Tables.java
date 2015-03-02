@@ -34,6 +34,18 @@ public class Act_Tables extends ActionBarActivity {
         newsMsgsSQLHandler = new DB_Msgs_Handler(this);
 
         content_lv = (ListView) findViewById(R.id.table_content_lv);
+
+        msgsLoad();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+
+    public void msgsLoad(){
         content = "";
 
         List<String> array_list = new ArrayList<String>();
@@ -60,15 +72,45 @@ public class Act_Tables extends ActionBarActivity {
                 array_list );
 
         content_lv.setAdapter(arrayAdapter);
+
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    public void usersLoad(){
+        content = "";
+
+        List<String> array_list = new ArrayList<String>();
+
+        String query = "SELECT id, username, blacklisted FROM USERS";
+
+        Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
+        if (c1 != null && c1.getCount() > 0) {
+            if (c1.moveToFirst()) {
+                do {
+                    content = c1.getString(c1.getColumnIndex("id")) + " | ";
+                    content = content + c1.getString(c1.getColumnIndex("username")) + " | ";
+                    content = content + c1.getString(c1.getColumnIndex("blacklisted"));
+                    array_list.add(content);
+                } while (c1.moveToNext());
+            }
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                array_list );
+
+        content_lv.setAdapter(arrayAdapter);
     }
 
     /* Check Functions */
 
     /* "GOTO" Calls */
+
+    public void gotoMsgsLoad(View view){
+        msgsLoad();
+    }
+
+    public void gotoUsersLoad(View view){
+        usersLoad();
+    }
 
 }

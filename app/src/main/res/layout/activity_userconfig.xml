@@ -17,7 +17,7 @@
         android:layout_width="182dp"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/title_activity_user"
+        android:text="@string/title_usercfg"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:textColor="#ffefefef"

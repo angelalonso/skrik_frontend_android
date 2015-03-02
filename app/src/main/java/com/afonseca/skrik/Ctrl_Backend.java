@@ -249,7 +249,7 @@ public class Ctrl_Backend {
         return output;
     }
 
-    public String sendMessageToBackend(String message, String userid_from, String userid_to, String timestamp) {
+    public String sendMsgToBackend(String message, String userid_from, String userid_to, String timestamp) {
 
         /*
         * Throw a message if the email is already in use (maybe get back the data?

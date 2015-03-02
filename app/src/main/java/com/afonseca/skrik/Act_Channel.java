@@ -135,6 +135,8 @@ public class Act_Channel extends ActionBarActivity {
         //Check if there is network first,
         //If trying to send, then mark as sending locally
         // TODO: Before even trying to send the messages: CHECK THE USER IS SYNCED AS WELL!
+
+
         Cursor c1 = msgsSQLHandler.getMsgsWStatus("created OR sending");
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
@@ -144,7 +146,7 @@ public class Act_Channel extends ActionBarActivity {
                     String item_userid_from = c1.getString(c1.getColumnIndex("userid_from"));
                     String item_userid_to = c1.getString(c1.getColumnIndex("userid_to"));
                     String item_timestamp = c1.getString(c1.getColumnIndex("timestamp"));
-                    String sendResult = backend.sendMessageToBackend(itemMessage,item_userid_from,item_userid_to,item_timestamp);
+                    String sendResult = backend.sendMsgToBackend(itemMessage,item_userid_from,item_userid_to,item_timestamp);
                     Log.i("TESTING - Message added: position", sendResult);
                     String updateQuery = "UPDATE MSGS SET status='sending' WHERE id='" + item_id + "';";
                     msgsSQLHandler.executeQuery(updateQuery);

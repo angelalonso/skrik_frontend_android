@@ -47,7 +47,7 @@
             android:text="msgs"
             android:id="@+id/msgstable_btn"
             android:textColor="#ffefefef"
-            android:onClick="msgsLoad"
+            android:onClick="gotoMsgsLoad"
             android:layout_gravity="right|top"
             android:layout_alignParentStart="false"
             android:layout_alignParentEnd="true"
@@ -62,7 +62,7 @@
             android:text="users"
             android:id="@+id/userstable_btn"
             android:textColor="#ffefefef"
-            android:onClick="usersLoad"
+            android:onClick="gotoUsersLoad"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/msgstable_btn"
             android:layout_toStartOf="@+id/msgstable_btn" />

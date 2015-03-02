@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -53,14 +54,26 @@ public class Act_SearchUser extends ActionBarActivity {
         TextView userid_tv = (TextView) view.findViewById(R.id.userid_search_tv);
         String userid_other = userid_tv.getText().toString();
         String userid_me = funcsUserCfg.getUid(mContext);
-        TextView username_tv = (TextView) view.findViewById(R.id.username_search_tv);
-        String username = username_tv.getText().toString();
-        Intent intent = new Intent(this, Act_Channel.class);
-        Bundle b = new Bundle();
-        b.putString("userid_other", userid_other);
-        b.putString("userid_me", userid_me);
-        b.putString("username", username);
-        intent.putExtras(b);
+        if (userid_me.matches("99999999999999")){
+            Toast.makeText(getApplicationContext(), R.string.msg_user_not_registered, Toast.LENGTH_LONG).show();
+            gotoUserConfig();
+        } else {
+            TextView username_tv = (TextView) view.findViewById(R.id.username_search_tv);
+            String username = username_tv.getText().toString();
+            Intent intent = new Intent(this, Act_Channel.class);
+            Bundle b = new Bundle();
+            b.putString("userid_other", userid_other);
+            b.putString("userid_me", userid_me);
+            b.putString("username", username);
+            intent.putExtras(b);
+            startActivity(intent);
+        }
+    }
+
+    /* "GOTO" Calls */
+
+    public void gotoUserConfig() {
+        Intent intent = new Intent(this, Act_UserCfg.class);
         startActivity(intent);
     }
 }
