@@ -54,11 +54,9 @@ public class Act_Overview extends ActionBarActivity {
         String userid = funcsUserCfg.getUid(context);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
-        else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, The server is not there"); }
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
         Username_tv = (TextView) findViewById(R.id.username_search_tv);
-
 
         Username_tv.setText(username);
 
@@ -81,7 +79,6 @@ public class Act_Overview extends ActionBarActivity {
         Username_tv.setText(username);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
-        else { Log.i("TESTING - NETWORK CHECK -- ", "the News List has not been updated, because the server is not there"); }
 
         showList(userid);
     }
@@ -121,7 +118,7 @@ public class Act_Overview extends ActionBarActivity {
     private void showList(String user_me) {
         Context mContext = getApplicationContext();
 
-        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
+        SimpleDateFormat fmt = new SimpleDateFormat(getString(R.string.aux_date_format));
 
         ArrayList<Data_OverviewItems> contactList = new ArrayList<>();
         contactList.clear();

@@ -20,7 +20,7 @@ public class Act_Main extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_skrik);
+        setContentView(R.layout.activity_main);
         Context context = getApplicationContext();
 
         if (controlUserconfig.userOK_SharedPrefs(context).equals("OK")){
@@ -35,7 +35,7 @@ public class Act_Main extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setContentView(R.layout.activity_skrik);
+        setContentView(R.layout.activity_main);
 
         Context context = getApplicationContext();
 

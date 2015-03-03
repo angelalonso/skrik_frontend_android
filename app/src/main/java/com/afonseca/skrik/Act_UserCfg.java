@@ -68,7 +68,7 @@ public class Act_UserCfg extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
-            toast = Toast.makeText(this, "Press back again to close this app", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, getString(R.string.msg_press_exit), Toast.LENGTH_SHORT);
             toast.show();
             this.lastBackPressTime = System.currentTimeMillis();
         } else {
@@ -116,11 +116,11 @@ public class Act_UserCfg extends ActionBarActivity {
             }
         }
         if (foundAccounts.size() > 0){
-            foundAccounts.add("Enter manually");
+            foundAccounts.add(getString(R.string.btn_usercfg_entermanual));
             final CharSequence[] allAccounts = foundAccounts.toArray(new
                     CharSequence[foundAccounts.size()]);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("What do you want to link your account to?");
+            builder.setTitle(getString(R.string.msg_link_account));
             builder.setItems(allAccounts, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -156,9 +156,9 @@ public class Act_UserCfg extends ActionBarActivity {
 
     public void clearUser(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to DELETE your USER DATA?")
+        builder.setMessage(getString(R.string.msg_del_confirm))
                 .setCancelable(false)
-                .setPositiveButton("YES, do it!", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.msg_del_conf_y), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Context mContext = getApplicationContext();
                         name.setText("");
@@ -172,7 +172,7 @@ public class Act_UserCfg extends ActionBarActivity {
                         loadUserData(mContext);
                     }
                 })
-                .setNegativeButton("Ups, NO!", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.msg_del_conf_n), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
