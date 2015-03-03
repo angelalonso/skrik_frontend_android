@@ -8,6 +8,7 @@
 
     <string name="title_usercfg">User details</string>
 
+    <string name="btn_main_getuser">Give me one!</string>
     <string name="btn_usercfg_clear">Clear</string>
     <string name="btn_usercfg_save">Save</string>
 
@@ -16,7 +17,7 @@
     <string name="hint_usercfg_pass">Add a password</string>
     <string name="hint_usercfg_phone">Enter your phone number here</string>
 
-
+    <string name="msg_you_need_user">You need a user name</string>
     <string name="msg_user_not_registered">Your user is not yet registered. Get connected to Internet and retry to save</string>
 
 </resources>
