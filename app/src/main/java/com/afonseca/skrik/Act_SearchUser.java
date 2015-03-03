@@ -54,7 +54,7 @@ public class Act_SearchUser extends ActionBarActivity {
         TextView userid_tv = (TextView) view.findViewById(R.id.userid_search_tv);
         String userid_other = userid_tv.getText().toString();
         String userid_me = funcsUserCfg.getUid(mContext);
-        if (userid_me.matches("99999999999999")){
+        if (userid_me.matches(getString(R.string.aux_dummy_uid))){
             Toast.makeText(getApplicationContext(), R.string.msg_user_not_registered, Toast.LENGTH_LONG).show();
             gotoUserConfig();
         } else {

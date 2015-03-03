@@ -3,8 +3,11 @@ package com.afonseca.skrik;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -26,7 +29,8 @@ public class Funcs_UserCfg extends Activity {
     public static final String Status = "statusKey";
     public static final String Passwd = "PasswdKey";
 
-    public String userOK_onSave (String username, String email, String phone, String uid, String regid, String passwd) {
+
+    public String userOK_onSave (Context mContext, String username, String email, String phone, String uid, String regid, String passwd) {
 
         Boolean allOK = true;
         String result;
@@ -35,7 +39,7 @@ public class Funcs_UserCfg extends Activity {
         // Checking there is a USERNAME
         if (username.matches("")){
             allOK = false;
-            errors.add("username");
+            errors.add(mContext.getResources().getString(R.string.aux_result_username));
         }
         // Checking there is a valid e-Mail OR phone
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -45,14 +49,14 @@ public class Funcs_UserCfg extends Activity {
             Pattern PhonePattern = Patterns.PHONE;
             if (!PhonePattern.matcher(phone).matches()) {
                 allOK = false;
-                errors.add("'VALID' Email or Phone");
+                errors.add(mContext.getResources().getString(R.string.aux_result_valid_email_phone));
             }
         }
 
         if (allOK) {
-            result = "OK";
+            result = mContext.getResources().getString(R.string.aux_result_ok);
         } else {
-            result = "You need to provide: ";
+            result = getString(R.string.aux_result_provide);
             for (String iterable_element : errors) {
                 result = result + iterable_element + " ";
             }
@@ -73,7 +77,7 @@ public class Funcs_UserCfg extends Activity {
                 || sharedpreferences.getString(Name, "").equals(""))
         {
             allOK = false;
-            errors.add("username");
+            errors.add(mContext.getResources().getString(R.string.aux_result_username));
         }
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
@@ -83,14 +87,14 @@ public class Funcs_UserCfg extends Activity {
                 || !matcher.matches())
         {
             allOK = false;
-            errors.add("'VALID' Email");
+            errors.add(mContext.getResources().getString(R.string.aux_result_valid_email));
         }
 
 
         if (allOK){
-            result = "OK";
+            result = mContext.getResources().getString(R.string.aux_result_ok);
         } else {
-            result = "You need to provide: ";
+            result = mContext.getResources().getString(R.string.aux_result_provide);
             for (String iterable_element : errors) {
                 result = result + iterable_element + " ";
             }
@@ -138,7 +142,6 @@ public class Funcs_UserCfg extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Email, email);
-        //editor.commit();
         editor.apply();
     }
 
@@ -153,7 +156,6 @@ public class Funcs_UserCfg extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Phone, phone);
-        //editor.commit();
         editor.apply();
     }
 
@@ -180,7 +182,6 @@ public class Funcs_UserCfg extends Activity {
         SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Status, data_status);
-        //editor.commit();
         editor.apply();
     }
 
@@ -194,7 +195,6 @@ public class Funcs_UserCfg extends Activity {
         editor.remove(Uid);
         editor.remove(Regid);
         editor.remove(Passwd);
-        //editor.commit();
         editor.apply();
     }
 
@@ -215,9 +215,8 @@ public class Funcs_UserCfg extends Activity {
         }
 
         if (serverSide.matches("OK")) {
-            // TODO: uid.setText(current_uid);
             if (current_uid.matches("")) {
-                current_uid = "99999999999999";
+                current_uid = mContext.getResources().getString(R.string.aux_dummy_uid);
             }
             String saveResult = backend.saveUserToBackend(username, email, phone, current_uid, regid);
             if (saveResult.contains("Email found, NEW ID = ")) {
@@ -230,9 +229,8 @@ public class Funcs_UserCfg extends Activity {
             data_status = "synced";
         } else {
             if (current_uid.matches("")) {
-                current_uid = "99999999999999";
+                current_uid = getString(R.string.aux_dummy_uid);
                 result = result + "UPDATE uid " + current_uid +"||";
-                // TODO: uid.setText(current_uid);
             }
             data_status = "unsynced";
         }
@@ -244,7 +242,6 @@ public class Funcs_UserCfg extends Activity {
         editor.putString(Regid, regid);
         editor.putString(Status, data_status);
         editor.putString(Passwd, passwd);
-        //editor.commit();
         editor.apply();
 
         if (result.contains("ERROR")) {
@@ -255,12 +252,4 @@ public class Funcs_UserCfg extends Activity {
         }
     }
 
-    //JUST FOR TESTING WHAT IS ON THE SHAREDPREFS
-    public void checkSavedData(Context mContext){
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        String phone = sharedpreferences.getString(Phone, "");
-        String email = sharedpreferences.getString(Email, "");
-        Log.i("TESTING, DATA-phone:",phone);
-        Log.i("TESTING, DATA-email:",email);
-    }
 }

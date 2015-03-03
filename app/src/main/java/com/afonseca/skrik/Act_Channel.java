@@ -61,18 +61,14 @@ public class Act_Channel extends ActionBarActivity {
         Context mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
-        if (serverSide.matches("OK")) { Log.i("TESTING", me_userid); }
-
         showMessages(other_userid);
     }
 
     /* Additional Actions' Methods */
 
     private void showMessages(String user_other) {
-        //Context mContext = getApplicationContext();
 
-
-        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss dd/MM/yy");
+        SimpleDateFormat fmt = new SimpleDateFormat(getString(R.string.aux_date_format));
 
         ArrayList<Data_ChannelItems> chatList = new ArrayList<>();
         chatList.clear();
@@ -132,10 +128,6 @@ public class Act_Channel extends ActionBarActivity {
     }
 
     public void syncMessages(){
-        //Check if there is network first,
-        //If trying to send, then mark as sending locally
-        // TODO: Before even trying to send the messages: CHECK THE USER IS SYNCED AS WELL!
-
 
         Cursor c1 = msgsSQLHandler.getMsgsWStatus("created OR sending");
         if (c1 != null && c1.getCount() > 0) {
@@ -158,12 +150,8 @@ public class Act_Channel extends ActionBarActivity {
                 } while (c1.moveToNext());
             }
         }
-        /*
-        get list of messages with status = sending
-         */
-        //msgsSQLHandler
-        //String sendResult = backend.sendMessageToBackend(message,me_userid,other_userid,timestamp);
     }
+
     /* Check Functions */
 
     public String serverCheck(Context mContext) {

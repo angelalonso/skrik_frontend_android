@@ -5,18 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 
-/*
-This one is a more "personalized" controller of what's shown in the News list
-  It is useful to control a Whitelist (to join id with username)
-    and a blacklist (to avoid seeing messages from someone you don't want)
-*/
 
-/*
-* TODO: function to get username
-*   TODO: If the username is not there, add it, reading from backend
-*   TODO: If the username is there, send it back
-*
-* */
 public class Funcs_Overview extends Activity {
 
     Ctrl_Backend backend = new Ctrl_Backend();

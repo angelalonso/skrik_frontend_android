@@ -7,15 +7,19 @@
     <string name="action_settings">Settings</string>
 
     <string name="title_usercfg">User details</string>
+    <string name="title_tables">Tables</string>
 
     <string name="btn_main_getuser">Give me one!</string>
     <string name="btn_overview_delete">Delete</string>
     <string name="btn_overview_newchannel">New</string>
     <string name="btn_overview_update">Update</string>
+    <string name="btn_searchuser_search">Search</string>
     <string name="btn_usercfg_clear">Clear</string>
     <string name="btn_usercfg_entermanual">Enter manually</string>
     <string name="btn_usercfg_save">Save</string>
 
+
+    <string name="hint_searchuser_search">Search ...</string>
     <string name="hint_usercfg_email">Enter your e-mail here</string>
     <string name="hint_usercfg_name">Enter your name here</string>
     <string name="hint_usercfg_pass">Add a password</string>
@@ -31,5 +35,11 @@
     <string name="msg_you_need_user">You need a user name</string>
 
     <string name="aux_date_format">HH:mm:ss dd/MM/yy</string>
+    <string name="aux_dummy_uid">99999999999999</string>
+    <string name="aux_result_ok">OK</string>
+    <string name="aux_result_username">username</string>
+    <string name="aux_result_valid_email">\'VALID\' Email</string>
+    <string name="aux_result_valid_email_phone">\'VALID\' Email or Phone</string>
+    <string name="aux_result_provide">You need to provide: </string>
 
 </resources>

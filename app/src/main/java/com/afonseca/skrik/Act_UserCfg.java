@@ -49,7 +49,6 @@ public class Act_UserCfg extends ActionBarActivity {
         passwd = (TextView) findViewById(R.id.passwd_input);
 
         serverSide = serverCheck(mContext);
-        funcsUserCfg.checkSavedData(mContext);
         loadUserData(mContext);
     }
 
@@ -59,7 +58,6 @@ public class Act_UserCfg extends ActionBarActivity {
         Context mContext = getApplicationContext();
 
         serverSide = serverCheck(mContext);
-        funcsUserCfg.checkSavedData(mContext);
         loadUserData(mContext);
     }
 
@@ -191,7 +189,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
         Context mContext = getApplicationContext();
 
-        String dataCheck = funcsUserCfg.userOK_onSave(n, em, ph, id, rid, pwd);
+        String dataCheck = funcsUserCfg.userOK_onSave(mContext, n, em, ph, id, rid, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
             //TODO: Find out why I need TWO FINISHES here
