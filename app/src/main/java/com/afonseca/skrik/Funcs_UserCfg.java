@@ -229,7 +229,7 @@ public class Funcs_UserCfg extends Activity {
             data_status = "synced";
         } else {
             if (current_uid.matches("")) {
-                current_uid = getString(R.string.aux_dummy_uid);
+                current_uid = mContext.getResources().getString(R.string.aux_dummy_uid);
                 result = result + "UPDATE uid " + current_uid +"||";
             }
             data_status = "unsynced";

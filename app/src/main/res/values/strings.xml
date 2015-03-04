@@ -9,12 +9,14 @@
     <string name="title_usercfg">User details</string>
     <string name="title_tables">Tables</string>
 
+    <string name="btn_all_clear">Clear</string>
+    <string name="btn_all_clearall">Clear all</string>
+    <string name="btn_all_update">Update</string>
+    <string name="btn_channel_send">Send</string>
     <string name="btn_main_getuser">Give me one!</string>
     <string name="btn_overview_delete">Delete</string>
     <string name="btn_overview_newchannel">New</string>
-    <string name="btn_overview_update">Update</string>
     <string name="btn_searchuser_search">Search</string>
-    <string name="btn_usercfg_clear">Clear</string>
     <string name="btn_usercfg_entermanual">Enter manually</string>
     <string name="btn_usercfg_save">Save</string>
 
@@ -25,7 +27,7 @@
     <string name="hint_usercfg_pass">Add a password</string>
     <string name="hint_usercfg_phone">Enter your phone number here</string>
 
-    <string name="msg_first_offline">You registered while being offline. Get connected at least once to start using @string/app_name</string>
+    <string name="msg_first_offline">Registering a new user requires internet. Get connected and push here to retry</string>
     <string name="msg_del_confirm">Are you sure you want to DELETE your USER DATA?</string>
     <string name="msg_del_conf_n">Ups, NO!</string>
     <string name="msg_del_conf_y">YES, do it!</string>

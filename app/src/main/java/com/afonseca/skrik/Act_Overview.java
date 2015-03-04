@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,45 +42,53 @@ public class Act_Overview extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
-        Context context = getApplicationContext();
-        serverSide = serverCheck(context);
+        Context mContext = getApplicationContext();
+        serverSide = serverCheck(mContext);
 
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
         newsMsgsSQLHandler = new DB_Msgs_Handler(this);
         newsUsersSQLHandler = new DB_Users_Handler(this);
 
-        String username = funcsUserCfg.getUsername(context);
-        String userid = funcsUserCfg.getUid(context);
-
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
+        String username = funcsUserCfg.getUsername(mContext);
+        String userid = funcsUserCfg.getUid(mContext);
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
         Username_tv = (TextView) findViewById(R.id.username_search_tv);
 
         Username_tv.setText(username);
 
-        showList(userid);
+        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
+
+        if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
+            showEmpty();
+        } else {
+            showList(userid);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        Context context = getApplicationContext();
-        serverSide = serverCheck(context);
+        Context mContext = getApplicationContext();
+        serverSide = serverCheck(mContext);
 
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
 
-        String username = funcsUserCfg.getUsername(context);
-        String userid = funcsUserCfg.getUid(context);
+        String username = funcsUserCfg.getUsername(mContext);
+        String userid = funcsUserCfg.getUid(mContext);
 
         Username_tv.setText(username);
 
         if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
 
-        showList(userid);
+        if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
+            showEmpty();
+        } else {
+            showList(userid);
+        }
     }
 
     @Override
@@ -114,6 +122,14 @@ public class Act_Overview extends ActionBarActivity {
         String userid = funcsUserCfg.getUid(context);
         showList(userid);
     }
+
+    private void showEmpty() {
+
+        Button emptyText = (Button)findViewById(R.id.empty_string);
+        NewsList_lv.setEmptyView(emptyText);
+
+    }
+
 
     private void showList(String user_me) {
         Context mContext = getApplicationContext();
@@ -204,6 +220,11 @@ public class Act_Overview extends ActionBarActivity {
     /* "GOTO" Calls */
 
     public void gotoUserConfig() {
+        Intent intent = new Intent(this, Act_UserCfg.class);
+        startActivity(intent);
+    }
+    // Version for xml elements
+    public void gotoUserConfig(View view) {
         Intent intent = new Intent(this, Act_UserCfg.class);
         startActivity(intent);
     }

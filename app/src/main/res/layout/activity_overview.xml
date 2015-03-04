@@ -41,7 +41,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_overview_update"
+            android:text="@string/btn_all_update"
             android:id="@+id/update_btn"
             android:textColor="#ffefefef"
             android:onClick="updateOverview"
@@ -83,5 +83,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/newslist_lv" />
+
+    <Button
+        android:id="@+id/empty_string"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:onClick="gotoUserConfig"
+        android:text="@string/msg_first_offline"
+        android:textColor="@color/OrangeRed" />
 
 </LinearLayout>

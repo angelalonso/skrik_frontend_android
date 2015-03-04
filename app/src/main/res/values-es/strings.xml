@@ -6,16 +6,18 @@
     <string name="hello_world">¡Hola Mundo!</string>
     <string name="action_settings">Configuración</string>
 
-    <string name="title_usercfg">Detalles de usuario</string>
+    <string name="title_usercfg">Ajustes</string>
     <string name="title_tables">Tablas</string>
 
 
+    <string name="btn_all_clear">Resetear</string>
+    <string name="btn_all_clearall">Borrar todo</string>
+    <string name="btn_all_update">Actualizar</string>
+    <string name="btn_channel_send">Enviar</string>
     <string name="btn_main_getuser">¡Quiero uno!</string>
     <string name="btn_overview_delete">Borrar</string>
     <string name="btn_overview_newchannel">Nuevo</string>
-    <string name="btn_overview_update">Actualizar</string>
     <string name="btn_searchuser_search">Buscar</string>
-    <string name="btn_usercfg_clear">Resetear</string>
     <string name="btn_usercfg_entermanual">Introducir manualmente</string>
     <string name="btn_usercfg_save">Guardar</string>
 
@@ -26,7 +28,7 @@
     <string name="hint_usercfg_pass">Introduzca una contraseña</string>
     <string name="hint_usercfg_phone">Introduzca su teléfono aquí</string>
 
-    <string name="msg_first_offline">Te registraste sin conexi¡on a internet. Conéctate al menos una vez para empezar a usar @string/app_name</string>
+    <string name="msg_first_offline">El primer registro necesita internet. Conéctate y pulsa aquí para intentar salvar de nuevo</string>
     <string name="msg_del_confirm">¿Estás seguro de que quieres BORRAR tus DATOS DE USUARIO?</string>
     <string name="msg_del_conf_n">¡Ups, NO!</string>
     <string name="msg_del_conf_y">¡SÍ, adelante!</string>

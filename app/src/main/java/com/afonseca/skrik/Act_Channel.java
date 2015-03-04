@@ -139,7 +139,6 @@ public class Act_Channel extends ActionBarActivity {
                     String item_userid_to = c1.getString(c1.getColumnIndex("userid_to"));
                     String item_timestamp = c1.getString(c1.getColumnIndex("timestamp"));
                     String sendResult = backend.sendMsgToBackend(itemMessage,item_userid_from,item_userid_to,item_timestamp);
-                    Log.i("TESTING - Message added: position", sendResult);
                     String updateQuery = "UPDATE MSGS SET status='sending' WHERE id='" + item_id + "';";
                     msgsSQLHandler.executeQuery(updateQuery);
                     if (sendResult.contains("received")){
