@@ -84,21 +84,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/newslist_lv" />
 
-    <ViewStub
-        android:id="@android:id/empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout="@layout/empty" />
-
     <Button
-        android:id="@+id/empty_string"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:id="@+id/empty_list_view"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
         android:onClick="gotoUserConfig"
-        android:text="@string/msg_first_offline"
-        android:textColor="@color/OrangeRed" />
+        android:text="@string/msg_user_not_registered"
+        android:background="@color/White"
+        android:textColor="@color/OrangeRed"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:padding="20dp" />
 
 </LinearLayout>

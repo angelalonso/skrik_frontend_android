@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -125,8 +126,10 @@ public class Act_Overview extends ActionBarActivity {
 
     private void showEmpty() {
 
-        Button emptyText = (Button)findViewById(R.id.empty_string);
-        NewsList_lv.setEmptyView(emptyText);
+
+        NewsList_lv.setEmptyView( findViewById( R.id.empty_list_view ) );
+        NewsList_lv.setAdapter( new ArrayAdapter( this, R.layout.activity_overview, new ArrayList() ) );
+
         // TODO: http://cyrilmottier.com/2011/06/20/listview-tips-tricks-1-handle-emptiness/
         //layout/empty and activity_overview.viewstub might not be needed
 
