@@ -84,6 +84,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/newslist_lv" />
 
+    <ViewStub
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout="@layout/empty" />
+
     <Button
         android:id="@+id/empty_string"
         android:layout_width="match_parent"

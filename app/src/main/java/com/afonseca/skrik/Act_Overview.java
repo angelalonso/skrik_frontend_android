@@ -127,12 +127,15 @@ public class Act_Overview extends ActionBarActivity {
 
         Button emptyText = (Button)findViewById(R.id.empty_string);
         NewsList_lv.setEmptyView(emptyText);
+        // TODO: http://cyrilmottier.com/2011/06/20/listview-tips-tricks-1-handle-emptiness/
+        //layout/empty and activity_overview.viewstub might not be needed
 
     }
 
 
     private void showList(String user_me) {
         Context mContext = getApplicationContext();
+        //NewsList_lv.setEmptyView(findViewById(android.R.id.empty));
 
         SimpleDateFormat fmt = new SimpleDateFormat(getString(R.string.aux_date_format));
 
