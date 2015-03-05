@@ -79,7 +79,7 @@ public class Act_Tables extends ActionBarActivity {
         content = "";
 
         List<String> array_list = new ArrayList<String>();
-/*
+
         String query = "SELECT id, username, blacklisted FROM USERS";
 
         Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
@@ -89,19 +89,6 @@ public class Act_Tables extends ActionBarActivity {
                     content = c1.getString(c1.getColumnIndex("id")) + " | ";
                     content = content + c1.getString(c1.getColumnIndex("username")) + " | ";
                     content = content + c1.getString(c1.getColumnIndex("blacklisted"));
-                    array_list.add(content);
-                } while (c1.moveToNext());
-            }
-        }
-        */
-
-        String query = "SELECT count(message) as msgs_nr, status FROM MSGS where status='received' JOIN SELECT count(message) as msgs_nr, status FROM MSGS where status='sent'";
-        Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
-        if (c1 != null && c1.getCount() > 0) {
-            if (c1.moveToFirst()) {
-                do {
-                    content = c1.getString(c1.getColumnIndex("msgs_nr")) + " | ";
-                    content = content + c1.getString(c1.getColumnIndex("userid_from")) + " | ";
                     array_list.add(content);
                 } while (c1.moveToNext());
             }

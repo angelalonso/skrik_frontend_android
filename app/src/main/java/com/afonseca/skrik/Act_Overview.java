@@ -130,9 +130,6 @@ public class Act_Overview extends ActionBarActivity {
         NewsList_lv.setEmptyView( findViewById( R.id.empty_list_view ) );
         NewsList_lv.setAdapter( new ArrayAdapter( this, R.layout.activity_overview, new ArrayList() ) );
 
-        // TODO: http://cyrilmottier.com/2011/06/20/listview-tips-tricks-1-handle-emptiness/
-        //layout/empty and activity_overview.viewstub might not be needed
-
     }
 
 
@@ -144,7 +141,10 @@ public class Act_Overview extends ActionBarActivity {
 
         ArrayList<Data_OverviewItems> contactList = new ArrayList<>();
         contactList.clear();
-
+        //TODO:
+        //    TODO: For each new message received OR sent, add the user (if it was not there yet.
+        //    TODO: Get the list of users (not me, and not blacklisted)
+        //    TODO: for each, get the latest message and timestamp, plus the amount of messages not read
         //String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
         String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
 
