@@ -12,14 +12,7 @@
         android:layout_width="36dp"
         android:layout_height="51dp">
 
-        <TextView
-            android:layout_width="33dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Nr"
-            android:id="@+id/nr_msgs_tv"
-            android:padding="10dp"
-            android:textSize="10dp" />
+
 
         <TextView
             android:layout_width="47dp"
@@ -33,7 +26,7 @@
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="49dp"
+        android:layout_height="50dp"
         android:layout_weight="1.01"
         >
         <LinearLayout
@@ -67,15 +60,32 @@
             android:layout_marginLeft="20dp" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/timestamp_tv"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="timestamp"
-        android:textColor="#000"
-        android:gravity="right"
-        android:layout_gravity="right"
-        android:padding="10dp"
-        android:textSize="10dp" />
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="25dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Nr"
+            android:id="@+id/nr_msgs_tv"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:padding="2dp"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/timestamp_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="timestamp"
+            android:textColor="#000"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:padding="2dp"
+            android:textSize="10dp" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -145,6 +145,7 @@ public class Act_Overview extends ActionBarActivity {
         ArrayList<Data_OverviewItems> contactList = new ArrayList<>();
         contactList.clear();
 
+        //String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
         String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
 
         Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
