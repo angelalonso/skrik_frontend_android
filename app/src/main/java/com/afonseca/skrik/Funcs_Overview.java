@@ -9,7 +9,7 @@ import android.database.Cursor;
 public class Funcs_Overview extends Activity {
 
     Ctrl_Backend backend = new Ctrl_Backend();
-
+    //TODO: Where is this called from? Act_overview>Showlist
     public String getUsername(Context mContext,String newsUser_id) {
         DB_Users_Handler newsUsersSQLHandler = new DB_Users_Handler(mContext);
         String query = "SELECT username FROM USERS WHERE id = '" + newsUser_id + "'";
@@ -24,12 +24,12 @@ public class Funcs_Overview extends Activity {
         }
         if (username.matches("")) {
             username = backend.getUsername(newsUser_id);
-            addUser(mContext,newsUser_id,username);
+            addNewUser(mContext,newsUser_id,username);
         }
         return username;
     }
-
-    public void addUser(Context mContext,String userid, String username){
+    // TODO: It is only used from here (up there), should be called when a new message arrives/is sent
+    public void addNewUser(Context mContext,String userid, String username){
         DB_Users_Handler newsUsersSQLHandler = new DB_Users_Handler(mContext);
 
         String query = "INSERT INTO USERS (id, username, blacklisted) VALUES('" + userid + "','" + username + "',0)";

@@ -20,6 +20,7 @@ public class Act_Tables extends ActionBarActivity {
     /* Declarations */
 
     DB_Msgs_Handler newsMsgsSQLHandler;
+    DB_Users_Handler newsUsersSQLHandler;
 
     String content;
     ListView content_lv;
@@ -32,6 +33,7 @@ public class Act_Tables extends ActionBarActivity {
         setContentView(R.layout.activity_tables);
 
         newsMsgsSQLHandler = new DB_Msgs_Handler(this);
+        newsUsersSQLHandler = new DB_Users_Handler(this);
 
         content_lv = (ListView) findViewById(R.id.table_content_lv);
 
@@ -82,7 +84,7 @@ public class Act_Tables extends ActionBarActivity {
 
         String query = "SELECT id, username, blacklisted FROM USERS";
 
-        Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
+        Cursor c1 = newsUsersSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
                 do {

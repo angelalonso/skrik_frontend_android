@@ -164,6 +164,7 @@ public class Act_Overview extends ActionBarActivity {
 
                     overviewItems.setTimestamp(timestamp);
                     String userid_from = c1.getString(c1.getColumnIndex("userid_from"));
+                    //TODO: Get new username IF IT's NOT US!
                     String userid_name = functionsOverview.getUsername(mContext,userid_from);
                     overviewItems.setUserid(userid_from);
                     overviewItems.setUsername(userid_name);
