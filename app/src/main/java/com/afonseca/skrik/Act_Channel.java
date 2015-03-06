@@ -19,6 +19,7 @@ public class Act_Channel extends ActionBarActivity {
     /* Declarations */
 
     DB_Msgs_Handler msgsSQLHandler;
+    DB_Users_Handler usersSQLHandler;
     Ctrl_Backend backend = new Ctrl_Backend();
 
     String serverSide;
@@ -37,6 +38,7 @@ public class Act_Channel extends ActionBarActivity {
         setContentView(R.layout.activity_channel);
 
         msgsSQLHandler = new DB_Msgs_Handler(this);
+        usersSQLHandler = new DB_Users_Handler(this);
         Context context = getApplicationContext();
         serverSide = serverCheck(context);
 
@@ -48,7 +50,7 @@ public class Act_Channel extends ActionBarActivity {
         Username_tv = (TextView) findViewById(R.id.username_search_tv);
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(msgsSQLHandler, me_userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(msgsSQLHandler, usersSQLHandler, me_userid); }
         //if (serverSide.matches("OK")) { Log.i("TESTING", userid); }
         showMessages(other_userid);
 
@@ -108,6 +110,7 @@ public class Act_Channel extends ActionBarActivity {
         if (!message.matches("") ) {
             //TODO: We avoid sending millis here, but might be better to do so.
             String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+
             msgsSQLHandler.addNewMessage(me_userid, other_userid, message, timestamp);
             serverSide = serverCheck(mContext);
             if (serverSide.matches("OK")) {

@@ -59,7 +59,7 @@ public class Act_Overview extends ActionBarActivity {
 
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler,userid); }
         // TODO: create a showempty for other "emptinesses (maybe just a "look for users" message?)
         if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
             showEmpty();
@@ -83,7 +83,7 @@ public class Act_Overview extends ActionBarActivity {
 
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, userid); }
+        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler,userid); }
 
         if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
             showEmpty();
