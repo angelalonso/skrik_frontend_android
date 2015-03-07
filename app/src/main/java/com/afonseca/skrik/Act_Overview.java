@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,7 +60,17 @@ public class Act_Overview extends ActionBarActivity {
 
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler,userid); }
+        if (serverSide.matches("OK")) {
+            // We get the list of new messages and if any is from an unknown user, we save its details locally(getUsername does it for us)
+            String update = backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler, userid);
+            if (update.contains("Add ")) {
+                String[] NewUsers = update.replace("Add ", "").split(",");
+                for (int c = 0; c < NewUsers.length; c++) {
+                    Log.i("TESTING, usuario " + c + " is ", NewUsers[c]);
+                    username = functionsOverview.getUsername(mContext,NewUsers[c]);
+                }
+            }
+        }
         // TODO: create a showempty for other "emptinesses (maybe just a "look for users" message?)
         if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
             showEmpty();
@@ -83,7 +94,17 @@ public class Act_Overview extends ActionBarActivity {
 
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) { backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler,userid); }
+        if (serverSide.matches("OK")) {
+            // We get the list of new messages and if any is from an unknown user, we save its details locally(getUsername does it for us)
+            String update = backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler, userid);
+            if (update.contains("Add ")) {
+                String[] NewUsers = update.replace("Add ", "").split(",");
+                for (int c = 0; c < NewUsers.length; c++) {
+                    Log.i("TESTING, usuario " + c + " is ", NewUsers[c]);
+                    username = functionsOverview.getUsername(mContext,NewUsers[c]);
+                }
+            }
+        }
 
         if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
             showEmpty();

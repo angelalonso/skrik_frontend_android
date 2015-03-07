@@ -25,6 +25,7 @@ public class Ctrl_Backend {
     String PORT = "8000";
     String URL = "http://" + IP + ":" + PORT;
 
+
 /* SERVER CHECK */
 
     public String testNetwork(Context mContext) {
@@ -161,9 +162,10 @@ public class Ctrl_Backend {
 
 /* MSGS DATA */
 
-    public void updateNewslist(DB_Msgs_Handler sqlMsgsHandler,DB_Users_Handler sqlUsersHandler,String userid) {
+    public String updateNewslist(DB_Msgs_Handler sqlMsgsHandler,DB_Users_Handler sqlUsersHandler,String userid) {
 
         String output = null;
+        String callback = "Add ";
 
         /* First of all, we make sure we get something from the Backend */
         String url_getnewid = URL + "/getnews/" + userid + "/";
@@ -244,6 +246,7 @@ public class Ctrl_Backend {
                 if (nr_users.matches("0")) {
                     //TODO: INSERT A NEW USER HERE
                     Log.i("TESTING      NOT FOUND!!    -" + userfrom + "  ->", nr_users);
+                    callback = callback + userfrom + ",";
                 }
                 c3.close();
             } catch (JSONException e) {
@@ -253,6 +256,11 @@ public class Ctrl_Backend {
         if (!received_key.matches("")) {
             confirmReceivedBackend(received_key);
         }
+        if (callback.matches("Add ")) {
+            callback = "";
+        }
+        Log.i("TESTING  Callback!! ->", callback);
+        return callback;
     }
 
     public String confirmReceivedBackend(String key) {
