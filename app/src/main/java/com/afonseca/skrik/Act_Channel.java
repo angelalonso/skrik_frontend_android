@@ -98,7 +98,7 @@ public class Act_Channel extends ActionBarActivity {
                 } while (c1.moveToNext());
             }
         }
-
+        c1.close();
         Ctrl_ChannelListAdapter channelAdapter = new Ctrl_ChannelListAdapter(
                 Act_Channel.this, chatList);
         ChatList_lv.setAdapter(channelAdapter);
@@ -155,6 +155,7 @@ public class Act_Channel extends ActionBarActivity {
                 } while (c1.moveToNext());
             }
         }
+        c1.close();
     }
 
     /* Check Functions */

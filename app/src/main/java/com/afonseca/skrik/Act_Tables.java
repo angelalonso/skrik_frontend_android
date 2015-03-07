@@ -68,6 +68,7 @@ public class Act_Tables extends ActionBarActivity {
                 } while (c1.moveToNext());
             }
         }
+        c1.close();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -81,21 +82,6 @@ public class Act_Tables extends ActionBarActivity {
         content = "";
 
         List<String> array_list = new ArrayList<String>();
-/*
-        String query = "SELECT id, username, blacklisted FROM USERS";
-
-        Cursor c1 = newsUsersSQLHandler.selectQuery(query);
-        if (c1 != null && c1.getCount() > 0) {
-            if (c1.moveToFirst()) {
-                do {
-                    content = c1.getString(c1.getColumnIndex("id")) + " | ";
-                    content = content + c1.getString(c1.getColumnIndex("username")) + " | ";
-                    content = content + c1.getString(c1.getColumnIndex("blacklisted"));
-                    array_list.add(content);
-                } while (c1.moveToNext());
-            }
-        }
-*/
 
         String usr_query = "SELECT id, username, blacklisted FROM USERS where blacklisted=0";
 
@@ -119,9 +105,11 @@ public class Act_Tables extends ActionBarActivity {
                             } while (c2.moveToNext());
                         }
                     }
+                    c2.close();
                 } while (c1.moveToNext());
             }
         }
+        c1.close();
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,

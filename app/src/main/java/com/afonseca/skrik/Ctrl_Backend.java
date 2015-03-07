@@ -218,8 +218,8 @@ public class Ctrl_Backend {
                         }
                     }
                 }
-
                 c1.close();
+
                 String auxquery = "SELECT count(*) as result FROM MSGS ";
                 Cursor c2 = sqlMsgsHandler.selectQuery(auxquery);
                 String nr_msgs = "";
@@ -230,7 +230,6 @@ public class Ctrl_Backend {
                         } while (c2.moveToNext());
                     }
                 }
-
                 c2.close();
 
                 String query_userexists = "SELECT count(*) AS result FROM USERS WHERE id = '" + userfrom + "' ";
@@ -248,6 +247,7 @@ public class Ctrl_Backend {
                     callback = callback + userfrom + ",";
                 }
                 c3.close();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

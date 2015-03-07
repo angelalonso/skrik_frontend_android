@@ -24,6 +24,7 @@ public class Funcs_Overview extends Activity {
                 } while (c1.moveToNext());
             }
         }
+        c1.close();
         if (username.matches("")) {
             username = backend.getUsername(newsUser_id);
             addNewUser(mContext,newsUser_id,username);
