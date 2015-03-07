@@ -9,7 +9,9 @@ import android.database.Cursor;
 public class Funcs_Overview extends Activity {
 
     Ctrl_Backend backend = new Ctrl_Backend();
-    //TODO: Where is this called from? Act_overview>Showlist
+    //TODO: Where is this called from? Act_overview>Showlist, Act_Channel>sendMessage
+
+    //TODO: This should not go in functions overview
     public String getUsername(Context mContext,String newsUser_id) {
         DB_Users_Handler newsUsersSQLHandler = new DB_Users_Handler(mContext);
         String query = "SELECT username FROM USERS WHERE id = '" + newsUser_id + "'";

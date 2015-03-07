@@ -66,8 +66,7 @@ public class Act_Overview extends ActionBarActivity {
             if (update.contains("Add ")) {
                 String[] NewUsers = update.replace("Add ", "").split(",");
                 for (int c = 0; c < NewUsers.length; c++) {
-                    Log.i("TESTING, usuario " + c + " is ", NewUsers[c]);
-                    username = functionsOverview.getUsername(mContext,NewUsers[c]);
+                    String newUserName = functionsOverview.getUsername(mContext,NewUsers[c]);
                 }
             }
         }
@@ -100,8 +99,7 @@ public class Act_Overview extends ActionBarActivity {
             if (update.contains("Add ")) {
                 String[] NewUsers = update.replace("Add ", "").split(",");
                 for (int c = 0; c < NewUsers.length; c++) {
-                    Log.i("TESTING, usuario " + c + " is ", NewUsers[c]);
-                    username = functionsOverview.getUsername(mContext,NewUsers[c]);
+                    String newUserName = functionsOverview.getUsername(mContext,NewUsers[c]);
                 }
             }
         }

@@ -21,6 +21,8 @@ public class Act_Channel extends ActionBarActivity {
     DB_Msgs_Handler msgsSQLHandler;
     DB_Users_Handler usersSQLHandler;
     Ctrl_Backend backend = new Ctrl_Backend();
+    //TODO: This should not go in functions overview
+    Funcs_Overview functionsOverview = new Funcs_Overview();
 
     String serverSide;
     String other_userid;
@@ -110,6 +112,7 @@ public class Act_Channel extends ActionBarActivity {
         if (!message.matches("") ) {
             //TODO: We avoid sending millis here, but might be better to do so.
             String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+            String newUserName = functionsOverview.getUsername(mContext,other_userid);
 
             msgsSQLHandler.addNewMessage(me_userid, other_userid, message, timestamp);
             serverSide = serverCheck(mContext);
