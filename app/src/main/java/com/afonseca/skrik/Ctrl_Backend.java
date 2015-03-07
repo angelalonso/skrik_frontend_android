@@ -178,7 +178,7 @@ public class Ctrl_Backend {
         }
         /*  Work on the result */
         ArrayList<String> stringArray = new ArrayList<String>();
-        if (output != null){
+        if (output != null && !output.contains("<!DOCTYPE")){
             try {
                 JSONArray jsonArray = new JSONArray(output);
                 for (int i = 0; i < jsonArray.length(); i++) {

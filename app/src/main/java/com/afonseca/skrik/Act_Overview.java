@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Time;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -65,7 +65,7 @@ public class Act_Overview extends ActionBarActivity {
             if (update.contains("Add ")) {
                 String[] NewUsers = update.replace("Add ", "").split(",");
                 for (int c = 0; c < NewUsers.length; c++) {
-                    String newUserName = functionsOverview.getUsername(mContext,NewUsers[c]);
+                    functionsOverview.getUsername(mContext,NewUsers[c]);
                 }
             }
         }
@@ -152,10 +152,9 @@ public class Act_Overview extends ActionBarActivity {
 
 
     private void showList(String user_me) {
-        Context mContext = getApplicationContext();
-        //NewsList_lv.setEmptyView(findViewById(android.R.id.empty));
 
         SimpleDateFormat fmt = new SimpleDateFormat(getString(R.string.aux_date_format));
+
 
         ArrayList<Data_OverviewItems> contactList = new ArrayList<>();
         contactList.clear();
@@ -164,43 +163,36 @@ public class Act_Overview extends ActionBarActivity {
         //    TODO: Get the list of users (not me, and not blacklisted)
         //    TODO: for each, get the latest message and timestamp, plus the amount of messages not read
         //String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
-        String query = "SELECT id, username, blacklisted FROM USERS where blacklisted=0 and id<>'" + user_me + "'";
+        ArrayList<String> usernames = new ArrayList<String>();
+        ArrayList<String> userids = new ArrayList<String>();
+        String query = "SELECT id, username FROM USERS where blacklisted=0 and id<>'" + user_me + "'";
         Cursor c_1 = newsUsersSQLHandler.selectQuery(query);
         if (c_1 != null && c_1.getCount() > 0) {
             if (c_1.moveToFirst()) {
                 do {
-                    Data_OverviewItems overviewItems = new Data_OverviewItems();
-                    String userid = c_1.getString(c_1.getColumnIndex("id"));
-                    String username = c_1.getString(c_1.getColumnIndex("username"));
-                    overviewItems.setUsername(username);
-                    String msg_query = "SELECT count(message) as nr_msgs, message, timestamp FROM MSGS WHERE userid_from='" + userid + "'";
-                    Cursor c_2 = newsMsgsSQLHandler.selectQuery(msg_query);
-                    if (c_2 != null && c_2.getCount() > 0) {
-                        if (c_2.moveToFirst()) {
-                            do {
-                                String nr_msgs = c_2.getString(c_2.getColumnIndex("nr_msgs"));
-                                String msg = c_2.getString(c_2.getColumnIndex("message"));
-                                String timestamp_raw = c_2.getString(c_2.getColumnIndex("timestamp"));
-                                if (msg.matches("null")) {
-                                    Log.i("TESTING   ->", nr_msgs + msg + timestamp_raw);
-                                }
-                                /*if (!nr_msgs.matches(null)) {overviewItems.setNrOfMsgs(nr_msgs);}
-                                if (!msg.matches(null)) {overviewItems.setNews(msg);}
-                                if (!timestamp_raw.matches(null)) {
-                                    String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
-                                    overviewItems.setTimestamp(timestamp);
-                                }
-                                */
-                            } while (c_2.moveToNext());
-                        }
-                    }
-                    contactList.add(overviewItems);
-                    c_2.close();
-
+                    userids.add(c_1.getString(c_1.getColumnIndex("id")));
+                    usernames.add(c_1.getString(c_1.getColumnIndex("username")));
                 } while (c_1.moveToNext());
             }
         }
         c_1.close();
+        for (int c = 0; c < userids.size(); c++) {
+            Data_OverviewItems overviewItems = new Data_OverviewItems();
+            overviewItems.setUsername(usernames.get(c));
+
+            String msg_query = "SELECT count(message) as nr_msgs,status,message FROM MSGS WHERE (userid_from='" + userids.get(c) + "' OR userid_to='" + userids.get(c) + "') ";
+            Cursor c_2 = newsMsgsSQLHandler.selectQuery(msg_query);
+            if (c_2 != null && c_2.getCount() > 0) {
+                if (c_2.moveToFirst()) {
+                    do {
+                        overviewItems.setNrOfMsgs(c_2.getString(c_2.getColumnIndex("nr_msgs")));
+                        overviewItems.setNews(c_2.getString(c_2.getColumnIndex("message")));
+                    } while (c_2.moveToNext());
+                }
+            }
+            c_2.close();
+            contactList.add(overviewItems);
+        }
         Ctrl_OverviewListAdapter contactListAdapter = new Ctrl_OverviewListAdapter(
                 Act_Overview.this, contactList);
         NewsList_lv.setAdapter(contactListAdapter);
