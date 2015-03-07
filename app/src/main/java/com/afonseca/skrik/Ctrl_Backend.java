@@ -245,7 +245,6 @@ public class Ctrl_Backend {
                 }
                 if (nr_users.matches("0")) {
                     //TODO: INSERT A NEW USER HERE
-                    Log.i("TESTING      NOT FOUND!!    -" + userfrom + "  ->", nr_users);
                     callback = callback + userfrom + ",";
                 }
                 c3.close();
@@ -259,7 +258,6 @@ public class Ctrl_Backend {
         if (callback.matches("Add ")) {
             callback = "";
         }
-        Log.i("TESTING  Callback!! ->", callback);
         return callback;
     }
 

@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -165,35 +164,43 @@ public class Act_Overview extends ActionBarActivity {
         //    TODO: Get the list of users (not me, and not blacklisted)
         //    TODO: for each, get the latest message and timestamp, plus the amount of messages not read
         //String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
-        String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
-
-        Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
-        if (c1 != null && c1.getCount() > 0) {
-            if (c1.moveToFirst()) {
+        String query = "SELECT id, username, blacklisted FROM USERS where blacklisted=0 and id<>'" + user_me + "'";
+        Cursor c_1 = newsUsersSQLHandler.selectQuery(query);
+        if (c_1 != null && c_1.getCount() > 0) {
+            if (c_1.moveToFirst()) {
                 do {
                     Data_OverviewItems overviewItems = new Data_OverviewItems();
-
-                    overviewItems.setNrOfMsgs(c1.getString(c1
-                            .getColumnIndex("msg_nr")));
-                    overviewItems.setNews(c1.getString(c1
-                            .getColumnIndex("message")));
-
-                    String timestamp_raw = c1.getString(c1.getColumnIndex("timestamp_last"));
-                    String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
-
-                    overviewItems.setTimestamp(timestamp);
-                    String userid_from = c1.getString(c1.getColumnIndex("userid_from"));
-                    //TODO: Get new username IF IT's NOT US!
-                    String userid_name = functionsOverview.getUsername(mContext,userid_from);
-                    overviewItems.setUserid(userid_from);
-                    overviewItems.setUsername(userid_name);
-
+                    String userid = c_1.getString(c_1.getColumnIndex("id"));
+                    String username = c_1.getString(c_1.getColumnIndex("username"));
+                    overviewItems.setUsername(username);
+                    String msg_query = "SELECT count(message) as nr_msgs, message, timestamp FROM MSGS WHERE userid_from='" + userid + "'";
+                    Cursor c_2 = newsMsgsSQLHandler.selectQuery(msg_query);
+                    if (c_2 != null && c_2.getCount() > 0) {
+                        if (c_2.moveToFirst()) {
+                            do {
+                                String nr_msgs = c_2.getString(c_2.getColumnIndex("nr_msgs"));
+                                String msg = c_2.getString(c_2.getColumnIndex("message"));
+                                String timestamp_raw = c_2.getString(c_2.getColumnIndex("timestamp"));
+                                if (msg.matches("null")) {
+                                    Log.i("TESTING   ->", nr_msgs + msg + timestamp_raw);
+                                }
+                                /*if (!nr_msgs.matches(null)) {overviewItems.setNrOfMsgs(nr_msgs);}
+                                if (!msg.matches(null)) {overviewItems.setNews(msg);}
+                                if (!timestamp_raw.matches(null)) {
+                                    String timestamp = fmt.format(new Time(Long.parseLong(timestamp_raw + "000")));
+                                    overviewItems.setTimestamp(timestamp);
+                                }
+                                */
+                            } while (c_2.moveToNext());
+                        }
+                    }
                     contactList.add(overviewItems);
+                    c_2.close();
 
-                } while (c1.moveToNext());
+                } while (c_1.moveToNext());
             }
         }
-
+        c_1.close();
         Ctrl_OverviewListAdapter contactListAdapter = new Ctrl_OverviewListAdapter(
                 Act_Overview.this, contactList);
         NewsList_lv.setAdapter(contactListAdapter);
