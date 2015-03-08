@@ -14,6 +14,8 @@ public class Act_Main extends ActionBarActivity {
 
     Funcs_UserCfg controlUserconfig = new Funcs_UserCfg();
 
+    //https://www.jetbrains.com/idea/help/debugging-your-first-java-application.html
+
     /* General Methods */
 
     @Override
