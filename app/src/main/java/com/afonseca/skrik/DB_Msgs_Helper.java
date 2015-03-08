@@ -4,11 +4,15 @@ package com.afonseca.skrik;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DB_Msgs_Helper extends SQLiteOpenHelper {
+
+    private static DB_Msgs_Helper instance;
+
+    public static final String DATABASE_NAME = "MSGS_DB";
     public static final String DATABASE_TABLE = "MSGS";
+    public static final int DATABASE_VERSION = 3;
 
     public static final String COLUMN1 = "id";
     public static final String COLUMN2 = "userid_from";
@@ -28,11 +32,18 @@ public class DB_Msgs_Helper extends SQLiteOpenHelper {
             + COLUMN7 + " text not null "
             + ");";
 
-    public DB_Msgs_Helper(Context context, String name, CursorFactory factory,
-                          int version) {
-        super(context, name, factory, version);
+
+    public DB_Msgs_Helper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         // TODO Auto-generated constructor stub
 
+    }
+
+    public static synchronized DB_Msgs_Helper getInstance(Context context) {
+        if (instance == null)
+            instance = new DB_Msgs_Helper(context);
+
+        return instance;
     }
 
     @Override

@@ -64,7 +64,6 @@ public class Act_Channel extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
         showMessages(other_userid);
     }
@@ -79,7 +78,7 @@ public class Act_Channel extends ActionBarActivity {
         chatList.clear();
 
         String query = "SELECT CASE WHEN userid_from ='" + user_other + "' THEN 'FROM' ELSE 'TO' END AS to_or_from, id, message, timestamp, status FROM MSGS WHERE userid_from ='" + user_other + "' OR userid_to ='" + user_other + "' ORDER BY timestamp;";
-
+        msgsSQLHandler = new DB_Msgs_Handler(this);
         Cursor c1 = msgsSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {

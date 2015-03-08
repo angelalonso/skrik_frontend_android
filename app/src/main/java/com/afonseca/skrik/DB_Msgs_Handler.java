@@ -8,15 +8,12 @@ import android.util.Log;
 
 public class DB_Msgs_Handler {
 
-    public static final String DATABASE_NAME = "MSGS_DB";
-    public static final int DATABASE_VERSION = 3;
     SQLiteDatabase sqlDatabase;
     DB_Msgs_Helper dbHelper;
 
     public DB_Msgs_Handler(Context context) {
 
-        dbHelper = new DB_Msgs_Helper(context, DATABASE_NAME, null,
-                DATABASE_VERSION);
+        dbHelper = DB_Msgs_Helper.getInstance(context);
         sqlDatabase = dbHelper.getWritableDatabase();
     }
 
@@ -47,6 +44,7 @@ public class DB_Msgs_Handler {
             }
             sqlDatabase = dbHelper.getWritableDatabase();
             c1 = sqlDatabase.rawQuery(query, null);
+
 
         } catch (Exception e) {
 
@@ -90,6 +88,8 @@ public class DB_Msgs_Handler {
 
         return c1;
     }
+
+
 
 }
 

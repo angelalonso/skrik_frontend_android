@@ -9,16 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DB_Users_Handler {
 
-    public static final String DATABASE_NAME = "USERS_DB";
-    public static final int DATABASE_VERSION = 5;
-    //Context context;
     SQLiteDatabase sqlDatabase;
     DB_Users_Helper dbHelper;
 
     public DB_Users_Handler(Context context) {
 
-        dbHelper = new DB_Users_Helper(context, DATABASE_NAME, null,
-                DATABASE_VERSION);
+        dbHelper = DB_Users_Helper.getInstance(context);
         sqlDatabase = dbHelper.getWritableDatabase();
     }
 
@@ -58,6 +54,8 @@ public class DB_Users_Handler {
         return c1;
 
     }
+
+
 
 }
 

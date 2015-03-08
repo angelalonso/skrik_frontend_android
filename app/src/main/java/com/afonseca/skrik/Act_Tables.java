@@ -53,7 +53,7 @@ public class Act_Tables extends ActionBarActivity {
         List<String> array_list = new ArrayList<String>();
 
         String query = "SELECT userid_from, userid_to, message, status, timestamp, backend_id  FROM MSGS";
-
+        newsMsgsSQLHandler = new DB_Msgs_Handler(this);
         Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
         if (c1 != null && c1.getCount() > 0) {
             if (c1.moveToFirst()) {
