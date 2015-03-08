@@ -24,6 +24,8 @@ public class Act_Channel extends ActionBarActivity {
     //TODO: This should not go in functions overview
     Funcs_Overview functionsOverview = new Funcs_Overview();
 
+    Context mContext;
+
     String serverSide;
     String other_userid;
     String me_userid;
@@ -41,8 +43,8 @@ public class Act_Channel extends ActionBarActivity {
 
         msgsSQLHandler = new DB_Msgs_Handler(this);
         usersSQLHandler = new DB_Users_Handler(this);
-        Context context = getApplicationContext();
-        serverSide = serverCheck(context);
+        mContext = getApplicationContext();
+        serverSide = serverCheck(mContext);
 
         Bundle b = getIntent().getExtras();
         other_userid = b.getString("userid_other");
@@ -62,9 +64,8 @@ public class Act_Channel extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        Context mContext = getApplicationContext();
+        mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
-
         showMessages(other_userid);
     }
 

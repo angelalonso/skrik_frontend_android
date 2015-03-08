@@ -25,12 +25,16 @@ public class Act_Overview extends ActionBarActivity {
     /* Declarations */
     //Extender Activity
     Funcs_Overview functionsOverview = new Funcs_Overview();
+    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
+    Ctrl_Backend backend = new Ctrl_Backend();
 
     DB_Msgs_Handler newsMsgsSQLHandler;
     DB_Users_Handler newsUsersSQLHandler;
 
-    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
-    Ctrl_Backend backend = new Ctrl_Backend();
+    Context mContext;
+
+    String username;
+    String userid;
 
     String serverSide;
 
@@ -43,7 +47,7 @@ public class Act_Overview extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
-        Context mContext = getApplicationContext();
+        mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
         // We would need this to add entries to/from us
@@ -51,14 +55,15 @@ public class Act_Overview extends ActionBarActivity {
         newsMsgsSQLHandler = new DB_Msgs_Handler(this);
         newsUsersSQLHandler = new DB_Users_Handler(this);
 
-        String username = funcsUserCfg.getUsername(mContext);
-        String userid = funcsUserCfg.getUid(mContext);
+        username = funcsUserCfg.getUsername(mContext);
+        userid = funcsUserCfg.getUid(mContext);
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
         Username_tv = (TextView) findViewById(R.id.username_search_tv);
 
         Username_tv.setText(username);
-
+//TODO: TUNE THIS!
+/*
         if (serverSide.matches("OK")) {
             // We get the list of new messages and if any is from an unknown user, we save its details locally(getUsername does it for us)
             String update = backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler, userid);
@@ -68,7 +73,7 @@ public class Act_Overview extends ActionBarActivity {
                     functionsOverview.getUsername(mContext,NewUsers[c]);
                 }
             }
-        }
+        }*/
         // TODO: create a showempty for other "emptinesses (maybe just a "look for users" message?)
         if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
             showEmpty();
@@ -81,28 +86,30 @@ public class Act_Overview extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        Context mContext = getApplicationContext();
+        mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
         // We would need this to add entries to/from us
         //  So far used in SHOWLIST */
 
-        String username = funcsUserCfg.getUsername(mContext);
-        String userid = funcsUserCfg.getUid(mContext);
+        //String username = funcsUserCfg.getUsername(mContext);
+        //String userid = funcsUserCfg.getUid(mContext);
 
-        Username_tv.setText(username);
+        //Username_tv.setText(username);
 
+//TODO: TUNE THIS!
+/*
         if (serverSide.matches("OK")) {
             // We get the list of new messages and if any is from an unknown user, we save its details locally(getUsername does it for us)
             String update = backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler, userid);
             if (update.contains("Add ")) {
                 String[] NewUsers = update.replace("Add ", "").split(",");
                 for (int c = 0; c < NewUsers.length; c++) {
-                    String newUserName = functionsOverview.getUsername(mContext,NewUsers[c]);
+                    functionsOverview.getUsername(mContext,NewUsers[c]);
                 }
             }
         }
-
+*/
         if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
             showEmpty();
         } else {
@@ -220,9 +227,9 @@ public class Act_Overview extends ActionBarActivity {
         }
         return status;
     }
-
+    //TODO: TUNE THIS
     public void listviewClick(View view) {
-        Context mContext = getApplicationContext();
+        //mContext = getApplicationContext();
         TextView userid_tv = (TextView) view.findViewById(R.id.id_tv);
         String userid_other = userid_tv.getText().toString();
         String userid_me = funcsUserCfg.getUid(mContext);
