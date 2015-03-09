@@ -166,12 +166,14 @@ public class Act_Overview extends ActionBarActivity {
             Data_OverviewItems overviewItems = new Data_OverviewItems();
             overviewItems.setUsername(usernames.get(c));
 
+            String nr_ofmsgs = "";
             String newmsg_query = "SELECT count(message) as nr_msgs FROM MSGS WHERE (userid_from='" + userids.get(c) + "' AND status='received') ";
             Cursor c_2 = newsMsgsSQLHandler.selectQuery(newmsg_query);
             if (c_2 != null && c_2.getCount() > 0) {
                 if (c_2.moveToFirst()) {
                     do {
-                        overviewItems.setNrOfMsgs(c_2.getString(c_2.getColumnIndex("nr_msgs")));
+                        nr_ofmsgs = c_2.getString(c_2.getColumnIndex("nr_msgs"));
+                        overviewItems.setNrOfMsgs(nr_ofmsgs);
                     } while (c_2.moveToNext());
                 }
             }
@@ -179,28 +181,68 @@ public class Act_Overview extends ActionBarActivity {
 
             String latest_ts = "";
             String latestts_query = "SELECT MAX(timestamp) as timestamp FROM MSGS WHERE (userid_from='" + userids.get(c) + "' OR userid_to='" + userids.get(c) + "')";
-            Cursor c_3 = newsMsgsSQLHandler.selectQuery(latestts_query);
-            if (c_3 != null && c_3.getCount() > 0) {
-                if (c_3.moveToFirst()) {
-                    do {
-                        String latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
-                        latest_ts = fmt.format(new Time(Long.parseLong(latest_ts_raw + "000")));
-                        overviewItems.setTimestamp(latest_ts);
-                    } while (c_3.moveToNext());
-                }
-            }
-            c_3.close();
-
             String latestmsg_query = "SELECT message FROM MSGS WHERE (userid_from='" + userids.get(c) + "'  OR userid_to='" + userids.get(c) + "' AND timestamp='" + latest_ts + "')";
-            Cursor c_4 = newsMsgsSQLHandler.selectQuery(latestmsg_query);
-            if (c_4 != null && c_4.getCount() > 0) {
-                if (c_4.moveToFirst()) {
-                    do {
-                        overviewItems.setNews(c_4.getString(c_4.getColumnIndex("message")));
-                    } while (c_4.moveToNext());
+
+            if (nr_ofmsgs.matches("0")) {
+                String allmsg_query = "SELECT count(message) as nr_msgs FROM MSGS WHERE userid_from='" + userids.get(c) + "' ";
+                Cursor c_aux = newsMsgsSQLHandler.selectQuery(allmsg_query);
+                if (c_aux != null && c_aux.getCount() > 0) {
+                    if (c_aux.moveToFirst()) {
+                        do {
+                            nr_ofmsgs = c_aux.getString(c_aux.getColumnIndex("nr_msgs"));
+                        } while (c_aux.moveToNext());
+                    }
                 }
+                c_aux.close();
+                if (!nr_ofmsgs.matches("0")) {
+                    Cursor c_3 = newsMsgsSQLHandler.selectQuery(latestts_query);
+                    if (c_3 != null && c_3.getCount() > 0) {
+                        if (c_3.moveToFirst()) {
+                            do {
+                                String latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
+                                latest_ts = fmt.format(new Time(Long.parseLong(latest_ts_raw + "000")));
+                                overviewItems.setTimestamp(latest_ts);
+                            } while (c_3.moveToNext());
+                        }
+                    }
+                    c_3.close();
+
+                    Cursor c_4 = newsMsgsSQLHandler.selectQuery(latestmsg_query);
+                    if (c_4 != null && c_4.getCount() > 0) {
+                        if (c_4.moveToFirst()) {
+                            do {
+                                overviewItems.setNews(c_4.getString(c_4.getColumnIndex("message")));
+                            } while (c_4.moveToNext());
+                        }
+                    }
+                    c_4.close();
+                }
+
+            } else {
+                Cursor c_3 = newsMsgsSQLHandler.selectQuery(latestts_query);
+                if (c_3 != null && c_3.getCount() > 0) {
+                    if (c_3.moveToFirst()) {
+                        do {
+                            String latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
+                            latest_ts = fmt.format(new Time(Long.parseLong(latest_ts_raw + "000")));
+                            overviewItems.setTimestamp(latest_ts);
+                        } while (c_3.moveToNext());
+                    }
+                }
+                c_3.close();
+
+                Cursor c_4 = newsMsgsSQLHandler.selectQuery(latestmsg_query);
+                if (c_4 != null && c_4.getCount() > 0) {
+                    if (c_4.moveToFirst()) {
+                        do {
+                            overviewItems.setNews(c_4.getString(c_4.getColumnIndex("message")));
+                        } while (c_4.moveToNext());
+                    }
+                }
+                c_4.close();
+
             }
-            c_4.close();
+
             contactList.add(overviewItems);
         }
         Ctrl_OverviewListAdapter contactListAdapter = new Ctrl_OverviewListAdapter(
