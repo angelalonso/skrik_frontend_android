@@ -166,7 +166,7 @@ public class Act_Overview extends ActionBarActivity {
             Data_OverviewItems overviewItems = new Data_OverviewItems();
             overviewItems.setUsername(usernames.get(c));
 
-            String newmsg_query = "SELECT count(message) as nr_msgs FROM MSGS WHERE userid_from='" + userids.get(c) + "' ";
+            String newmsg_query = "SELECT count(message) as nr_msgs FROM MSGS WHERE (userid_from='" + userids.get(c) + "' AND status='received') ";
             Cursor c_2 = newsMsgsSQLHandler.selectQuery(newmsg_query);
             if (c_2 != null && c_2.getCount() > 0) {
                 if (c_2.moveToFirst()) {

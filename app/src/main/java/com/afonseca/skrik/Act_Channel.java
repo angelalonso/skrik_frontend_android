@@ -103,6 +103,9 @@ public class Act_Channel extends ActionBarActivity {
                 Act_Channel.this, chatList);
         ChatList_lv.setAdapter(channelAdapter);
 
+        String update_query = "UPDATE MSGS SET status='read' WHERE (userid_from ='" + user_other + "' OR userid_to ='" + user_other + "') ";
+        msgsSQLHandler.executeQuery(update_query);
+
     }
 
     public void sendMessage(View view) {
