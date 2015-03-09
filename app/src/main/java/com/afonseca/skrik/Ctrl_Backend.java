@@ -232,22 +232,23 @@ public class Ctrl_Backend {
                 }
                 c2.close();
 
-                String query_userexists = "SELECT count(*) AS result FROM USERS WHERE id = '" + userfrom + "' ";
-                Cursor c3 = sqlUsersHandler.selectQuery(query_userexists);
-                String nr_users = "";
-                if (c3 != null && c3.getCount() > 0) {
-                    if (c3.moveToFirst()) {
-                        do {
-                            nr_users = c3.getString(c3.getColumnIndex("result"));
-                        } while (c3.moveToNext());
+                if (!callback.contains(userfrom)) {
+                    String query_userexists = "SELECT count(*) AS result FROM USERS WHERE id = '" + userfrom + "' ";
+                    Cursor c3 = sqlUsersHandler.selectQuery(query_userexists);
+                    String nr_users = "";
+                    if (c3 != null && c3.getCount() > 0) {
+                        if (c3.moveToFirst()) {
+                            do {
+                                nr_users = c3.getString(c3.getColumnIndex("result"));
+                            } while (c3.moveToNext());
+                        }
                     }
+                    if (nr_users.matches("0")) {
+                        //TODO: INSERT A NEW USER HERE
+                        callback = callback + userfrom + ",";
+                    }
+                    c3.close();
                 }
-                if (nr_users.matches("0")) {
-                    //TODO: INSERT A NEW USER HERE
-                    callback = callback + userfrom + ",";
-                }
-                c3.close();
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

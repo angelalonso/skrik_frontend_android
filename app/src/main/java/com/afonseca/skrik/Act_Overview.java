@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -50,8 +51,6 @@ public class Act_Overview extends ActionBarActivity {
         mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
-        // We would need this to add entries to/from us
-        //  So far used in SHOWLIST */
         newsMsgsSQLHandler = new DB_Msgs_Handler(this);
         newsUsersSQLHandler = new DB_Users_Handler(this);
 
@@ -63,22 +62,7 @@ public class Act_Overview extends ActionBarActivity {
 
         Username_tv.setText(username);
 
-        if (serverSide.matches("OK")) {
-            // We get the list of new messages and if any is from an unknown user, we save its details locally(getUsername does it for us)
-            String update = backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler, userid);
-            if (update.contains("Add ")) {
-                String[] NewUsers = update.replace("Add ", "").split(",");
-                for (int c = 0; c < NewUsers.length; c++) {
-                    functionsOverview.getUsername(mContext,NewUsers[c]);
-                }
-            }
-        }
-        // TODO: create a showempty for other "emptinesses (maybe just a "look for users" message?)
-        if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
-            showEmpty();
-        } else {
-            showList(userid);
-        }
+        showWhatever();
     }
 
     @Override
@@ -88,30 +72,8 @@ public class Act_Overview extends ActionBarActivity {
         mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
-        // We would need this to add entries to/from us
-        //  So far used in SHOWLIST */
+        showWhatever();
 
-        //String username = funcsUserCfg.getUsername(mContext);
-        //String userid = funcsUserCfg.getUid(mContext);
-
-        //Username_tv.setText(username);
-
-
-        if (serverSide.matches("OK")) {
-            // We get the list of new messages and if any is from an unknown user, we save its details locally(getUsername does it for us)
-            String update = backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler, userid);
-            if (update.contains("Add ")) {
-                String[] NewUsers = update.replace("Add ", "").split(",");
-                for (int c = 0; c < NewUsers.length; c++) {
-                    functionsOverview.getUsername(mContext,NewUsers[c]);
-                }
-            }
-        }
-        if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
-            showEmpty();
-        } else {
-            showList(userid);
-        }
     }
 
     @Override
@@ -141,9 +103,29 @@ public class Act_Overview extends ActionBarActivity {
 
 
     public void updateOverview(View view) {
-        Context context = getApplicationContext();
-        String userid = funcsUserCfg.getUid(context);
+        mContext = getApplicationContext();
+        userid = funcsUserCfg.getUid(mContext);
         showList(userid);
+    }
+
+    private void showWhatever(){
+
+        if (serverSide.matches("OK")) {
+            // We get the list of new messages and if any is from an unknown user, we save its details locally(getUsername does it for us)
+            String update = backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler, userid);
+
+            if (update.contains("Add ")) {
+                String[] NewUsers = update.replace("Add ", "").split(",");
+                for (int c = 0; c < NewUsers.length; c++) {
+                    functionsOverview.getUsername(mContext,NewUsers[c]);
+                }
+            }
+        }
+        if (userid.matches(mContext.getResources().getString(R.string.aux_dummy_uid))) {
+            showEmpty();
+        } else {
+            showList(userid);
+        }
     }
 
     private void showEmpty() {
@@ -184,17 +166,41 @@ public class Act_Overview extends ActionBarActivity {
             Data_OverviewItems overviewItems = new Data_OverviewItems();
             overviewItems.setUsername(usernames.get(c));
 
-            String msg_query = "SELECT count(message) as nr_msgs,status,message FROM MSGS WHERE (userid_from='" + userids.get(c) + "' OR userid_to='" + userids.get(c) + "') ";
-            Cursor c_2 = newsMsgsSQLHandler.selectQuery(msg_query);
+            String newmsg_query = "SELECT count(message) as nr_msgs FROM MSGS WHERE userid_from='" + userids.get(c) + "' ";
+            Cursor c_2 = newsMsgsSQLHandler.selectQuery(newmsg_query);
             if (c_2 != null && c_2.getCount() > 0) {
                 if (c_2.moveToFirst()) {
                     do {
                         overviewItems.setNrOfMsgs(c_2.getString(c_2.getColumnIndex("nr_msgs")));
-                        overviewItems.setNews(c_2.getString(c_2.getColumnIndex("message")));
                     } while (c_2.moveToNext());
                 }
             }
             c_2.close();
+
+            String latest_ts = "";
+            String latestts_query = "SELECT MAX(timestamp) as timestamp FROM MSGS WHERE (userid_from='" + userids.get(c) + "' OR userid_to='" + userids.get(c) + "')";
+            Cursor c_3 = newsMsgsSQLHandler.selectQuery(latestts_query);
+            if (c_3 != null && c_3.getCount() > 0) {
+                if (c_3.moveToFirst()) {
+                    do {
+                        String latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
+                        latest_ts = fmt.format(new Time(Long.parseLong(latest_ts_raw + "000")));
+                        overviewItems.setTimestamp(latest_ts);
+                    } while (c_3.moveToNext());
+                }
+            }
+            c_3.close();
+
+            String latestmsg_query = "SELECT message FROM MSGS WHERE (userid_from='" + userids.get(c) + "'  OR userid_to='" + userids.get(c) + "' AND timestamp='" + latest_ts + "')";
+            Cursor c_4 = newsMsgsSQLHandler.selectQuery(latestmsg_query);
+            if (c_4 != null && c_4.getCount() > 0) {
+                if (c_4.moveToFirst()) {
+                    do {
+                        overviewItems.setNews(c_4.getString(c_4.getColumnIndex("message")));
+                    } while (c_4.moveToNext());
+                }
+            }
+            c_4.close();
             contactList.add(overviewItems);
         }
         Ctrl_OverviewListAdapter contactListAdapter = new Ctrl_OverviewListAdapter(

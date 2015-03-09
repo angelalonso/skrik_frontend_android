@@ -92,14 +92,14 @@ public class Act_Tables extends ActionBarActivity {
                     String userid = c1.getString(c1.getColumnIndex("id"));
                     String username = c1.getString(c1.getColumnIndex("username"));
                     //TODO: Check when the userid or status is null - MAYBE DELETE THEM?
-                    String msg_query = "SELECT * FROM (SELECT count(message) as nr_msgs, userid_from as user,status FROM MSGS WHERE userid_from='" + userid + "' UNION SELECT count(message) as nr_msgs, userid_to as user, status FROM MSGS WHERE userid_to='" + userid + "') t GROUP BY t.user";
+                    //String msg_query = "SELECT * FROM (SELECT count(message) as nr_msgs, userid_from as user,status FROM MSGS WHERE userid_from='" + userid + "' GROUP BY user UNION SELECT count(message) as nr_msgs, userid_to as user,status FROM MSGS WHERE userid_to='" + userid + "' GROUP BY user)";
+                    //String msg_query = "SELECT * FROM (SELECT COUNT(message) as nr_msgs,'' as timestamp, '' as message FROM MSGS WHERE (status='received' and userid_from='" + userid + "') UNION ALL SELECT '' as nr_msgs, MAX(timestamp) as timestamp, '' as message FROM MSGS WHERE (status='received' and userid_from='" + userid + "') UNION ALL SELECT '' as nr_msgs,timestamp, message FROM MSGS WHERE (status='received' and userid_from='" + userid + "')) t GROUP BY timestamp";
+                    String msg_query = "SELECT COUNT(message) as nr_msgs FROM MSGS WHERE (status='received' and userid_from='" + userid + "')";
                     Cursor c2 = newsMsgsSQLHandler.selectQuery(msg_query);
                     if (c2 != null && c2.getCount() > 0) {
                         if (c2.moveToFirst()) {
                             do {
                                 content = c2.getString(c2.getColumnIndex("nr_msgs")) + " | ";
-                                content = content + c2.getString(c2.getColumnIndex("user")) + " | ";
-                                content = content + c2.getString(c2.getColumnIndex("status")) + " | ";
                                 content = content + userid;
                                 array_list.add(content);
                             } while (c2.moveToNext());
