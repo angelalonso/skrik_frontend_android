@@ -115,6 +115,8 @@ public class Act_Channel extends ActionBarActivity {
         if (!message.matches("") ) {
             //TODO: We avoid sending millis here, but might be better to do so.
             String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+
+            //ERROR HERE SQLite
             String newUserName = functionsOverview.getUsername(mContext,other_userid);
 
             msgsSQLHandler.addNewMessage(me_userid, other_userid, message, timestamp);
@@ -124,7 +126,10 @@ public class Act_Channel extends ActionBarActivity {
             }
         }
         message_et.setText("");
+
         showMessages(other_userid);
+
+
     }
 
     public void clearChannel(View view) {

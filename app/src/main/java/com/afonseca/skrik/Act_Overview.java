@@ -277,6 +277,11 @@ public class Act_Overview extends ActionBarActivity {
         //mContext = getApplicationContext();
         TextView userid_tv = (TextView) view.findViewById(R.id.id_tv);
         String userid_other = userid_tv.getText().toString();
+        if (userid_other.matches("")){
+            TextView username_tv = (TextView) view.findViewById(R.id.username_search_tv);
+            String username_other = username_tv.getText().toString();
+            userid_other = functionsOverview.getUserid(mContext,username_other);
+        }
         String userid_me = funcsUserCfg.getUid(mContext);
         if (userid_me.matches("99999999999999")){
             Toast.makeText(getApplicationContext(), R.string.msg_user_not_registered, Toast.LENGTH_LONG).show();

@@ -29,8 +29,30 @@ public class Funcs_Overview extends Activity {
             username = backend.getUsername(newsUser_id);
             addNewUser(mContext,newsUser_id,username);
         }
+
         return username;
     }
+    //TODO: This should not go in functions overview
+    public String getUserid(Context mContext,String newsUser_name) {
+        DB_Users_Handler newsUsersSQLHandler = new DB_Users_Handler(mContext);
+        String query = "SELECT id FROM USERS WHERE username = '" + newsUser_name + "'";
+        String userid = "";
+        Cursor c1 = newsUsersSQLHandler.selectQuery(query);
+        if (c1 != null && c1.getCount() > 0) {
+            if (c1.moveToFirst()) {
+                do {
+                    userid = c1.getString(c1.getColumnIndex("id"));
+                } while (c1.moveToNext());
+            }
+        }
+        c1.close();
+        if (userid.matches("")) {
+            userid = "";
+        }
+
+        return userid;
+    }
+
     // TODO: It is only used from here (up there), should be called when a new message arrives/is sent
     public void addNewUser(Context mContext,String userid, String username){
         DB_Users_Handler newsUsersSQLHandler = new DB_Users_Handler(mContext);

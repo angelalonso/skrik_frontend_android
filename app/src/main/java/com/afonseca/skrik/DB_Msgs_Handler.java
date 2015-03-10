@@ -69,7 +69,7 @@ public class DB_Msgs_Handler {
     }
 
     public void addNewMessage(String me_userid, String other_userid, String message,String timestamp) {
-        String Insertquery = "INSERT INTO MSGS (userid_from, userid_to, message, status, timestamp, backend_id) VALUES('" + me_userid + "','" + other_userid + "','" + message + "','created','" + timestamp + "','none')";
+        String Insertquery = "INSERT INTO MSGS (userid_from, userid_to, message, status, timestamp, backend_id) VALUES('" + me_userid + "','" + other_userid + "','" + message + "','created','" + timestamp + "','none');";
         executeQuery(Insertquery);
     }
 

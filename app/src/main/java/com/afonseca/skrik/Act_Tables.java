@@ -51,7 +51,7 @@ public class Act_Tables extends ActionBarActivity {
         content = "";
 
         List<String> array_list = new ArrayList<String>();
-
+        array_list.add("userid_from | userid_to | message | status | timestamp | backend_id");
         String query = "SELECT userid_from, userid_to, message, status, timestamp, backend_id  FROM MSGS";
         newsMsgsSQLHandler = new DB_Msgs_Handler(this);
         Cursor c1 = newsMsgsSQLHandler.selectQuery(query);
