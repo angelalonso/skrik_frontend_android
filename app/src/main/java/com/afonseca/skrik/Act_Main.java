@@ -12,7 +12,7 @@ public class Act_Main extends ActionBarActivity {
 
     /* Declarations */
 
-    Funcs_UserCfg controlUserconfig = new Funcs_UserCfg();
+    Toolbox_Sharedprefs controlUserconfig = new Toolbox_Sharedprefs();
 
     //https://www.jetbrains.com/idea/help/debugging-your-first-java-application.html
 

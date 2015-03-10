@@ -19,8 +19,8 @@ public class Act_UserCfg extends ActionBarActivity {
 
     /* Declarations */
 
-    Ctrl_Backend backend = new Ctrl_Backend();
-    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
+    Toolbox_Backend backend = new Toolbox_Backend();
+    Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
 
     String serverSide;
     private Toast toast;
@@ -83,14 +83,14 @@ public class Act_UserCfg extends ActionBarActivity {
 
     public void loadUserData(Context mContext){
 
-        if (funcsUserCfg.userHasLinkedAccount(mContext).equals("None")){
+        if (toolbox_SP.userHasLinkedAccount(mContext).equals("None")){
             offerAccount(mContext);
         }
-        name.setText(funcsUserCfg.getUsername(mContext));
-        email.setText(funcsUserCfg.getEmail(mContext));
-        phone.setText(funcsUserCfg.getPhone(mContext));
-        uid.setText(funcsUserCfg.getUid(mContext));
-        regid.setText(funcsUserCfg.getRegid(mContext));
+        name.setText(toolbox_SP.getUsername(mContext));
+        email.setText(toolbox_SP.getEmail(mContext));
+        phone.setText(toolbox_SP.getPhone(mContext));
+        uid.setText(toolbox_SP.getUid(mContext));
+        regid.setText(toolbox_SP.getRegid(mContext));
     }
 
     public void offerAccount(Context mContext) {
@@ -147,8 +147,8 @@ public class Act_UserCfg extends ActionBarActivity {
                 }
             });
             builder.show();
-            funcsUserCfg.setPhone(mContext, phone.getText().toString());
-            funcsUserCfg.setEmail(mContext, email.getText().toString());
+            toolbox_SP.setPhone(mContext, phone.getText().toString());
+            toolbox_SP.setEmail(mContext, email.getText().toString());
         }
     }
 
@@ -165,8 +165,8 @@ public class Act_UserCfg extends ActionBarActivity {
                         uid.setText("");
                         regid.setText("");
                         passwd.setText("");
-                        funcsUserCfg.clearUser(mContext);
-                        String saveResult = funcsUserCfg.saveUserConfig(mContext, "", "", "", "", "", "");
+                        toolbox_SP.clearUser(mContext);
+                        String saveResult = toolbox_SP.saveUserConfig(mContext, "", "", "", "", "", "");
                         loadUserData(mContext);
                     }
                 })
@@ -189,9 +189,9 @@ public class Act_UserCfg extends ActionBarActivity {
 
         Context mContext = getApplicationContext();
 
-        String dataCheck = funcsUserCfg.userOK_onSave(mContext, n, em, ph, id, rid, pwd);
+        String dataCheck = toolbox_SP.userOK_onSave(mContext, n, em, ph, id, rid, pwd);
         if (dataCheck.equals("OK")) {
-            String saveResult = funcsUserCfg.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
+            String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
             //TODO: Find out why I need TWO FINISHES here
             finish();
             finish();

@@ -19,7 +19,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Pattern;
 
 
-public class Ctrl_Backend {
+public class Toolbox_Backend {
 
     String IP = "192.168.10.229";
     String PORT = "8000";
@@ -73,6 +73,8 @@ public class Ctrl_Backend {
         return output;
     }
 
+
+
 /* USER DATA */
 
     public String getUsername(String userid) {
@@ -88,6 +90,8 @@ public class Ctrl_Backend {
         return output;
 
     }
+
+
 
     public String saveUserToBackend(String username, String email, String phone, String userid, String regid) {
 
@@ -114,6 +118,8 @@ public class Ctrl_Backend {
         }
         return output;
     }
+
+
 
 
     public ArrayList<Data_SearchUser_ListItems> searchUser(String word2Search){
@@ -159,6 +165,8 @@ public class Ctrl_Backend {
         }
         return result;
     }
+
+
 
 /* MSGS DATA */
 
@@ -262,6 +270,8 @@ public class Ctrl_Backend {
         return callback;
     }
 
+
+
     public String confirmReceivedBackend(String key) {
         String output = null;
         String url_gotmsg = URL + "/gotmsg/" + key + "/";
@@ -274,6 +284,8 @@ public class Ctrl_Backend {
         }
         return output;
     }
+
+
 
     public String sendMsgToBackend(String message, String userid_from, String userid_to, String timestamp) {
 

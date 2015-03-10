@@ -3,22 +3,17 @@ package com.afonseca.skrik;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** TODO:
- * Check the values of userid and regid and handle that offline AND online
- */
-public class Funcs_UserCfg extends Activity {
+   // TODO: Check the values of userid and regid and handle that offline AND online
 
-    Ctrl_Backend backend = new Ctrl_Backend();
+public class Toolbox_Sharedprefs extends Activity {
+
+    Toolbox_Backend backend = new Toolbox_Backend();
 
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Name = "nameKey";
@@ -29,8 +24,8 @@ public class Funcs_UserCfg extends Activity {
     public static final String Status = "statusKey";
     public static final String Passwd = "PasswdKey";
 
-
-    public String userOK_onSave (Context mContext, String username, String email, String phone, String uid, String regid, String passwd) {
+    // SOME PARAMETERS ARE NOT YET USED - is OK
+    public String userOK_onSave (Context inContext, String username, String email, String phone, String uid, String regid, String passwd) {
 
         Boolean allOK = true;
         String result;
@@ -39,7 +34,7 @@ public class Funcs_UserCfg extends Activity {
         // Checking there is a USERNAME
         if (username.matches("")){
             allOK = false;
-            errors.add(mContext.getResources().getString(R.string.aux_result_username));
+            errors.add(inContext.getResources().getString(R.string.aux_result_username));
         }
         // Checking there is a valid e-Mail OR phone
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -49,14 +44,14 @@ public class Funcs_UserCfg extends Activity {
             Pattern PhonePattern = Patterns.PHONE;
             if (!PhonePattern.matcher(phone).matches()) {
                 allOK = false;
-                errors.add(mContext.getResources().getString(R.string.aux_result_valid_email_phone));
+                errors.add(inContext.getResources().getString(R.string.aux_result_valid_email_phone));
             }
         }
 
         if (allOK) {
-            result = mContext.getResources().getString(R.string.aux_result_ok);
+            result = inContext.getResources().getString(R.string.aux_result_ok);
         } else {
-            result = getString(R.string.aux_result_provide);
+            result = inContext.getResources().getString(R.string.aux_result_provide);
             for (String iterable_element : errors) {
                 result = result + iterable_element + " ";
             }
@@ -65,9 +60,10 @@ public class Funcs_UserCfg extends Activity {
         return result;
     }
 
-    public String userOK_SharedPrefs(Context mContext) {
+    
+    public String userOK_SharedPrefs(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
         Boolean allOK = true;
         String result;
@@ -77,7 +73,7 @@ public class Funcs_UserCfg extends Activity {
                 || sharedpreferences.getString(Name, "").equals(""))
         {
             allOK = false;
-            errors.add(mContext.getResources().getString(R.string.aux_result_username));
+            errors.add(inContext.getResources().getString(R.string.aux_result_username));
         }
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
@@ -87,14 +83,14 @@ public class Funcs_UserCfg extends Activity {
                 || !matcher.matches())
         {
             allOK = false;
-            errors.add(mContext.getResources().getString(R.string.aux_result_valid_email));
+            errors.add(inContext.getResources().getString(R.string.aux_result_valid_email));
         }
 
 
         if (allOK){
-            result = mContext.getResources().getString(R.string.aux_result_ok);
+            result = inContext.getResources().getString(R.string.aux_result_ok);
         } else {
-            result = mContext.getResources().getString(R.string.aux_result_provide);
+            result = inContext.getResources().getString(R.string.aux_result_provide);
             for (String iterable_element : errors) {
                 result = result + iterable_element + " ";
             }
@@ -103,9 +99,9 @@ public class Funcs_UserCfg extends Activity {
         return result;
     }
 
-    public String userHasLinkedAccount(Context mContext) {
+    public String userHasLinkedAccount(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         String Result = "";
 
         Pattern emailPattern = Patterns.EMAIL_ADDRESS;
@@ -125,69 +121,79 @@ public class Funcs_UserCfg extends Activity {
         return Result;
     }
 
-    public String getUsername(Context mContext) {
+    
+    public String getUsername(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Name, "");
     }
 
-    public String getEmail(Context mContext) {
+    
+    public String getEmail(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Email, "");
     }
 
-    public void setEmail(Context mContext, String email) {
+    
+    public void setEmail(Context inContext, String email) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Email, email);
         editor.apply();
     }
 
-    public String getPhone(Context mContext) {
+    
+    public String getPhone(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Phone, "");
     }
 
-    public void setPhone(Context mContext, String phone) {
+    
+    public void setPhone(Context inContext, String phone) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Phone, phone);
         editor.apply();
     }
 
-    public String getUid(Context mContext) {
+    
+    public String getUid(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Uid, "");
     }
 
-    public String getRegid(Context mContext) {
+    
+    public String getRegid(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Regid, "");
     }
 
-    public String getStatus(Context mContext) {
+    // THIS IS NOT YET USED - is OK
+    public String getStatus(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Status, "");
     }
 
-    public void setStatus(Context mContext, String data_status) {
+    // THIS IS NOT YET USED - is OK
+    public void setStatus(Context inContext, String data_status) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Status, data_status);
         editor.apply();
     }
 
-    public void clearUser(Context mContext) {
+    
+    public void clearUser(Context inContext) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
 
         editor.remove(Name);
@@ -198,13 +204,14 @@ public class Funcs_UserCfg extends Activity {
         editor.apply();
     }
 
-    public String saveUserConfig(Context mContext, String username, String email, String phone, String uid, String regid, String passwd) {
+    
+    public String saveUserConfig(Context inContext, String username, String email, String phone, String uid, String regid, String passwd) {
 
-        SharedPreferences sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
 
         String result = "";
-        String serverSide = backend.testNetwork(mContext);
+        String serverSide = backend.testNetwork(inContext);
         String current_uid = uid;
         String data_status;
 
@@ -216,7 +223,7 @@ public class Funcs_UserCfg extends Activity {
 
         if (serverSide.matches("OK")) {
             if (current_uid.matches("")) {
-                current_uid = mContext.getResources().getString(R.string.aux_dummy_uid);
+                current_uid = inContext.getResources().getString(R.string.aux_dummy_uid);
             }
             String saveResult = backend.saveUserToBackend(username, email, phone, current_uid, regid);
             if (saveResult.contains("Email found, NEW ID = ")) {
@@ -229,7 +236,7 @@ public class Funcs_UserCfg extends Activity {
             data_status = "synced";
         } else {
             if (current_uid.matches("")) {
-                current_uid = mContext.getResources().getString(R.string.aux_dummy_uid);
+                current_uid = inContext.getResources().getString(R.string.aux_dummy_uid);
                 result = result + "UPDATE uid " + current_uid +"||";
             }
             data_status = "unsynced";

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,9 +19,8 @@ public class Act_Channel extends ActionBarActivity {
 
     DB_Msgs_Handler msgsSQLHandler;
     DB_Users_Handler usersSQLHandler;
-    Ctrl_Backend backend = new Ctrl_Backend();
-    //TODO: This should not go in functions overview
-    Funcs_Overview functionsOverview = new Funcs_Overview();
+    Toolbox_Backend backend = new Toolbox_Backend();
+    Toolbox_LocalSQLite toolbox_SP = new Toolbox_LocalSQLite();
 
     Context mContext;
 
@@ -117,7 +115,7 @@ public class Act_Channel extends ActionBarActivity {
             String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
 
             //ERROR HERE SQLite
-            String newUserName = functionsOverview.getUsername(mContext,other_userid);
+            String newUserName = toolbox_SP.getUsername(mContext,other_userid);
 
             msgsSQLHandler.addNewMessage(me_userid, other_userid, message, timestamp);
             serverSide = serverCheck(mContext);

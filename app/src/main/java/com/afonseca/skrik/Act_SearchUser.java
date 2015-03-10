@@ -18,8 +18,8 @@ public class Act_SearchUser extends ActionBarActivity {
 
     EditText name2Search;
     ListView userList_lv;
-    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
-    Ctrl_Backend backend = new Ctrl_Backend();
+    Toolbox_Sharedprefs funcsUserCfg = new Toolbox_Sharedprefs();
+    Toolbox_Backend backend = new Toolbox_Backend();
 
     /* General Behaviour Methods */
 

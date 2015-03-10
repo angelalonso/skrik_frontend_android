@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,9 +24,9 @@ public class Act_Overview extends ActionBarActivity {
 
     /* Declarations */
     //Extender Activity
-    Funcs_Overview functionsOverview = new Funcs_Overview();
-    Funcs_UserCfg funcsUserCfg = new Funcs_UserCfg();
-    Ctrl_Backend backend = new Ctrl_Backend();
+    Toolbox_Sharedprefs funcsUserCfg = new Toolbox_Sharedprefs();
+    Toolbox_Backend backend = new Toolbox_Backend();
+    Toolbox_LocalSQLite toolbox_SP = new Toolbox_LocalSQLite();
 
     DB_Msgs_Handler newsMsgsSQLHandler;
     DB_Users_Handler newsUsersSQLHandler;
@@ -117,7 +116,7 @@ public class Act_Overview extends ActionBarActivity {
             if (update.contains("Add ")) {
                 String[] NewUsers = update.replace("Add ", "").split(",");
                 for (int c = 0; c < NewUsers.length; c++) {
-                    functionsOverview.getUsername(mContext,NewUsers[c]);
+                    toolbox_SP.getUsername(mContext,NewUsers[c]);
                 }
             }
         }
@@ -280,7 +279,7 @@ public class Act_Overview extends ActionBarActivity {
         if (userid_other.matches("")){
             TextView username_tv = (TextView) view.findViewById(R.id.username_search_tv);
             String username_other = username_tv.getText().toString();
-            userid_other = functionsOverview.getUserid(mContext,username_other);
+            userid_other = toolbox_SP.getUserid(mContext, username_other);
         }
         String userid_me = funcsUserCfg.getUid(mContext);
         if (userid_me.matches("99999999999999")){
