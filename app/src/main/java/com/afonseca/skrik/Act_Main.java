@@ -12,7 +12,7 @@ public class Act_Main extends ActionBarActivity {
 
     /* Declarations */
 
-    Toolbox_Sharedprefs controlUserconfig = new Toolbox_Sharedprefs();
+    Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
 
     //https://www.jetbrains.com/idea/help/debugging-your-first-java-application.html
 
@@ -25,7 +25,7 @@ public class Act_Main extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         Context context = getApplicationContext();
 
-        if (controlUserconfig.userOK_SharedPrefs(context).equals("OK")){
+        if (toolbox_SP.userOK_SharedPrefs(context).equals("OK")){
             Intent intent = new Intent(this, Act_Overview.class);
             startActivity(intent);
         } else {
@@ -41,7 +41,7 @@ public class Act_Main extends ActionBarActivity {
 
         Context context = getApplicationContext();
 
-        if (controlUserconfig.userOK_SharedPrefs(context).equals("OK")){
+        if (toolbox_SP.userOK_SharedPrefs(context).equals("OK")){
             Intent intent = new Intent(this, Act_Overview.class);
             startActivity(intent);
         } else {

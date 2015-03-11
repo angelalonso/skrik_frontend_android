@@ -25,7 +25,7 @@ public class Toolbox_Sharedprefs extends Activity {
     public static final String Passwd = "PasswdKey";
 
     // SOME PARAMETERS ARE NOT YET USED - is OK
-    public String userOK_onSave (Context inContext, String username, String email, String phone, String uid, String regid, String passwd) {
+    public String userOK_beforeSave (Context inContext, String username, String email, String phone, String uid, String regid, String passwd) {
 
         Boolean allOK = true;
         String result;

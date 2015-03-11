@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ public class Act_UserCfg extends ActionBarActivity {
 
     Toolbox_Backend backend = new Toolbox_Backend();
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
+
+    Context mContext;
 
     String serverSide;
     private Toast toast;
@@ -37,7 +40,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Context mContext = getApplicationContext();
+        mContext = getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userconfig);
 
@@ -48,16 +51,16 @@ public class Act_UserCfg extends ActionBarActivity {
         regid = (TextView) findViewById(R.id.regid_input);
         passwd = (TextView) findViewById(R.id.passwd_input);
 
-        serverSide = serverCheck(mContext);
+        serverSide = serverCheck();
         loadUserData(mContext);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Context mContext = getApplicationContext();
+        mContext = getApplicationContext();
 
-        serverSide = serverCheck(mContext);
+        serverSide = serverCheck();
         loadUserData(mContext);
     }
 
@@ -65,8 +68,9 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        mContext = getApplicationContext();
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
-            toast = Toast.makeText(this, getString(R.string.msg_press_exit), Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, mContext.getResources().getString(R.string.msg_press_exit), Toast.LENGTH_SHORT);
             toast.show();
             this.lastBackPressTime = System.currentTimeMillis();
         } else {
@@ -114,11 +118,11 @@ public class Act_UserCfg extends ActionBarActivity {
             }
         }
         if (foundAccounts.size() > 0){
-            foundAccounts.add(getString(R.string.btn_usercfg_entermanual));
+            foundAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
             final CharSequence[] allAccounts = foundAccounts.toArray(new
                     CharSequence[foundAccounts.size()]);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(getString(R.string.msg_link_account));
+            builder.setTitle(mContext.getResources().getString(R.string.msg_link_account));
             builder.setItems(allAccounts, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -154,9 +158,9 @@ public class Act_UserCfg extends ActionBarActivity {
 
     public void clearUser(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.msg_del_confirm))
+        builder.setMessage(mContext.getResources().getString(R.string.msg_del_confirm))
                 .setCancelable(false)
-                .setPositiveButton(getString(R.string.msg_del_conf_y), new DialogInterface.OnClickListener() {
+                .setPositiveButton(mContext.getResources().getString(R.string.msg_del_conf_y), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Context mContext = getApplicationContext();
                         name.setText("");
@@ -170,7 +174,7 @@ public class Act_UserCfg extends ActionBarActivity {
                         loadUserData(mContext);
                     }
                 })
-                .setNegativeButton(getString(R.string.msg_del_conf_n), new DialogInterface.OnClickListener() {
+                .setNegativeButton(mContext.getResources().getString(R.string.msg_del_conf_n), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -188,21 +192,21 @@ public class Act_UserCfg extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         Context mContext = getApplicationContext();
-
-        String dataCheck = toolbox_SP.userOK_onSave(mContext, n, em, ph, id, rid, pwd);
+        //TODO: REDESIGN THIS
+        String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, id, rid, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
-            //TODO: Find out why I need TWO FINISHES here
-            finish();
+            Log.i("TESTING  save result ", saveResult);
             finish();
         } else {
             Toast.makeText(getApplicationContext(), dataCheck, Toast.LENGTH_LONG).show();
         }
+
     }
 
     /* CHECK Methods */
 
-    public String serverCheck(Context mContext) {
+    public String serverCheck() {
         TextView server_tv = (TextView) findViewById(R.id.server_tv);
         String status = backend.testNetwork(mContext);
         switch(status) {
