@@ -8,7 +8,7 @@ import android.view.View;
 
 
 
-public class Act_Main extends ActionBarActivity {
+public class Old_Act_Main extends ActionBarActivity {
 
     /* Declarations */
 
@@ -17,6 +17,8 @@ public class Act_Main extends ActionBarActivity {
     //https://www.jetbrains.com/idea/help/debugging-your-first-java-application.html
 
     /* General Methods */
+
+    //TODO: DELETE THIS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

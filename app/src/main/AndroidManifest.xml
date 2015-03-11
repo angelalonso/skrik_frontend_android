@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/MyFullscreenTheme">
         <activity
-            android:name=".Act_Main"
+            android:name=".Act_Overview"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,6 @@
         <activity android:name=".Act_UserCfg" >
         </activity>
         <activity android:name=".Toolbox_Sharedprefs" >
-        </activity>
-        <activity android:name=".Act_Overview" >
         </activity>
         <activity android:name=".Act_SearchUser" >
         </activity>
