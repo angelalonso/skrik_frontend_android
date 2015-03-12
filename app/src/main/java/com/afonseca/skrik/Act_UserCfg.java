@@ -204,7 +204,6 @@ public class Act_UserCfg extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         mContext = getApplicationContext();
-        //TODO: REDESIGN THIS.
         String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, id, rid, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);

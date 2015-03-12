@@ -82,8 +82,14 @@ public class Toolbox_Sharedprefs extends Activity {
                 || sharedpreferences.getString(Email, "").equals("")
                 || !matcher.matches())
         {
-            allOK = false;
-            errors.add(inContext.getResources().getString(R.string.aux_result_valid_email));
+            Pattern phonepattern = Patterns.PHONE;
+            Matcher phonematcher = phonepattern.matcher(sharedpreferences.getString(Phone, ""));
+            if (!sharedpreferences.contains(Phone)
+                    || sharedpreferences.getString(Phone, "").equals("")
+                    || !phonematcher.matches()) {
+                allOK = false;
+                errors.add(inContext.getResources().getString(R.string.aux_result_valid_email_phone));
+            }
         }
 
 
