@@ -29,7 +29,7 @@
     <string name="hint_usercfg_phone">Introduzca su teléfono aquí</string>
 
     <string name="msg_first_offline">El primer registro necesita internet. Conéctate y pulsa aquí para intentar salvar de nuevo</string>
-    <string name="msg_del_confirm">¿Estás seguro de que quieres BORRAR tus DATOS DE USUARIO?</string>
+    <string name="msg_del_confirm">¿Estás seguro de que quieres BORRAR TODOS tus DATOS DE USUARIO?</string>
     <string name="msg_del_conf_n">¡Ups, NO!</string>
     <string name="msg_del_conf_y">¡SÍ, adelante!</string>
     <string name="msg_link_account">¿Con qué quieres unir tu cuenta de usuario?</string>

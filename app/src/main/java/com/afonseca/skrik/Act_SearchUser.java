@@ -18,8 +18,9 @@ public class Act_SearchUser extends ActionBarActivity {
 
     EditText name2Search;
     ListView userList_lv;
-    Toolbox_Sharedprefs funcsUserCfg = new Toolbox_Sharedprefs();
+    Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
     Toolbox_Backend backend = new Toolbox_Backend();
+    Toolbox_LocalSQLite toolbox_SQL = new Toolbox_LocalSQLite();
 
     /* General Behaviour Methods */
 
@@ -53,13 +54,14 @@ public class Act_SearchUser extends ActionBarActivity {
         Context mContext = getApplicationContext();
         TextView userid_tv = (TextView) view.findViewById(R.id.userid_search_tv);
         String userid_other = userid_tv.getText().toString();
-        String userid_me = funcsUserCfg.getUid(mContext);
+        String userid_me = toolbox_SP.getUid(mContext);
         if (userid_me.matches(getString(R.string.aux_dummy_uid))){
             Toast.makeText(getApplicationContext(), R.string.msg_user_not_registered, Toast.LENGTH_LONG).show();
             gotoUserConfig();
         } else {
             TextView username_tv = (TextView) view.findViewById(R.id.username_search_tv);
             String username = username_tv.getText().toString();
+            toolbox_SQL.addNewUser(mContext,userid_other,username);
             Intent intent = new Intent(this, Act_Channel.class);
             Bundle b = new Bundle();
             b.putString("userid_other", userid_other);

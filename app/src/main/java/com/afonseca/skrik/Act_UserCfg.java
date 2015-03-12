@@ -41,6 +41,7 @@ public class Act_UserCfg extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userconfig);
+        mContext = getApplicationContext();
 
         name = (TextView) findViewById(R.id.name_input);
         email = (TextView) findViewById(R.id.email_input);
@@ -167,7 +168,13 @@ public class Act_UserCfg extends ActionBarActivity {
                 .setCancelable(false)
                 .setPositiveButton(mContext.getResources().getString(R.string.msg_del_conf_y), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Context mContext = getApplicationContext();
+                        mContext = getApplicationContext();
+                        DB_Msgs_Handler msgsSQLHandler = new DB_Msgs_Handler(mContext);
+                        String ClearMsgsquery = "DELETE FROM MSGS WHERE id=id;";
+                        msgsSQLHandler.executeQuery(ClearMsgsquery);
+                        DB_Users_Handler usersSQLHandler = new DB_Users_Handler(mContext);
+                        String Clearusersquery = "DELETE FROM USERS WHERE id=id;";
+                        usersSQLHandler.executeQuery(Clearusersquery);
                         name.setText("");
                         email.setText("");
                         phone.setText("");
