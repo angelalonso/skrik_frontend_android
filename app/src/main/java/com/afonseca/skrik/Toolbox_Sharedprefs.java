@@ -95,7 +95,6 @@ public class Toolbox_Sharedprefs extends Activity {
                 result = result + iterable_element + " ";
             }
         }
-
         return result;
     }
 
@@ -206,7 +205,6 @@ public class Toolbox_Sharedprefs extends Activity {
 
     
     public String saveUserConfig(Context inContext, String username, String email, String phone, String uid, String regid, String passwd) {
-
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
 

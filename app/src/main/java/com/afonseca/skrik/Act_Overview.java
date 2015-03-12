@@ -1,10 +1,13 @@
 package com.afonseca.skrik;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,9 +27,9 @@ public class Act_Overview extends ActionBarActivity {
 
     /* Declarations */
     //Extender Activity
-    Toolbox_Sharedprefs funcsUserCfg = new Toolbox_Sharedprefs();
+    Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
     Toolbox_Backend backend = new Toolbox_Backend();
-    Toolbox_LocalSQLite toolbox_SP = new Toolbox_LocalSQLite();
+    Toolbox_LocalSQLite toolbox_localSQL = new Toolbox_LocalSQLite();
 
     DB_Msgs_Handler newsMsgsSQLHandler;
     DB_Users_Handler newsUsersSQLHandler;
@@ -48,30 +51,24 @@ public class Act_Overview extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
         mContext = getApplicationContext();
-        serverSide = serverCheck(mContext);
-
-        newsMsgsSQLHandler = new DB_Msgs_Handler(this);
-        newsUsersSQLHandler = new DB_Users_Handler(this);
-
-        username = funcsUserCfg.getUsername(mContext);
-        userid = funcsUserCfg.getUid(mContext);
 
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
         Username_tv = (TextView) findViewById(R.id.username_search_tv);
 
-        Username_tv.setText(username);
-
-        showWhatever();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
-        showWhatever();
+        if (check_UserData(mContext).matches("OK")) {
+            showWhatever();
+        } else {
+            Intent intent = new Intent(this, Act_UserCfg.class);
+            startActivity(intent);
+        }
 
     }
 
@@ -100,15 +97,24 @@ public class Act_Overview extends ActionBarActivity {
     }
     /* Additional Actions' Methods */
 
+    public String check_UserData(Context mContext){
+        String result = toolbox_SP.userOK_SharedPrefs(mContext);
+        return result;
+    }
 
     public void updateOverview(View view) {
-        mContext = getApplicationContext();
-        userid = funcsUserCfg.getUid(mContext);
-        showList(userid);
+        if (check_UserData(mContext).matches("OK")) {
+            showWhatever();
+        } else {
+            Intent intent = new Intent(this, Act_UserCfg.class);
+            startActivity(intent);
+        }
     }
 
     private void showWhatever(){
-
+        userid = toolbox_SP.getUid(mContext);
+        username = toolbox_SP.getUsername(mContext);
+        Username_tv.setText(username);
         if (serverSide.matches("OK")) {
             // We get the list of new messages and if any is from an unknown user, we save its details locally(getUsername does it for us)
             String update = backend.updateNewslist(newsMsgsSQLHandler, newsUsersSQLHandler, userid);
@@ -116,7 +122,7 @@ public class Act_Overview extends ActionBarActivity {
             if (update.contains("Add ")) {
                 String[] NewUsers = update.replace("Add ", "").split(",");
                 for (int c = 0; c < NewUsers.length; c++) {
-                    toolbox_SP.getUsername(mContext,NewUsers[c]);
+                    toolbox_localSQL.getUsername(mContext,NewUsers[c]);
                 }
             }
         }
@@ -140,6 +146,8 @@ public class Act_Overview extends ActionBarActivity {
 
         SimpleDateFormat fmt = new SimpleDateFormat(getString(R.string.aux_date_format));
 
+        newsUsersSQLHandler = new DB_Users_Handler(this);
+        newsMsgsSQLHandler = new DB_Msgs_Handler(this);
 
         ArrayList<Data_OverviewItems> contactList = new ArrayList<>();
         contactList.clear();
@@ -273,15 +281,14 @@ public class Act_Overview extends ActionBarActivity {
     }
     //TODO: TUNE THIS
     public void listviewClick(View view) {
-        //mContext = getApplicationContext();
         TextView userid_tv = (TextView) view.findViewById(R.id.id_tv);
         String userid_other = userid_tv.getText().toString();
         if (userid_other.matches("")){
             TextView username_tv = (TextView) view.findViewById(R.id.username_search_tv);
             String username_other = username_tv.getText().toString();
-            userid_other = toolbox_SP.getUserid(mContext, username_other);
+            userid_other = toolbox_localSQL.getUserid(mContext, username_other);
         }
-        String userid_me = funcsUserCfg.getUid(mContext);
+        String userid_me = toolbox_SP.getUid(mContext);
         if (userid_me.matches("99999999999999")){
             Toast.makeText(getApplicationContext(), R.string.msg_user_not_registered, Toast.LENGTH_LONG).show();
             gotoUserConfig();

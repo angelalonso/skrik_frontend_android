@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
@@ -40,7 +39,6 @@ public class Act_UserCfg extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mContext = getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userconfig);
 
@@ -52,7 +50,6 @@ public class Act_UserCfg extends ActionBarActivity {
         passwd = (TextView) findViewById(R.id.passwd_input);
 
         serverSide = serverCheck();
-        loadUserData(mContext);
     }
 
     @Override
@@ -86,8 +83,9 @@ public class Act_UserCfg extends ActionBarActivity {
 
 
     public void loadUserData(Context mContext){
+        String LinkedAccount = toolbox_SP.userHasLinkedAccount(mContext);
 
-        if (toolbox_SP.userHasLinkedAccount(mContext).equals("None")){
+        if (LinkedAccount.equals("None")){
             offerAccount(mContext);
         }
         name.setText(toolbox_SP.getUsername(mContext));
@@ -99,6 +97,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     public void offerAccount(Context mContext) {
 
+        final Context inContext = mContext;
         List<String> foundAccounts = new ArrayList<>();
         Pattern emailPattern = Patterns.EMAIL_ADDRESS;
         Pattern phonePattern = Patterns.PHONE;
@@ -132,12 +131,16 @@ public class Act_UserCfg extends ActionBarActivity {
                     if (emailPattern.matcher(Chosen).matches()) {
                         email.setEnabled(true);
                         email.setText(Chosen);
+                        toolbox_SP.setEmail(inContext,Chosen);
+                        toolbox_SP.setPhone(inContext,"");
                         phone.setText(" ");
                         phone.setEnabled(false);
                     } else if (phonePattern.matcher(Chosen).matches())
                     {
                         phone.setEnabled(true);
                         phone.setText(Chosen);
+                        toolbox_SP.setPhone(inContext,Chosen);
+                        toolbox_SP.setEmail(inContext,"");
                         email.setText(" ");
                         email.setEnabled(false);
                     }
@@ -146,6 +149,8 @@ public class Act_UserCfg extends ActionBarActivity {
                         phone.setEnabled(true);
                         email.setText("");
                         phone.setText("");
+                        toolbox_SP.setEmail(inContext,"");
+                        toolbox_SP.setPhone(inContext,"");
                     }
 
                 }
@@ -191,12 +196,11 @@ public class Act_UserCfg extends ActionBarActivity {
         String rid  = regid.getText().toString();
         String pwd  = passwd.getText().toString();
 
-        Context mContext = getApplicationContext();
+        mContext = getApplicationContext();
         //TODO: REDESIGN THIS.
         String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, id, rid, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
-            Log.i("TESTING  save result ", saveResult);
             finish();
         } else {
             Toast.makeText(getApplicationContext(), dataCheck, Toast.LENGTH_LONG).show();

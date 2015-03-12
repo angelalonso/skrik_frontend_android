@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.util.Patterns;
 
 import org.json.JSONArray;
@@ -104,10 +103,8 @@ public class Toolbox_Backend {
         Pattern phonePattern = Patterns.PHONE;
         if (!phone.matches("") && phonePattern.matcher(phone).matches()){
             url_saveuser = URL + "/saveid/" + userid + "/name/" + username + "/acc/p" + phone + "/regid/" + regid + "/";
-            Log.i("TESTING: ","new phone");
         } else {
             url_saveuser = URL + "/saveid/" + userid + "/name/" + username + "/acc/e" + email + "/regid/" + regid + "/";
-            Log.i("TESTING: ","new email");
         }
         try {
             output = new Tool_AsyncTask().execute(url_saveuser).get();
@@ -160,9 +157,9 @@ public class Toolbox_Backend {
                 }
             }
         }
-        for (int i=0; i < result.size(); i++) {
+        /*for (int i=0; i < result.size(); i++) {
             Log.i("TESTING - user found: ", result.get(i).toString());
-        }
+        }*/
         return result;
     }
 
