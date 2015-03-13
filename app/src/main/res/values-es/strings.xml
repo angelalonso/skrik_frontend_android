@@ -37,9 +37,10 @@
     <string name="msg_user_not_registered">Tu usuario aun no está registrado. Conéctate a internet y vuelve a intentar guardar</string>
     <string name="msg_you_need_user">Necesitas un nombre de usuario</string>
 
-    <string name="aux_date_format_full">HH:mm:ss dd/MM/yy</string>
+    <string name="aux_date_format_full">dd/MM/yy HH:mm</string>
     <string name="aux_date_format_hour">HH:mm</string>
-    <string name="aux_date_format_day">dd/MM</string>
+    <string name="aux_date_format_day">dd/MM HH:mm</string>
+    <string name="aux_date_yesterday">ayer</string>
     <string name="aux_dummy_uid">99999999999999</string>
     <string name="aux_result_ok">OK</string>
     <string name="aux_result_username">nombre de usuario</string>
