@@ -36,7 +36,9 @@
     <string name="msg_user_not_registered">Your user is not yet registered. Get connected to Internet and retry to save</string>
     <string name="msg_you_need_user">You need a user name</string>
 
-    <string name="aux_date_format">HH:mm:ss dd/MM/yy</string>
+    <string name="aux_date_format_full">HH:mm:ss dd/MM/yy</string>
+    <string name="aux_date_format_hour">HH:mm</string>
+    <string name="aux_date_format_day">dd/MM</string>
     <string name="aux_dummy_uid">99999999999999</string>
     <string name="aux_result_ok">OK</string>
     <string name="aux_result_username">username</string>

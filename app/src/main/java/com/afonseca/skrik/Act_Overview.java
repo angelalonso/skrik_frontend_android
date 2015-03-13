@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class Act_Overview extends ActionBarActivity {
 
     /* Declarations */
+
     //Extender Activity
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
     Toolbox_Backend backend = new Toolbox_Backend();
@@ -144,18 +145,11 @@ public class Act_Overview extends ActionBarActivity {
 
     private void showList(String user_me) {
 
-        SimpleDateFormat fmt = new SimpleDateFormat(getString(R.string.aux_date_format));
-
         newsUsersSQLHandler = new DB_Users_Handler(this);
         newsMsgsSQLHandler = new DB_Msgs_Handler(this);
 
         ArrayList<Data_OverviewItems> contactList = new ArrayList<>();
         contactList.clear();
-        //TODO:
-        //    TODO: For each new message received OR sent, add the user (if it was not there yet.
-        //    TODO: Get the list of users (not me, and not blacklisted)
-        //    TODO: for each, get the latest message and timestamp, plus the amount of messages not read
-        //String query = "SELECT count(*) AS msg_nr, userid_from, message, MAX(timestamp) AS timestamp_last FROM MSGS GROUP BY userid_from";
         ArrayList<String> usernames = new ArrayList<String>();
         ArrayList<String> userids = new ArrayList<String>();
         String query = "SELECT id, username FROM USERS where blacklisted=0 and id<>'" + user_me + "'";
@@ -180,7 +174,9 @@ public class Act_Overview extends ActionBarActivity {
                 if (c_2.moveToFirst()) {
                     do {
                         nr_ofmsgs = c_2.getString(c_2.getColumnIndex("nr_msgs"));
-                        overviewItems.setNrOfMsgs(nr_ofmsgs);
+                        if (Integer.parseInt(nr_ofmsgs) > 0) {
+                            overviewItems.setNrOfMsgs(nr_ofmsgs);
+                        }
                     } while (c_2.moveToNext());
                 }
             }
@@ -207,7 +203,8 @@ public class Act_Overview extends ActionBarActivity {
                         if (c_3.moveToFirst()) {
                             do {
                                 String latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
-                                latest_ts = fmt.format(new Time(Long.parseLong(latest_ts_raw + "000")));
+                                latest_ts = Tool_Timestamp.getBeauty(mContext, Integer.parseInt(latest_ts_raw));
+                                //latest_ts = fmt.format(new Time(Long.parseLong(latest_ts_raw + "000")));
                                 overviewItems.setTimestamp(latest_ts);
                             } while (c_3.moveToNext());
                         }
@@ -231,7 +228,7 @@ public class Act_Overview extends ActionBarActivity {
                     if (c_3.moveToFirst()) {
                         do {
                             String latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
-                            latest_ts = fmt.format(new Time(Long.parseLong(latest_ts_raw + "000")));
+                            latest_ts = Tool_Timestamp.getBeauty(mContext, Integer.parseInt(latest_ts_raw));
                             overviewItems.setTimestamp(latest_ts);
                         } while (c_3.moveToNext());
                     }

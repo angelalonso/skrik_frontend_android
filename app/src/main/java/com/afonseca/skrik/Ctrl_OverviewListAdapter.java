@@ -52,6 +52,11 @@ public class Ctrl_OverviewListAdapter extends BaseAdapter {
 
         TextView NrMsgs_tv = (TextView) convertView.findViewById(R.id.nr_msgs_tv);
         NrMsgs_tv.setText(contactListItems.getNrOfMsgs());
+        if (contactListItems.getNrOfMsgs() != null && Integer.parseInt(contactListItems.getNrOfMsgs()) > 0) {
+            NrMsgs_tv.setTextColor(context.getResources().getColor(R.color.green));
+        } else {
+            NrMsgs_tv.setTextColor(context.getResources().getColor(R.color.gray));
+        }
         TextView Userid_tv = (TextView) convertView.findViewById(R.id.id_tv);
         Userid_tv.setText(contactListItems.getUserid());
         TextView Username_tv = (TextView) convertView.findViewById(R.id.username_search_tv);
