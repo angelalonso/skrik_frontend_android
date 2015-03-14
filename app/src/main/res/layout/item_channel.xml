@@ -20,10 +20,13 @@
                 android:id="@+id/message_tv"
                 android:layout_width="367dp"
                 android:layout_height="49dp"
-                android:layout_marginLeft="10dp"
                 android:text="Message"
                 android:textColor="#000"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:layout_above="@+id/timestamp_tv"
+                android:layout_toRightOf="@+id/sender_tv"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp" />
 
             <TextView
                 android:id="@+id/timestamp_tv"
@@ -34,20 +37,41 @@
                 android:gravity="right"
                 android:layout_gravity="right"
                 android:textSize="10dp"
+                android:paddingRight="8dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignRight="@+id/message_tv"
-                android:layout_alignEnd="@+id/message_tv"
-                android:paddingRight="10dp" />
+                android:layout_alignEnd="@+id/message_tv" />
+
+            <TextView
+                android:id="@+id/status_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="status"
+                android:gravity="right"
+                android:layout_gravity="right"
+                android:textSize="10dp"
+                android:paddingRight="4dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/timestamp_tv"
+                android:layout_toStartOf="@+id/timestamp_tv"
+                android:layout_marginRight="6dp"
+                android:layout_marginEnd="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="status"
-                android:id="@+id/status_tv"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="&lt;"
+                android:id="@+id/sender_tv"
+                android:linksClickable="false"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:layout_alignParentTop="true"
-                android:layout_alignLeft="@+id/timestamp_tv"
-                android:layout_alignStart="@+id/timestamp_tv" />
+                android:layout_alignParentBottom="true"
+                android:background="@color/Black"
+                android:textColor="@color/white"
+                android:gravity="center_vertical" />
 
         </RelativeLayout>
 
