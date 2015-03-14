@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -66,6 +69,29 @@ public class Act_Channel extends ActionBarActivity {
         showMessages(other_userid);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_channel, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_userdetails:
+                return true;
+            case R.id.action_clear_channel:
+                clearChannel();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     /* Additional Actions' Methods */
 
     private void showMessages(String user_other) {
@@ -98,6 +124,7 @@ public class Act_Channel extends ActionBarActivity {
         Ctrl_ChannelListAdapter channelAdapter = new Ctrl_ChannelListAdapter(
                 Act_Channel.this, chatList);
         ChatList_lv.setAdapter(channelAdapter);
+        ChatList_lv.setSelection(ChatList_lv.getAdapter().getCount()-1);
 
         String update_query = "UPDATE MSGS SET status='read' WHERE (userid_from ='" + user_other + "' OR userid_to ='" + user_other + "') ";
         msgsSQLHandler.executeQuery(update_query);
@@ -128,9 +155,10 @@ public class Act_Channel extends ActionBarActivity {
 
     }
 
-    public void clearChannel(View view) {
-        String clearQuery = "DELETE FROM MSGS where id = id;";
+    public void clearChannel() {
+        String clearQuery = "DELETE FROM MSGS where (userid_from='" + other_userid + "' OR userid_to='" + other_userid + "')";
         msgsSQLHandler.executeQuery(clearQuery);
+        showMessages(other_userid);
     }
 
     public void updateChannel(View view) {

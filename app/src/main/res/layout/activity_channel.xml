@@ -55,16 +55,6 @@
             android:layout_alignParentLeft="false"
             />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_all_clearall"
-            android:id="@+id/clear_btn"
-            android:onClick="clearChannel"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/update_btn"
-            android:layout_toStartOf="@+id/update_btn" />
     </RelativeLayout>
 
     <!-- Footer aligned to bottom -->

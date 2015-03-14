@@ -1,8 +1,6 @@
 package com.afonseca.skrik;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,8 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -77,7 +73,7 @@ public class Act_Overview extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_actions, menu);
+        inflater.inflate(R.menu.menu_overview, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -91,6 +87,9 @@ public class Act_Overview extends ActionBarActivity {
                 return true;
             case R.id.action_check_tables:
                 gotoShowDB();
+                return true;
+            case R.id.action_clear_alldata:
+                clearDB();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -182,12 +181,13 @@ public class Act_Overview extends ActionBarActivity {
             }
             c_2.close();
 
-            String latest_ts = "";
+            String latest_ts;
+            String latest_ts_raw = "";
+            Log.i("TESTING - looking for", userids.get(c));
             String latestts_query = "SELECT MAX(timestamp) as timestamp FROM MSGS WHERE (userid_from='" + userids.get(c) + "' OR userid_to='" + userids.get(c) + "')";
-            String latestmsg_query = "SELECT message FROM MSGS WHERE (userid_from='" + userids.get(c) + "'  OR userid_to='" + userids.get(c) + "' AND timestamp='" + latest_ts + "')";
 
             if (nr_ofmsgs.matches("0")) {
-                String allmsg_query = "SELECT count(message) as nr_msgs FROM MSGS WHERE userid_from='" + userids.get(c) + "' ";
+                String allmsg_query = "SELECT count(message) as nr_msgs FROM MSGS WHERE (userid_from='" + userids.get(c) + "' OR userid_to='" + userids.get(c) + "')";
                 Cursor c_aux = newsMsgsSQLHandler.selectQuery(allmsg_query);
                 if (c_aux != null && c_aux.getCount() > 0) {
                     if (c_aux.moveToFirst()) {
@@ -202,15 +202,14 @@ public class Act_Overview extends ActionBarActivity {
                     if (c_3 != null && c_3.getCount() > 0) {
                         if (c_3.moveToFirst()) {
                             do {
-                                String latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
+                                latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
                                 latest_ts = Tool_Timestamp.getBeauty(mContext, Integer.parseInt(latest_ts_raw));
-                                //latest_ts = fmt.format(new Time(Long.parseLong(latest_ts_raw + "000")));
                                 overviewItems.setTimestamp(latest_ts);
                             } while (c_3.moveToNext());
                         }
                     }
                     c_3.close();
-
+                    String latestmsg_query = "SELECT message FROM MSGS WHERE (userid_from='" + userids.get(c) + "'  OR userid_to='" + userids.get(c) + "' AND timestamp='" + latest_ts_raw + "')";
                     Cursor c_4 = newsMsgsSQLHandler.selectQuery(latestmsg_query);
                     if (c_4 != null && c_4.getCount() > 0) {
                         if (c_4.moveToFirst()) {
@@ -227,14 +226,14 @@ public class Act_Overview extends ActionBarActivity {
                 if (c_3 != null && c_3.getCount() > 0) {
                     if (c_3.moveToFirst()) {
                         do {
-                            String latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
+                            latest_ts_raw = c_3.getString(c_3.getColumnIndex("timestamp"));
                             latest_ts = Tool_Timestamp.getBeauty(mContext, Integer.parseInt(latest_ts_raw));
                             overviewItems.setTimestamp(latest_ts);
                         } while (c_3.moveToNext());
                     }
                 }
                 c_3.close();
-
+                String latestmsg_query = "SELECT message FROM MSGS WHERE (userid_from='" + userids.get(c) + "'  OR userid_to='" + userids.get(c) + "' AND timestamp='" + latest_ts_raw + "')";
                 Cursor c_4 = newsMsgsSQLHandler.selectQuery(latestmsg_query);
                 if (c_4 != null && c_4.getCount() > 0) {
                     if (c_4.moveToFirst()) {
@@ -328,14 +327,13 @@ public class Act_Overview extends ActionBarActivity {
     }
 
 
-    //TODO: BE DELETED
-
-    public void clearDB(View view) {
-
+    public void clearDB() {
+        //TODO: Ask for confirmation
         Context mContext = getApplicationContext();
         DB_Msgs_Handler msgsSQLHandler = new DB_Msgs_Handler(mContext);
         String Clearquery = "DELETE FROM MSGS WHERE id=id;";
         msgsSQLHandler.executeQuery(Clearquery);
+        showWhatever();
     }
 
     //http://developer.android.com/guide/topics/ui/actionbar.html

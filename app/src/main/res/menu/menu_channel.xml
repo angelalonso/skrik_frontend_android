@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/action_userdetails"
+        android:title="@string/title_userdetails"/>
+    <item android:id="@+id/action_clear_channel"
+        android:title="@string/title_clear_channel" />
+</menu>

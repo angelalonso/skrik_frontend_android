@@ -6,8 +6,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="title_usercfg">User details</string>
+    <string name="title_clear_alldata">Clear all data</string>
+    <string name="title_clear_channel">Empty conversation</string>
     <string name="title_tables">Tables</string>
+    <string name="title_usercfg">User configuration</string>
+    <string name="title_userdetails">User details</string>
+
 
     <string name="btn_all_clear">Clear</string>
     <string name="btn_all_clearall">Clear all</string>

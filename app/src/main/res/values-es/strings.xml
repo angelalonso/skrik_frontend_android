@@ -6,8 +6,11 @@
     <string name="hello_world">¡Hola Mundo!</string>
     <string name="action_settings">Configuración</string>
 
-    <string name="title_usercfg">Ajustes</string>
+    <string name="title_clear_alldata">Borrar todo</string>
+    <string name="title_clear_channel">Vaciar conversación</string>
     <string name="title_tables">Tablas</string>
+    <string name="title_usercfg">Ajustes</string>
+    <string name="title_userdetails">Datos de Usuario</string>
 
 
     <string name="btn_all_clear">Resetear</string>

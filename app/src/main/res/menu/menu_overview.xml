@@ -1,6 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/action_user_settings"
         android:title="@string/title_usercfg"/>
+    <item android:id="@+id/action_clear_alldata"
+        android:title="@string/title_clear_alldata" />
     <item android:id="@+id/action_check_tables"
         android:title="@string/title_tables" />
 </menu>
