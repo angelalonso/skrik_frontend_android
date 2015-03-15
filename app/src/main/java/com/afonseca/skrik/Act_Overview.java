@@ -2,7 +2,9 @@ package com.afonseca.skrik;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,12 +18,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+//import com.google.android.gcm.GCMRegistrar;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class Act_Overview extends ActionBarActivity {
 
     /* Declarations */
+
+    public static final String EXTRA_MESSAGE = "message";
+    public static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_APP_VERSION = "appVersion";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    String SENDER_ID = "610647426983";
+    //GoogleCloudMessaging gcm;
+    String regid;
 
     //Extender Activity
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
@@ -49,6 +64,9 @@ public class Act_Overview extends ActionBarActivity {
         setContentView(R.layout.activity_overview);
         mContext = getApplicationContext();
 
+        //gcm = GoogleCloudMessaging.getInstance(this);
+        //final String regId = GCMRegistrar.getRegistrationId(this);
+
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
         Username_tv = (TextView) findViewById(R.id.username_search_tv);
 
@@ -59,6 +77,14 @@ public class Act_Overview extends ActionBarActivity {
         super.onResume();
         mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
+
+
+        String testing = "hola";
+        //registerGCMInBackground(testing);
+
+        Tool_GCMAsyncTask task = new Tool_GCMAsyncTask(this);
+        task.execute();
+
 
         if (check_UserData(mContext).matches("OK")) {
             showWhatever();
@@ -338,5 +364,9 @@ public class Act_Overview extends ActionBarActivity {
 
     //http://developer.android.com/guide/topics/ui/actionbar.html
 
+
+    // ------------  TESTING
+
+    // http://stackoverflow.com/questions/20820079/google-cloud-messaging-register-fails
 
 }
