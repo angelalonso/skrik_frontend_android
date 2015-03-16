@@ -1,16 +1,22 @@
 package com.afonseca.skrik;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import javax.xml.transform.Result;
 
 /**
  * Created by afonseca on 3/16/2015.
@@ -18,7 +24,12 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 public class GcmIntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
+    NotificationCompat.Builder notification;
+    TaskStackBuilder stackBuilder;
+    Intent resultIntent;
+    PendingIntent pIntent;
+    NotificationManager manager;
+
 
     String TAG = "GCM";
 
@@ -28,6 +39,8 @@ public class GcmIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Context mContext = getApplicationContext();
+        Vibrator vibe = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE) ;
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         // The getMessageType() intent parameter must be the intent you received
@@ -53,11 +66,13 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // This loop represents the service doing some work.
+                vibe.vibrate(400);
+                startNotification();
                 for (int i=0; i<5; i++) {
                     Log.i(TAG, "Working... " + (i + 1)
                             + "/5 @ " + SystemClock.elapsedRealtime());
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                     }
                 }
@@ -92,5 +107,36 @@ public class GcmIntentService extends IntentService {
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
+    protected void startNotification() {
+        Context context = GcmIntentService.this
+                .getApplicationContext();
+        NotificationManager notificationManager = (NotificationManager) context
+                .getSystemService(NOTIFICATION_SERVICE);
+
+        Notification updateComplete = new Notification();
+        updateComplete.icon = android.R.drawable.stat_notify_sync;
+        updateComplete.tickerText = "TESTTTTING";
+        updateComplete.when = System.currentTimeMillis();
+
+        Intent notificationIntent = new Intent(context,
+                GcmIntentService.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+                notificationIntent, 0);
+
+        String contentTitle = "TITLE";
+
+        String contentText = "GOT IT!";
+        /*if (!result) {
+            Log.w("DEBUG", "XML download and parse had errors");
+            contentText = "FAILED";
+        } else {
+            contentText = "GOT IT";
+        }*/
+        updateComplete.setLatestEventInfo(context, contentTitle,
+                contentText, contentIntent);
+
+        notificationManager.notify(0, updateComplete);
     }
 }
