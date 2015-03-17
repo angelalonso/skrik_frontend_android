@@ -16,6 +16,8 @@ class Tool_GCMAsyncTask extends AsyncTask<String, Void, String> {
     GoogleCloudMessaging gcm;
     String regid;
 
+    Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
+
     private Context mContext;
 
     public Tool_GCMAsyncTask(Context context) {
@@ -35,7 +37,6 @@ class Tool_GCMAsyncTask extends AsyncTask<String, Void, String> {
         try {
 
             if (gcm == null) {
-                //PROBLEM SOLVED HERE
                 gcm = GoogleCloudMessaging.getInstance(mContext);
                 Log.d("GCM", gcm.toString());
             }
@@ -43,6 +44,7 @@ class Tool_GCMAsyncTask extends AsyncTask<String, Void, String> {
             regid = gcm.register(SENDER_ID); //////NULL POINTER EXCEPTION
             msg = "Device registered, registration ID=" + regid;
             Log.i("TESTING REGID - in",regid);
+            toolbox_SP.setRegid(mContext,regid);
 
         } catch (IOException ex) {
             Log.i("TESTING REGID - ERROR",ex.getMessage());
@@ -53,6 +55,7 @@ class Tool_GCMAsyncTask extends AsyncTask<String, Void, String> {
             // exponential back-off.
         }
         Log.i("TESTING REGID",regid);
+
         return regid;
     }
 

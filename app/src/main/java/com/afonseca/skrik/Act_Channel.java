@@ -66,6 +66,7 @@ public class Act_Channel extends ActionBarActivity {
         super.onResume();
 
         serverSide = serverCheck(mContext);
+        if (serverSide.matches("OK")) { backend.updateNewslist(msgsSQLHandler, usersSQLHandler, me_userid); }
         showMessages(other_userid);
     }
 
@@ -132,7 +133,6 @@ public class Act_Channel extends ActionBarActivity {
     }
 
     public void sendMessage(View view) {
-        Context mContext = getApplicationContext();
         EditText message_et = (EditText) findViewById(R.id.message_et);
         String message = message_et.getText().toString();
         if (!message.matches("") ) {
@@ -149,7 +149,9 @@ public class Act_Channel extends ActionBarActivity {
             }
         }
         message_et.setText("");
-
+        if (serverSide.matches("OK")) {
+            backend.updateNewslist(msgsSQLHandler, usersSQLHandler, me_userid);
+        }
         showMessages(other_userid);
 
 
@@ -162,6 +164,10 @@ public class Act_Channel extends ActionBarActivity {
     }
 
     public void updateChannel(View view) {
+        serverSide = serverCheck(mContext);
+        if (serverSide.matches("OK")) {
+            backend.updateNewslist(msgsSQLHandler, usersSQLHandler, me_userid);
+        }
         showMessages(other_userid);
     }
 

@@ -126,6 +126,19 @@ public class Toolbox_Sharedprefs extends Activity {
         return Result;
     }
 
+    public boolean phoneHasRegid(Context inContext) {
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        boolean result = false;
+
+        String regid = sharedpreferences.getString(Regid, "");
+        String sanitized_regid = regid.replaceAll("[^\\d.]", "");
+        if (!sanitized_regid.matches("") && !sanitized_regid.matches("4444")) {
+            result = true;
+        }
+
+        return result;
+    }
+
     
     public String getUsername(Context inContext) {
 
@@ -177,6 +190,14 @@ public class Toolbox_Sharedprefs extends Activity {
 
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Regid, "");
+    }
+
+    public void setRegid(Context inContext, String regid) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Regid, regid);
+        editor.apply();
     }
 
     // THIS IS NOT YET USED - is OK

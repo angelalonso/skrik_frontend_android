@@ -179,7 +179,6 @@ public class Act_UserCfg extends ActionBarActivity {
                         email.setText("");
                         phone.setText("");
                         uid.setText("");
-                        regid.setText("");
                         passwd.setText("");
                         toolbox_SP.clearUser(mContext);
                         String saveResult = toolbox_SP.saveUserConfig(mContext, "", "", "", "", "", "");

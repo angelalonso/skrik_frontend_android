@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class Act_Overview extends ActionBarActivity {
 
     /* Declarations */
-
+/*
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
@@ -37,7 +37,7 @@ public class Act_Overview extends ActionBarActivity {
     String SENDER_ID = "610647426983";
     //GoogleCloudMessaging gcm;
     String regid;
-
+*/
     //Extender Activity
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
     Toolbox_Backend backend = new Toolbox_Backend();
@@ -64,9 +64,6 @@ public class Act_Overview extends ActionBarActivity {
         setContentView(R.layout.activity_overview);
         mContext = getApplicationContext();
 
-        //gcm = GoogleCloudMessaging.getInstance(this);
-        //final String regId = GCMRegistrar.getRegistrationId(this);
-
         NewsList_lv = (ListView) findViewById(R.id.newslist_lv);
         Username_tv = (TextView) findViewById(R.id.username_search_tv);
 
@@ -78,13 +75,12 @@ public class Act_Overview extends ActionBarActivity {
         mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
-
-        String testing = "hola";
-        //registerGCMInBackground(testing);
-
-        Tool_GCMAsyncTask task = new Tool_GCMAsyncTask(this);
-        task.execute();
-
+        if (!toolbox_SP.phoneHasRegid(mContext)) {
+            Tool_GCMAsyncTask task = new Tool_GCMAsyncTask(this);
+            task.execute();
+        } else {
+            Log.i("TESTING Save Regid is",toolbox_SP.getRegid(mContext));
+        }
 
         if (check_UserData(mContext).matches("OK")) {
             showWhatever();
