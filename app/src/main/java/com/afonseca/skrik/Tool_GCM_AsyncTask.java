@@ -9,7 +9,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.io.IOException;
 
 
-class Tool_GCMAsyncTask extends AsyncTask<String, Void, String> {
+class Tool_GCM_AsyncTask extends AsyncTask<String, Void, String> {
 
 
     String SENDER_ID = "610647426983";
@@ -20,7 +20,7 @@ class Tool_GCMAsyncTask extends AsyncTask<String, Void, String> {
 
     private Context mContext;
 
-    public Tool_GCMAsyncTask(Context context) {
+    public Tool_GCM_AsyncTask(Context context) {
         mContext = context;
     }
 

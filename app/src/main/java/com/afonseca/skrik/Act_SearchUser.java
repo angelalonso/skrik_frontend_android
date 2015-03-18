@@ -44,7 +44,7 @@ public class Act_SearchUser extends ActionBarActivity {
 
         userList = backend.searchUser(user2search);
 
-        Ctrl_SearchUser_ListAdapter userlistAdapter = new Ctrl_SearchUser_ListAdapter(
+        ListAdapter_SearchUser userlistAdapter = new ListAdapter_SearchUser(
                 Act_SearchUser.this, userList);
         userList_lv.setAdapter(userlistAdapter);
 

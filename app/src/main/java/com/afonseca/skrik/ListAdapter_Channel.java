@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Ctrl_ChannelListAdapter extends BaseAdapter {
+public class ListAdapter_Channel extends BaseAdapter {
 
     Context context;
     ArrayList<Data_ChannelItems> chatList;
 
-    public Ctrl_ChannelListAdapter(Context context, ArrayList<Data_ChannelItems> list) {
+    public ListAdapter_Channel(Context context, ArrayList<Data_ChannelItems> list) {
 
         this.context = context;
         chatList = list;

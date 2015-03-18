@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * Created by afonseca on 3/16/2015.
  */
-public class Result extends Activity {
+public class Act_Received extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {

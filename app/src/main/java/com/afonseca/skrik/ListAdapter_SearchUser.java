@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Ctrl_SearchUser_ListAdapter extends BaseAdapter {
+public class ListAdapter_SearchUser extends BaseAdapter {
 
     Context context;
     ArrayList<Data_SearchUser_ListItems> userList;
 
-    public Ctrl_SearchUser_ListAdapter(Context context, ArrayList<Data_SearchUser_ListItems> list) {
+    public ListAdapter_SearchUser(Context context, ArrayList<Data_SearchUser_ListItems> list) {
 
         this.context = context;
         userList = list;

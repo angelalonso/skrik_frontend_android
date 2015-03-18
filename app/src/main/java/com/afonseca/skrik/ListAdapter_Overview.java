@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class Ctrl_OverviewListAdapter extends BaseAdapter {
+public class ListAdapter_Overview extends BaseAdapter {
 
     Context context;
     ArrayList<Data_OverviewItems> contactList;
 
-    public Ctrl_OverviewListAdapter(Context context, ArrayList<Data_OverviewItems> list) {
+    public ListAdapter_Overview(Context context, ArrayList<Data_OverviewItems> list) {
 
         this.context = context;
         contactList = list;

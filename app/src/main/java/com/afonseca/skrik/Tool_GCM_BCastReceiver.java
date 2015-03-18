@@ -11,13 +11,13 @@ import android.util.Log;
 /**
  * Created by afonseca on 3/16/2015.
  */
-public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
+public class Tool_GCM_BCastReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Explicitly specify that GcmIntentService will handle the intent.
+        // Explicitly specify that Tool_GCM_IntentService will handle the intent.
         Log.i("TESTING GCM", "Message received!");
         ComponentName comp = new ComponentName(context.getPackageName(),
-                GcmIntentService.class.getName());
+                Tool_GCM_IntentService.class.getName());
         // Start the service, keeping the device awake while it is launching.
         startWakefulService(context, (intent.setComponent(comp)));
         setResultCode(Activity.RESULT_OK);

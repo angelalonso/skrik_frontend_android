@@ -12,16 +12,13 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import javax.xml.transform.Result;
 
 /**
  * Created by afonseca on 3/16/2015.
  */
-public class GcmIntentService extends IntentService {
+public class Tool_GCM_IntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder notification;
@@ -33,8 +30,8 @@ public class GcmIntentService extends IntentService {
 
     String TAG = "GCM";
 
-    public GcmIntentService() {
-        super("GcmIntentService");
+    public Tool_GCM_IntentService() {
+        super("Tool_GCM_IntentService");
     }
 
     @Override
@@ -83,7 +80,7 @@ public class GcmIntentService extends IntentService {
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
+        Tool_GCM_BCastReceiver.completeWakefulIntent(intent);
     }
 
     // Put the message into a notification and post it.
@@ -110,7 +107,7 @@ public class GcmIntentService extends IntentService {
     }
 
     protected void startNotification() {
-        Context context = GcmIntentService.this
+        Context context = Tool_GCM_IntentService.this
                 .getApplicationContext();
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(NOTIFICATION_SERVICE);
@@ -121,7 +118,7 @@ public class GcmIntentService extends IntentService {
         updateComplete.when = System.currentTimeMillis();
 
         Intent notificationIntent = new Intent(context,
-                GcmIntentService.class);
+                Tool_GCM_IntentService.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
 

@@ -2,9 +2,7 @@ package com.afonseca.skrik;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -18,10 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 //import com.google.android.gcm.GCMRegistrar;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -42,6 +38,9 @@ public class Act_Overview extends ActionBarActivity {
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
     Toolbox_Backend backend = new Toolbox_Backend();
     Toolbox_LocalSQLite toolbox_localSQL = new Toolbox_LocalSQLite();
+    Tool_Debug debugger = new Tool_Debug();
+
+
 
     DB_Msgs_Handler newsMsgsSQLHandler;
     DB_Users_Handler newsUsersSQLHandler;
@@ -76,12 +75,17 @@ public class Act_Overview extends ActionBarActivity {
         serverSide = serverCheck(mContext);
 
         if (!toolbox_SP.phoneHasRegid(mContext)) {
-            Tool_GCMAsyncTask task = new Tool_GCMAsyncTask(this);
+            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
             task.execute();
         } else {
             Log.i("TESTING Save Regid is",toolbox_SP.getRegid(mContext));
         }
-
+        /*
+//**************
+        Context auxContext = Act_Overview.this;
+        debugger.popup(auxContext,"regid-> " + toolbox_SP.getRegid(mContext));
+//**************
+*/
         if (check_UserData(mContext).matches("OK")) {
             showWhatever();
         } else {
@@ -270,7 +274,7 @@ public class Act_Overview extends ActionBarActivity {
 
             contactList.add(overviewItems);
         }
-        Ctrl_OverviewListAdapter contactListAdapter = new Ctrl_OverviewListAdapter(
+        ListAdapter_Overview contactListAdapter = new ListAdapter_Overview(
                 Act_Overview.this, contactList);
         NewsList_lv.setAdapter(contactListAdapter);
 

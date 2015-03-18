@@ -11,8 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 
 
@@ -122,7 +121,7 @@ public class Act_Channel extends ActionBarActivity {
             }
         }
         c1.close();
-        Ctrl_ChannelListAdapter channelAdapter = new Ctrl_ChannelListAdapter(
+        ListAdapter_Channel channelAdapter = new ListAdapter_Channel(
                 Act_Channel.this, chatList);
         ChatList_lv.setAdapter(channelAdapter);
         ChatList_lv.setSelection(ChatList_lv.getAdapter().getCount()-1);
