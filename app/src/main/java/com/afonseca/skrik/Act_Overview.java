@@ -25,7 +25,7 @@ public class Act_Overview extends ActionBarActivity {
     /*TODO: empty overview has to be just empty
       TODO: if user was registered offline, show a popup to retry and no message
 
-    */
+    **/
 
     /* Declarations */
 /*
