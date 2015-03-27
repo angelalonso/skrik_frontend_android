@@ -22,6 +22,10 @@ import java.util.ArrayList;
 
 
 public class Act_Overview extends ActionBarActivity {
+    /*TODO: empty overview has to be just empty
+      TODO: if user was registered offline, show a popup to retry and no message
+
+    */
 
     /* Declarations */
 /*
@@ -80,6 +84,7 @@ public class Act_Overview extends ActionBarActivity {
         } else {
             Log.i("TESTING Save Regid is",toolbox_SP.getRegid(mContext));
         }
+
         /*
 //**************
         Context auxContext = Act_Overview.this;

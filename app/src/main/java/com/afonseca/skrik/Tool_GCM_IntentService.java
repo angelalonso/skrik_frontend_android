@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,18 +14,16 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-/**
- * Created by afonseca on 3/16/2015.
- */
 public class Tool_GCM_IntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
-    private NotificationManager mNotificationManager;
+    NotificationManager mNotificationManager;
+    /* TODO: NOT NEEDED?
     NotificationCompat.Builder notification;
     TaskStackBuilder stackBuilder;
     Intent resultIntent;
     PendingIntent pIntent;
     NotificationManager manager;
-
+*/
 
     String TAG = "GCM";
 
@@ -65,6 +62,7 @@ public class Tool_GCM_IntentService extends IntentService {
                 // This loop represents the service doing some work.
                 vibe.vibrate(400);
                 startNotification();
+                /* TODO: NOT NEEDED?
                 for (int i=0; i<5; i++) {
                     Log.i(TAG, "Working... " + (i + 1)
                             + "/5 @ " + SystemClock.elapsedRealtime());
@@ -74,6 +72,8 @@ public class Tool_GCM_IntentService extends IntentService {
                     }
                 }
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
+
+                */
                 // Post notification of received message.
                 sendNotification("Received: " + extras.toString());
                 Log.i(TAG, "Received: " + extras.toString());
