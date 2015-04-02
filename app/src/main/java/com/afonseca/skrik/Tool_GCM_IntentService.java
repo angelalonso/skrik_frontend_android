@@ -113,7 +113,7 @@ public class Tool_GCM_IntentService extends IntentService {
                 .getSystemService(NOTIFICATION_SERVICE);
 
         Notification updateComplete = new Notification();
-        updateComplete.icon = android.R.drawable.stat_notify_sync;
+        updateComplete.icon = android.R.drawable.stat_notify_chat;
         updateComplete.tickerText = "TESTTTTING";
         updateComplete.when = System.currentTimeMillis();
 
