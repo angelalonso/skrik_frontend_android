@@ -61,7 +61,9 @@ public class Tool_GCM_IntentService extends IntentService {
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // This loop represents the service doing some work.
                 vibe.vibrate(400);
-                startNotification();
+                String userfrom = extras.getString("userfrom");
+                String message = extras.getString("message");
+                startNotification(userfrom,message);
                 /* TODO: NOT NEEDED?
                 for (int i=0; i<5; i++) {
                     Log.i(TAG, "Working... " + (i + 1)
@@ -83,9 +85,6 @@ public class Tool_GCM_IntentService extends IntentService {
         Tool_GCM_BCastReceiver.completeWakefulIntent(intent);
     }
 
-    // Put the message into a notification and post it.
-    // This is just one simple example of what you might choose to do with
-    // a GCM message.
     private void sendNotification(String msg) {
         Log.i("TESTING MSG is",msg);
         mNotificationManager = (NotificationManager)
@@ -106,7 +105,7 @@ public class Tool_GCM_IntentService extends IntentService {
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
-    protected void startNotification() {
+    protected void startNotification(String userfrom, String message) {
         Context context = Tool_GCM_IntentService.this
                 .getApplicationContext();
         NotificationManager notificationManager = (NotificationManager) context
@@ -114,7 +113,8 @@ public class Tool_GCM_IntentService extends IntentService {
 
         Notification updateComplete = new Notification();
         updateComplete.icon = android.R.drawable.stat_notify_chat;
-        updateComplete.tickerText = "TESTTTTING";
+        // TODO: standard text
+        updateComplete.tickerText = "New message";
         updateComplete.when = System.currentTimeMillis();
 
         Intent notificationIntent = new Intent(context,
@@ -122,15 +122,10 @@ public class Tool_GCM_IntentService extends IntentService {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
 
-        String contentTitle = "TITLE";
+        // TODO: standard text
+        String contentTitle = "you got a new message from user " + userfrom;
 
-        String contentText = "GOT IT!";
-        /*if (!result) {
-            Log.w("DEBUG", "XML download and parse had errors");
-            contentText = "FAILED";
-        } else {
-            contentText = "GOT IT";
-        }*/
+        String contentText = message;
         updateComplete.setLatestEventInfo(context, contentTitle,
                 contentText, contentIntent);
 

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +15,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+/*TODO:
+Full user config with password and NO CAVEATS!
+ */
 
 public class Act_UserCfg extends ActionBarActivity {
 
@@ -88,6 +93,15 @@ public class Act_UserCfg extends ActionBarActivity {
 
         if (LinkedAccount.equals("None")){
             offerAccount(mContext);
+        }
+        Log.i("TESTING Regid ", "in USERCFG");
+
+        if (!toolbox_SP.phoneHasRegid(mContext)) {
+            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
+            task.execute();
+            Log.i("TESTING after Regid ", toolbox_SP.getRegid(mContext));
+        } else {
+            Log.i("TESTING Save Regid is", toolbox_SP.getRegid(mContext));
         }
         name.setText(toolbox_SP.getUsername(mContext));
         email.setText(toolbox_SP.getEmail(mContext));

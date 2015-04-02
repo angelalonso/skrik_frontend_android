@@ -209,51 +209,66 @@ public class Toolbox_Backend {
                 String timestamp = jsonLine.getString(3);
                 String backend_id = jsonLine.getString(4);
                 String query = "SELECT count(*) AS result FROM MSGS WHERE backend_id = '" + backend_id + "' ";
-                Cursor c1 = sqlMsgsHandler.selectQuery(query);
+                try{
+                    Cursor c1 = sqlMsgsHandler.selectQuery(query);
 
-                if (c1 == null){
-                    String insert_query = "INSERT INTO MSGS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
-                    sqlMsgsHandler.executeQuery(insert_query);
-                } else {
-                    String test = Integer.toString(c1.getCount());
-                    if (c1.moveToFirst()) {
-                        Integer nr_msgs = Integer.parseInt(c1.getString(c1.getColumnIndex("result")));
-                        if (nr_msgs == 0){
-                            String insert_query = "INSERT INTO MSGS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
-                            sqlMsgsHandler.executeQuery(insert_query);
+
+                    if (c1 == null){
+                        String insert_query = "INSERT INTO MSGS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
+                        sqlMsgsHandler.executeQuery(insert_query);
+                    } else {
+                        String test = Integer.toString(c1.getCount());
+                        if (c1.moveToFirst()) {
+                            Integer nr_msgs = Integer.parseInt(c1.getString(c1.getColumnIndex("result")));
+                            if (nr_msgs == 0){
+                                String insert_query = "INSERT INTO MSGS (userid_from,userid_to,message,status,timestamp,backend_id) VALUES ('" + userfrom + "','" + userid + "','" + message + "','" + status + "','" + timestamp + "','" + backend_id + "')";
+                                sqlMsgsHandler.executeQuery(insert_query);
+                            }
                         }
                     }
+                    c1.close();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
-                c1.close();
 
                 String auxquery = "SELECT count(*) as result FROM MSGS ";
-                Cursor c2 = sqlMsgsHandler.selectQuery(auxquery);
-                String nr_msgs = "";
-                if (c2 != null && c2.getCount() > 0) {
-                    if (c2.moveToFirst()) {
-                        do {
-                            nr_msgs = c2.getString(c2.getColumnIndex("result"));
-                        } while (c2.moveToNext());
+                try {
+                    Cursor c2 = sqlMsgsHandler.selectQuery(auxquery);
+                    String nr_msgs = "";
+                    if (c2 != null && c2.getCount() > 0) {
+                        if (c2.moveToFirst()) {
+                            do {
+                                nr_msgs = c2.getString(c2.getColumnIndex("result"));
+                            } while (c2.moveToNext());
+                        }
                     }
+                    c2.close();
+
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
-                c2.close();
 
                 if (!callback.contains(userfrom)) {
                     String query_userexists = "SELECT count(*) AS result FROM USERS WHERE id = '" + userfrom + "' ";
-                    Cursor c3 = sqlUsersHandler.selectQuery(query_userexists);
-                    String nr_users = "";
-                    if (c3 != null && c3.getCount() > 0) {
-                        if (c3.moveToFirst()) {
-                            do {
-                                nr_users = c3.getString(c3.getColumnIndex("result"));
-                            } while (c3.moveToNext());
+                    try {
+                        Cursor c3 = sqlUsersHandler.selectQuery(query_userexists);
+                        String nr_users = "";
+                        if (c3 != null && c3.getCount() > 0) {
+                            if (c3.moveToFirst()) {
+                                do {
+                                    nr_users = c3.getString(c3.getColumnIndex("result"));
+                                } while (c3.moveToNext());
+                            }
                         }
+                        if (nr_users.matches("0")) {
+                            //TODO: INSERT A NEW USER HERE
+                            callback = callback + userfrom + ",";
+                        }
+                        c3.close();
+
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
                     }
-                    if (nr_users.matches("0")) {
-                        //TODO: INSERT A NEW USER HERE
-                        callback = callback + userfrom + ",";
-                    }
-                    c3.close();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
