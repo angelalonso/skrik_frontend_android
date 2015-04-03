@@ -16,9 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/*TODO: Full user config with password and NO CAVEATS!
-  TODO: Get Regid, Userid and a unique username (serverside)
-  TODO: Add an Image, send to server
+/*TODO: Define a better workflow:
+    TODO: Define a standard workflow
+    TODO: Check Full user config with regid,uid and password and NO CAVEATS!
+    TODO: Get a unique username (serverside)
+    TODO: Save password in backend (send all secured)
+    TODO: Add an Image, send to server
   TODO: Document which Classes are called from here
   TODO: Try to communicate securely
  */
