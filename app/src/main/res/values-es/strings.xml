@@ -46,6 +46,7 @@
     <string name="aux_date_yesterday">ayer</string>
     <string name="aux_dummy_uid">99999999999999</string>
     <string name="aux_result_ok">OK</string>
+    <string name="aux_result_passwd">contraseña</string>
     <string name="aux_result_username">nombre de usuario</string>
     <string name="aux_result_valid_email">Email \'VÁLIDO\'</string>
     <string name="aux_result_valid_email_phone">Email o teléfono \'VÁLIDO\'</string>

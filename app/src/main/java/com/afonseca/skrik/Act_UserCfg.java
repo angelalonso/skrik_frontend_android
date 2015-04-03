@@ -16,18 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/*TODO:
-Full user config with password and NO CAVEATS!
+/*TODO: Full user config with password and NO CAVEATS!
+  TODO: Get Regid, Userid and a unique username (serverside)
+  TODO: Add an Image, send to server
+  TODO: Document which Classes are called from here
+  TODO: Try to communicate securely
  */
 
 public class Act_UserCfg extends ActionBarActivity {
 
     /* Declarations */
 
-    Toolbox_Backend backend = new Toolbox_Backend();
+    Toolbox_Backend toolbox_BE = new Toolbox_Backend();
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
 
     Context mContext;
+
+    String TAG = "Checkpoint ->";
 
     String serverSide;
     private Toast toast;
@@ -47,6 +52,7 @@ public class Act_UserCfg extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userconfig);
         mContext = getApplicationContext();
+        Log.i(TAG,"onCreate");
 
         name = (TextView) findViewById(R.id.name_input);
         email = (TextView) findViewById(R.id.email_input);
@@ -54,23 +60,24 @@ public class Act_UserCfg extends ActionBarActivity {
         uid = (TextView) findViewById(R.id.uid_input);
         regid = (TextView) findViewById(R.id.regid_input);
         passwd = (TextView) findViewById(R.id.passwd_input);
-
-        serverSide = serverCheck();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mContext = getApplicationContext();
+        Log.i(TAG,"onResume");
 
         serverSide = serverCheck();
         loadUserData(mContext);
     }
 
-    /* onSOMETHING Methods */
+    /* onSOMETHINGELSE Methods */
 
     @Override
     public void onBackPressed() {
+        Log.i(TAG,"onBackPressed");
+
         mContext = getApplicationContext();
         if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
             toast = Toast.makeText(this, mContext.getResources().getString(R.string.msg_press_exit), Toast.LENGTH_SHORT);
@@ -89,12 +96,13 @@ public class Act_UserCfg extends ActionBarActivity {
 
 
     public void loadUserData(Context mContext){
+        Log.i(TAG,"loadUserData");
+
         String LinkedAccount = toolbox_SP.userHasLinkedAccount(mContext);
 
         if (LinkedAccount.equals("None")){
             offerAccount(mContext);
         }
-        Log.i("TESTING Regid ", "in USERCFG");
 
         if (!toolbox_SP.phoneHasRegid(mContext)) {
             Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
@@ -111,6 +119,7 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
     public void offerAccount(Context mContext) {
+        Log.i(TAG,"offerAccount");
 
         final Context inContext = mContext;
         List<String> foundAccounts = new ArrayList<>();
@@ -167,7 +176,6 @@ public class Act_UserCfg extends ActionBarActivity {
                         toolbox_SP.setEmail(inContext,"");
                         toolbox_SP.setPhone(inContext,"");
                     }
-
                 }
             });
             builder.show();
@@ -177,6 +185,8 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
     public void clearUser(View view) {
+        Log.i(TAG,"clearUser");
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mContext.getResources().getString(R.string.msg_del_confirm))
                 .setCancelable(false)
@@ -209,6 +219,8 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
     public void saveUser(View view) {
+        Log.i(TAG,"saveUser");
+
         String n  = name.getText().toString();
         String em  = email.getText().toString();
         String ph = phone.getText().toString();
@@ -217,7 +229,7 @@ public class Act_UserCfg extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         mContext = getApplicationContext();
-        String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, id, rid, pwd);
+        String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
             finish();
@@ -230,8 +242,10 @@ public class Act_UserCfg extends ActionBarActivity {
     /* CHECK Methods */
 
     public String serverCheck() {
+        Log.i(TAG,"serverCheck");
+
         TextView server_tv = (TextView) findViewById(R.id.server_tv);
-        String status = backend.testNetwork(mContext);
+        String status = toolbox_BE.testNetwork(mContext);
         switch(status) {
             case "OK":
                 server_tv.setTextColor(getResources().getColor(R.color.Lime));
