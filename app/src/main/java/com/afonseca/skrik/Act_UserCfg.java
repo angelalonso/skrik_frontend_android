@@ -18,7 +18,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /* TODO:
-- If user landed here -> Show why (which details are wrong/needed)
+- If user landed here -> Show why (which details are wrong/needed) MESSAGE ÁREA
+- If Activity is opened/resumed -> just load the current data
+- If user saves data ->...
+  - ...if data is correct -> Save to DB, send to server and go to Act_Overview
+  - ...if data is not correct -> Correct if possible, if not -> Show why (see above) and let user change it
+- If sending data to server -> Encrypt all, then send (decrypt at server)
 - If the UID is missing/wrong -> get UID from server
   - If server is unavailable -> use temporary 4444
 - If the REGID is missing/wrong/older than 1 day -> get Regid from GCM
@@ -27,15 +32,15 @@ import java.util.regex.Pattern;
     - ...if current REGID is correct or temporary, keep it
     - ...if current REGID is empty, get a temporary one
 - If the username exists at the server -> show error, get alternatives from server
+- TODO: DEFINE WHAT TO DO WITH PASSWORDS (when the user is known, when it's not, when it's new, when it's recovering an existing one...)
 
 
  */
 
 /*TODO: Define a better workflow:
-    TODO: Define a standard workflow
-    TODO: Check Full user config with regid,uid and password and NO CAVEATS!
-    TODO: Save password in backend (send all secured)
-    TODO: Add an Image, send to server
+  TODO: Show what is needed turning it red (back to grey when writing)
+  TODO: Save password in backend (send all secured)
+  TODO: Add an Image, send to server
   TODO: Document which Classes are called from here
   TODO: Try to communicate securely
  */
@@ -68,7 +73,6 @@ public class Act_UserCfg extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userconfig);
-        mContext = getApplicationContext();
         Log.i(TAG,"onCreate");
 
         name = (EditText) findViewById(R.id.name_input);
@@ -120,7 +124,9 @@ public class Act_UserCfg extends ActionBarActivity {
         if (LinkedAccount.equals("None")){
             offerAccount(mContext);
         }
+    //TODO: Move this to only on save
 
+        /*
         if (!toolbox_SP.phoneHasRegid(mContext)) {
             Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
             task.execute();
@@ -128,6 +134,7 @@ public class Act_UserCfg extends ActionBarActivity {
         } else {
             Log.i("TESTING Save Regid is", toolbox_SP.getRegid(mContext));
         }
+        */
         name.setText(toolbox_SP.getUsername(mContext));
         email.setText(toolbox_SP.getEmail(mContext));
         phone.setText(toolbox_SP.getPhone(mContext));
@@ -246,6 +253,13 @@ public class Act_UserCfg extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         mContext = getApplicationContext();
+        if (!toolbox_SP.phoneHasRegid(mContext)) {
+            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
+            task.execute();
+            Log.i("TESTING after Regid ", toolbox_SP.getRegid(mContext));
+        } else {
+            Log.i("TESTING Save Regid is", toolbox_SP.getRegid(mContext));
+        }
         String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
