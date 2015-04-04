@@ -54,7 +54,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     Context mContext;
 
-    String TAG = "Checkpoint ->";
+    String TAG = "Checkpoint! ->";
 
     String serverSide;
     private Toast toast;
@@ -124,17 +124,7 @@ public class Act_UserCfg extends ActionBarActivity {
         if (LinkedAccount.equals("None")){
             offerAccount(mContext);
         }
-    //TODO: Move this to only on save
 
-        /*
-        if (!toolbox_SP.phoneHasRegid(mContext)) {
-            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
-            task.execute();
-            Log.i("TESTING after Regid ", toolbox_SP.getRegid(mContext));
-        } else {
-            Log.i("TESTING Save Regid is", toolbox_SP.getRegid(mContext));
-        }
-        */
         name.setText(toolbox_SP.getUsername(mContext));
         email.setText(toolbox_SP.getEmail(mContext));
         phone.setText(toolbox_SP.getPhone(mContext));
@@ -253,6 +243,9 @@ public class Act_UserCfg extends ActionBarActivity {
         String pwd  = passwd.getText().toString();
 
         mContext = getApplicationContext();
+        //TODO: Shall we trigger this already while the user is entering data?
+        //    TODO: Maybe we can create a new function thtat does that, then triggers an update when it's done.
+        // UNDER CONSTRUCTION BELOW (regidCheck)
         if (!toolbox_SP.phoneHasRegid(mContext)) {
             Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
             task.execute();
@@ -271,6 +264,18 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
     /* CHECK Methods */
+
+    public void regidCheck() {
+        // TODO: Send and check result of AsyncTask
+        // TODO: Update regid directly at the Asynctask?
+        if (!toolbox_SP.phoneHasRegid(mContext)) {
+            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
+            task.execute();
+            Log.i("TESTING after Regid ", toolbox_SP.getRegid(mContext));
+        } else {
+            Log.i("TESTING Save Regid is", toolbox_SP.getRegid(mContext));
+        }
+    }
 
     public String serverCheck() {
         Log.i(TAG,"serverCheck");
@@ -293,6 +298,7 @@ public class Act_UserCfg extends ActionBarActivity {
         }
         return status;
     }
+
 
 
     /* "GOTO" Methods */
