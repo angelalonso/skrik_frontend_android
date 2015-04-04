@@ -10,16 +10,30 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/* TODO:
+- If user landed here -> Show why (which details are wrong/needed)
+- If the UID is missing/wrong -> get UID from server
+  - If server is unavailable -> use temporary 4444
+- If the REGID is missing/wrong/older than 1 day -> get Regid from GCM
+  - If GCM returns a new REGID -> update in server
+  - If GCM DOES NOT return a REGID -> ...
+    - ...if current REGID is correct or temporary, keep it
+    - ...if current REGID is empty, get a temporary one
+- If the username exists at the server -> show error, get alternatives from server
+
+
+ */
+
 /*TODO: Define a better workflow:
     TODO: Define a standard workflow
     TODO: Check Full user config with regid,uid and password and NO CAVEATS!
-    TODO: Get a unique username (serverside)
     TODO: Save password in backend (send all secured)
     TODO: Add an Image, send to server
   TODO: Document which Classes are called from here
@@ -41,12 +55,12 @@ public class Act_UserCfg extends ActionBarActivity {
     private Toast toast;
     private long lastBackPressTime = 0;
 
-    TextView name;
-    TextView email;
-    TextView phone;
+    EditText name;
+    EditText email;
+    EditText phone;
+    EditText passwd;
     TextView uid;
     TextView regid;
-    TextView passwd;
 
     /* LOADING Methods */
 
@@ -57,12 +71,12 @@ public class Act_UserCfg extends ActionBarActivity {
         mContext = getApplicationContext();
         Log.i(TAG,"onCreate");
 
-        name = (TextView) findViewById(R.id.name_input);
-        email = (TextView) findViewById(R.id.email_input);
-        phone = (TextView) findViewById(R.id.phone_input);
+        name = (EditText) findViewById(R.id.name_input);
+        email = (EditText) findViewById(R.id.email_input);
+        phone = (EditText) findViewById(R.id.phone_input);
+        passwd = (EditText) findViewById(R.id.passwd_input);
         uid = (TextView) findViewById(R.id.uid_input);
         regid = (TextView) findViewById(R.id.regid_input);
-        passwd = (TextView) findViewById(R.id.passwd_input);
     }
 
     @Override

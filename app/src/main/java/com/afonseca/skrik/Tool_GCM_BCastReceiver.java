@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
+/* TODO:
+- If a notification is clicked -> GOTO Act_Overview AND update data
+*/
 
 /**
  * Created by afonseca on 3/16/2015.

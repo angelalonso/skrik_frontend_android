@@ -1,7 +1,7 @@
 package com.afonseca.skrik;
 
 
-public class Data_SearchUser_ListItems {
+public class Data_SearchContact_ListItems {
 
     String username;
     String userid;

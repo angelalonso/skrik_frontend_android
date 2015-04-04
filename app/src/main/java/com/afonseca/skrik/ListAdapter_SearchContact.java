@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListAdapter_SearchUser extends BaseAdapter {
+public class ListAdapter_SearchContact extends BaseAdapter {
 
     Context context;
-    ArrayList<Data_SearchUser_ListItems> userList;
+    ArrayList<Data_SearchContact_ListItems> userList;
 
-    public ListAdapter_SearchUser(Context context, ArrayList<Data_SearchUser_ListItems> list) {
+    public ListAdapter_SearchContact(Context context, ArrayList<Data_SearchContact_ListItems> list) {
 
         this.context = context;
         userList = list;
@@ -42,7 +42,7 @@ public class ListAdapter_SearchUser extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup arg2) {
-        Data_SearchUser_ListItems channelItems = userList.get(position);
+        Data_SearchContact_ListItems channelItems = userList.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context

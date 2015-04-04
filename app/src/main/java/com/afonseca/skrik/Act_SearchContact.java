@@ -13,11 +13,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-
-public class Act_SearchUser extends ActionBarActivity {
+/* TODO:
+- If contact is (short) clicked ->...
+  - ...if contact is NOT blacklisted -> add contact to list for overview, open Channel
+  - ...if contact is blacklisted -> ask for confirmation before opening Channel
+- If contact is LONG-clicked -> Show options: blacklist, open Channel  // also in  Act_Overview //
+ */
+public class Act_SearchContact extends ActionBarActivity {
 
     EditText name2Search;
-    ListView userList_lv;
+    ListView contactList_lv;
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
     Toolbox_Backend backend = new Toolbox_Backend();
     Toolbox_LocalSQLite toolbox_SQL = new Toolbox_LocalSQLite();
@@ -27,26 +32,26 @@ public class Act_SearchUser extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_searchuser);
+        setContentView(R.layout.activity_searchcontact);
 
         name2Search = (EditText) findViewById(R.id.search_et);
-        userList_lv = (ListView) findViewById(R.id.userlist_lv);
+        contactList_lv = (ListView) findViewById(R.id.contactlist_lv);
     }
 
-    public void updateUserList(View view) {
-        String user2search = name2Search.getText().toString();
-        showUserList(user2search);
+    public void updateContactList(View view) {
+        String contact2search = name2Search.getText().toString();
+        showContactList(contact2search);
     }
 
-    private void showUserList(String user2search) {
-        ArrayList<Data_SearchUser_ListItems> userList = new ArrayList<>();
-        userList.clear();
+    private void showContactList(String contact2search) {
+        ArrayList<Data_SearchContact_ListItems> contactList = new ArrayList<>();
+        contactList.clear();
 
-        userList = backend.searchUser(user2search);
+        contactList = backend.searchUser(contact2search);
 
-        ListAdapter_SearchUser userlistAdapter = new ListAdapter_SearchUser(
-                Act_SearchUser.this, userList);
-        userList_lv.setAdapter(userlistAdapter);
+        ListAdapter_SearchContact contactlistAdapter = new ListAdapter_SearchContact(
+                Act_SearchContact.this, contactList);
+        contactList_lv.setAdapter(contactlistAdapter);
 
     }
 

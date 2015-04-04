@@ -4,6 +4,7 @@
     android:orientation="vertical"
     tools:context="com.afonseca.skrik.UserConfigActivity">
 
+    <!-- TODO: wrap everything on scrollable (landscape mode fucked up) -->
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -74,39 +75,6 @@
             android:layout_alignEnd="@+id/save_btn" />
 
 
-
-        <EditText
-            android:id="@+id/uid_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:editable="false"
-            android:focusable="false"
-            android:textColor="#77000000"
-            android:layout_below="@+id/passwd_input"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-
-
-        <EditText
-            android:id="@+id/regid_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:editable="false"
-            android:focusable="false"
-            android:textColor="#77000000"
-            android:layout_below="@+id/uid_input"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/save_btn"
-            android:layout_alignEnd="@+id/save_btn" />
-
         <EditText
             android:id="@+id/passwd_input"
             android:hint="@string/hint_usercfg_pass"
@@ -119,6 +87,86 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="#ff000000"
+            android:text="@string/title_techdetails"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            android:singleLine="false"
+            android:layout_above="@+id/uid_input"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="46dp" />
+
+        <TextView
+            android:id="@+id/uid_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="#77000000"
+            android:text="UID:"
+            android:layout_above="@+id/regid_title"
+            android:layout_toLeftOf="@+id/details_title"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/uid_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="#77000000"
+            android:layout_alignTop="@+id/uid_title"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/uid_title"
+            android:layout_toEndOf="@+id/uid_title" />
+
+        <TextView
+            android:id="@+id/regid_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="#77000000"
+            android:text="REGID:"
+            android:layout_above="@+id/clear_input"
+            android:layout_marginBottom="33dp"
+            android:layout_toLeftOf="@+id/details_title"
+            android:layout_alignLeft="@+id/uid_title"
+            android:layout_alignStart="@+id/uid_title" />
+
+        <TextView
+            android:id="@+id/regid_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="#77000000"
+            android:nestedScrollingEnabled="true"
+            android:password="true"
+            android:layout_below="@+id/uid_title"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/regid_title"
+            android:layout_toEndOf="@+id/regid_title" />
+
 
         <Button
             android:id="@+id/save_btn"

@@ -30,7 +30,7 @@
             android:text="@string/btn_searchuser_search"
             android:id="@+id/search_btn"
             android:singleLine="true"
-            android:onClick="updateUserList"
+            android:onClick="updateContactList"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
@@ -54,6 +54,6 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/userlist_lv" />
+        android:id="@+id/contactlist_lv" />
 
 </LinearLayout>

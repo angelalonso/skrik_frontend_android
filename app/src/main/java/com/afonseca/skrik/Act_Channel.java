@@ -14,6 +14,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/* TODO:
+- If user opens or comes back here -> update data
+- If the REGID is missing/wrong/older than 1 day -> get Regid from GCM
+  - If GCM returns a new REGID -> update in server
+  - If GCM DOES NOT return a REGID -> ...
+    - ...if current REGID is correct or temporary, keep it
+    - ...if current REGID is empty, get a temporary one
+- If user sends a new msg -> save into DB and send to server
+ */
 
 public class Act_Channel extends ActionBarActivity {
 

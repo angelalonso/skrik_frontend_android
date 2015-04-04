@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.util.Patterns;
 
 import org.json.JSONArray;
@@ -120,8 +119,8 @@ public class Toolbox_Backend {
 
 
 
-    public ArrayList<Data_SearchUser_ListItems> searchUser(String word2Search){
-        ArrayList<Data_SearchUser_ListItems> result = new ArrayList<Data_SearchUser_ListItems>();
+    public ArrayList<Data_SearchContact_ListItems> searchUser(String word2Search){
+        ArrayList<Data_SearchContact_ListItems> result = new ArrayList<Data_SearchContact_ListItems>();
         String output = null;
         if (!word2Search.matches("")) {
             String url_searchuser = URL + "/searchusers/" + word2Search + "/";
@@ -147,7 +146,7 @@ public class Toolbox_Backend {
             for (String s : stringArray) {
                 try {
                     JSONArray jsonLine = new JSONArray(s);
-                    Data_SearchUser_ListItems item = new Data_SearchUser_ListItems();
+                    Data_SearchContact_ListItems item = new Data_SearchContact_ListItems();
                     item.setUsername(jsonLine.getString(0));
                     item.setUserID(jsonLine.getString(1));
                     item.setStatus(jsonLine.getString(2));

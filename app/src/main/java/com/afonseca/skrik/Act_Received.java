@@ -3,9 +3,7 @@ package com.afonseca.skrik;
 import android.app.Activity;
 import android.os.Bundle;
 
-/**
- * Created by afonseca on 3/16/2015.
- */
+
 public class Act_Received extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState)

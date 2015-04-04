@@ -20,6 +20,21 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/* TODO:
+- If user details are empty or wrong -> go to Act_UserCfg
+- If user opens or comes back here -> update data
+- If the REGID is missing/wrong/older than 1 day -> get Regid from GCM
+  - If GCM returns a new REGID -> update in server
+  - If GCM DOES NOT return a REGID -> ...
+    - ...if current REGID is correct or temporary -> keep it
+    - ...if current REGID is empty -> get a temporary one
+- If contact is (short) clicked -> open Channel on contact
+- If contact is LONG-clicked -> Show options: blacklist, open Channel // also in  Act_SearchContact //
+- If new msg(s) is received -> ...
+  - ...if contact exists on list -> Show number of new msgs
+  - ...if contact does not exist on list -> if it is not blacklisted -> add it, Show number of new msgs
+
+ */
 
 public class Act_Overview extends ActionBarActivity {
     /*TODO: empty overview has to be just empty
@@ -353,7 +368,7 @@ public class Act_Overview extends ActionBarActivity {
 
     public void gotoSearchUser(View view) {
         /** Called when the user clicks the Config button */
-        Intent intent = new Intent(this, Act_SearchUser.class);
+        Intent intent = new Intent(this, Act_SearchContact.class);
         startActivity(intent);
     }
 
