@@ -227,9 +227,10 @@ public class Toolbox_Sharedprefs extends Activity {
 
         editor.remove(Name);
         editor.remove(Email);
+        editor.remove(Passwd);
         editor.remove(Uid);
         editor.remove(Regid);
-        editor.remove(Passwd);
+        editor.remove(RegidTS);
         editor.apply();
     }
 

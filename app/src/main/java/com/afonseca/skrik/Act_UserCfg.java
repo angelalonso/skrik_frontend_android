@@ -51,6 +51,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
     Toolbox_Backend toolbox_BE = new Toolbox_Backend();
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
+    Tool_Timestamp my_Timestamp = new Tool_Timestamp();
 
     Context mContext;
 
@@ -132,8 +133,8 @@ public class Act_UserCfg extends ActionBarActivity {
         phone.setText(toolbox_SP.getPhone(mContext));
         uid.setText(toolbox_SP.getUid(mContext));
         regid.setText(toolbox_SP.getRegid(mContext));
-        regid_ts.setText(Long.toString(toolbox_SP.getRegidTimestamp(mContext)));
-        Log.i(TAG,"TROUBLESHOOT loaduserdatta");
+        regid_ts.setText(my_Timestamp.getBeauty(mContext,(int)(toolbox_SP.getRegidTimestamp(mContext)/1000)));
+        //regid_ts.setText(Long.toString(toolbox_SP.getRegidTimestamp(mContext)));
         String regid_new = toolbox_SP.correctRegid(mContext,this);
         if (!regid_new .matches("")) {
             regid.setText(regid_new);
@@ -224,8 +225,10 @@ public class Act_UserCfg extends ActionBarActivity {
                         name.setText("");
                         email.setText("");
                         phone.setText("");
-                        uid.setText("");
                         passwd.setText("");
+                        uid.setText("");
+                        regid.setText("");
+                        regid_ts.setText("");
                         toolbox_SP.clearUser(mContext);
                         String saveResult = toolbox_SP.saveUserConfig(mContext, "", "", "", "", "", "");
                         loadUserData(mContext);
@@ -247,19 +250,19 @@ public class Act_UserCfg extends ActionBarActivity {
         String em  = email.getText().toString();
         String ph = phone.getText().toString();
         String id  = uid.getText().toString();
-        String rid  = regid.getText().toString();
         String pwd  = passwd.getText().toString();
 
         mContext = getApplicationContext();
-        //TODO: Shall we trigger this already while the user is entering data?
-        //    TODO: Maybe we can create a new function that does that, then triggers an update when it's done.
-        Log.i(TAG,"TROUBLESHOOT");
         toolbox_SP.correctRegid(mContext,this);
+        // OTHERWISE we might get a new regid but keep on passing the old one
+        String rid = toolbox_SP.getRegid(mContext);
         String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
             finish();
         } else {
+            //We use this as an update
+            loadUserData(mContext);
             Toast.makeText(getApplicationContext(), dataCheck, Toast.LENGTH_LONG).show();
         }
 
