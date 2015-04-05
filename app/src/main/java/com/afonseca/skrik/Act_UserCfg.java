@@ -17,34 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/* TODO:
-- If user landed here -> Show why (which details are wrong/needed) MESSAGE ÁREA
-OK- If Activity is opened/resumed -> just load the current data
-- If user saves data ->...
-  - ...if data is correct -> Save to DB, send to server and go to Act_Overview
-  - ...if data is not correct -> Correct if possible, if not -> Show why (see above) and let user change it
-- If sending data to server -> Encrypt all, then send (decrypt at server)
-- If the UID is missing/wrong -> get UID from server
-  - If server is unavailable -> use temporary 4444
-OK- If the REGID is missing/wrong/older than 1 day -> get Regid from GCM
-  OK- If GCM returns a new REGID -> update local, update timestamp,update in server if different,
-  OK- If GCM DOES NOT return a REGID -> ...
-    OK- ...if current REGID is correct or temporary, keep it
-    OK- ...if current REGID is empty, get a temporary one
-- If the username exists at the server -> show error, get alternatives from server
-- TODO: DEFINE WHAT TO DO WITH PASSWORDS (when the user is known, when it's not, when it's new, when it's recovering an existing one...)
-
-
- */
-
-/*TODO: Define a better workflow:
-  TODO: Show what is needed turning it red (back to grey when writing)
-  TODO: Save password in backend (send all secured)
-  TODO: Add an Image, send to server
-  TODO: Document which Classes are called from here
-  TODO: Try to communicate securely
- */
-
 public class Act_UserCfg extends ActionBarActivity {
 
     /* Declarations */
@@ -54,8 +26,6 @@ public class Act_UserCfg extends ActionBarActivity {
     Tool_Timestamp my_Timestamp = new Tool_Timestamp();
 
     Context mContext;
-
-    String TAG = "Checkpoint! ->";
 
     String serverSide;
     private Toast toast;
@@ -68,6 +38,8 @@ public class Act_UserCfg extends ActionBarActivity {
     TextView uid;
     TextView regid;
     TextView regid_ts;
+
+    String TAG = "Checkpoint! ->";
 
     /* LOADING Methods */
 
@@ -118,7 +90,6 @@ public class Act_UserCfg extends ActionBarActivity {
 
     /* ACTION Methods */
 
-
     public void loadUserData(Context mContext){
         Log.i(TAG,"loadUserData");
 
@@ -134,7 +105,6 @@ public class Act_UserCfg extends ActionBarActivity {
         uid.setText(toolbox_SP.getUid(mContext));
         regid.setText(toolbox_SP.getRegid(mContext));
         regid_ts.setText(my_Timestamp.getBeauty(mContext,(int)(toolbox_SP.getRegidTimestamp(mContext)/1000)));
-        //regid_ts.setText(Long.toString(toolbox_SP.getRegidTimestamp(mContext)));
         String regid_new = toolbox_SP.correctRegid(mContext,this);
         if (!regid_new .matches("")) {
             regid.setText(regid_new);

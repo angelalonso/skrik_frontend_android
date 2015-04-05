@@ -24,11 +24,14 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyFullscreenTheme" >
+        android:theme="@style/MyFullscreenTheme"
+        android:noHistory="true"
+        android:launchMode="singleTop">
+
         <receiver
             android:enabled="true"
             android:exported="true"
-            android:label="TESTING GCM Msgs"
+            android:label="GCM Msgs Receiver"
             android:name=".Tool_GCM_BCastReceiver">
             <intent-filter>
                 <!-- Receives the actual messages. -->
@@ -42,7 +45,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

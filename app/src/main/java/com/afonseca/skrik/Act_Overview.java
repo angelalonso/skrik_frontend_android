@@ -94,12 +94,7 @@ public class Act_Overview extends ActionBarActivity {
         serverSide = serverCheck(mContext);
 
         toolbox_SP.correctRegid(mContext,this);
-        /*
-//**************
-        Context auxContext = Act_Overview.this;
-        debugger.popup(auxContext,"regid-> " + toolbox_SP.getRegid(mContext));
-//**************
-*/
+
         if (check_UserData(mContext).matches("OK")) {
             showWhatever();
         } else {
@@ -368,19 +363,11 @@ public class Act_Overview extends ActionBarActivity {
 
 
     public void clearDB() {
-        //TODO: Ask for confirmation
         Context mContext = getApplicationContext();
         DB_Msgs_Handler msgsSQLHandler = new DB_Msgs_Handler(mContext);
         String Clearquery = "DELETE FROM MSGS WHERE id=id;";
         msgsSQLHandler.executeQuery(Clearquery);
         showWhatever();
     }
-
-    //http://developer.android.com/guide/topics/ui/actionbar.html
-
-
-    // ------------  TESTING
-
-    // http://stackoverflow.com/questions/20820079/google-cloud-messaging-register-fails
 
 }

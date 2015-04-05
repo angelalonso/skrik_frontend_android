@@ -316,4 +316,9 @@ public class Toolbox_Backend {
         return output;
     }
 
+    public String sendCrypt(String message) {
+        String output = "";
+
+        return output;
+    }
 }
