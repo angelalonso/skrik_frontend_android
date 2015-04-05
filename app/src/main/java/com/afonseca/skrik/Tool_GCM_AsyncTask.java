@@ -20,6 +20,8 @@ class Tool_GCM_AsyncTask extends AsyncTask<String, Void, String> {
 
     private Context mContext;
 
+    String TAG = "Checkpoint! ->";
+
     public Tool_GCM_AsyncTask(Context context) {
         mContext = context;
     }
@@ -31,7 +33,7 @@ class Tool_GCM_AsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... urls) {
-        Log.i("TESTING WFLOW", "2");
+        Log.i(TAG, "GCM running in background");
         String msg = "";
         Log.d("Register GCM", "started");
         try {
@@ -43,8 +45,10 @@ class Tool_GCM_AsyncTask extends AsyncTask<String, Void, String> {
 
             regid = gcm.register(SENDER_ID); //////NULL POINTER EXCEPTION
             msg = "Device registered, registration ID=" + regid;
-            Log.i("TESTING REGID - in",regid);
+            Log.i(TAG,msg);
+            long ts_new = System.currentTimeMillis();
             toolbox_SP.setRegid(mContext,regid);
+            toolbox_SP.setRegidTimestamp(mContext,ts_new);
 
         } catch (IOException ex) {
             Log.i("TESTING REGID - ERROR",ex.getMessage());
@@ -60,6 +64,5 @@ class Tool_GCM_AsyncTask extends AsyncTask<String, Void, String> {
     }
 
     protected void onPostExecute(Boolean result) {
-
     }
 }

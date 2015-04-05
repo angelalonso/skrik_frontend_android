@@ -30,20 +30,22 @@ public class Toolbox_Sharedprefs extends Activity {
     public static final String Status = "statusKey";
     public static final String Passwd = "PasswdKey";
 
+    public void setUsername(Context inContext, String username) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Name, username);
+        editor.apply();
+    }
+
     public String getUsername(Context inContext) {
 
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Name, "");
     }
 
-    
-    public String getEmail(Context inContext) {
 
-        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        return sharedpreferences.getString(Email, "");
-    }
 
-    
     public void setEmail(Context inContext, String email) {
 
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
@@ -52,19 +54,35 @@ public class Toolbox_Sharedprefs extends Activity {
         editor.apply();
     }
 
-    
+    public String getEmail(Context inContext) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        return sharedpreferences.getString(Email, "");
+    }
+
+
+
+    public void setPhone(Context inContext, String phone) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Phone, phone);
+        editor.apply();
+    }
+
     public String getPhone(Context inContext) {
 
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Phone, "");
     }
 
-    
-    public void setPhone(Context inContext, String phone) {
+
+
+    public void setUid(Context inContext, String uid) {
 
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Phone, phone);
+        editor.putString(Uid, uid);
         editor.apply();
     }
 
@@ -74,11 +92,7 @@ public class Toolbox_Sharedprefs extends Activity {
         return sharedpreferences.getString(Uid, "");
     }
 
-    public String getRegid(Context inContext) {
 
-        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        return sharedpreferences.getString(Regid, "");
-    }
 
     public void setRegid(Context inContext, String regid) {
 
@@ -88,12 +102,65 @@ public class Toolbox_Sharedprefs extends Activity {
         editor.apply();
     }
 
-
-    public long getRegidTimestamp(Context inContext) {
+    public String getRegid(Context inContext) {
 
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        return sharedpreferences.getLong(RegidTS, 0);
+        return sharedpreferences.getString(Regid, "");
     }
+/*
+    public boolean acceptableRegid(Context inContext) {
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        boolean result = false;
+
+        String regid = sharedpreferences.getString(Regid, "");
+        String sanitized_regid = regid.replaceAll("[^\\d.]", "");
+        if (!sanitized_regid.matches("") && !sanitized_regid.matches("4444")) {
+            result = true;
+        }
+
+        return result;
+    }
+*/
+    //TODO: Check also the length, maybe?(is it even fixed?)
+    public boolean usableRegid(String regid) {
+        boolean result = false;
+
+        String sanitized_regid = regid.replaceAll("[^\\d.]", "");
+        if (!sanitized_regid.matches("") && !sanitized_regid.matches("4444")) {
+            result = true;
+        }
+        return result;
+    }
+
+    public String correctRegid(Context inContext,Activity act_call) {
+
+        String regid_old = getRegid(inContext);
+        long regidts_old = getRegidTimestamp(inContext);
+        long ts_new = System.currentTimeMillis();
+
+        // IF regid is empty or temporary
+        if (!usableRegid(regid_old)) {
+            //The GCM Async task will update regid and timestamp if correct
+            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(act_call);
+            task.execute();
+            // IF Timestamp of regid is older than a day
+        } else if (ts_new - regidts_old > 3600000) {
+            //The GCM Async task will update regid and timestamp if correct
+            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(act_call);
+            task.execute();
+        }
+        String regid_new = getRegid(inContext);
+        if (!regid_new.matches(regid_old)){
+            saveUserConfig(inContext, getUsername(inContext), getEmail(inContext), getPhone(inContext), getUid(inContext), regid_new, getPasswd(inContext));
+            return regid_new;
+        } else {
+            return "";
+        }
+    }
+
+
+
+
 
     public void setRegidTimestamp(Context inContext, long regidTimestamp) {
 
@@ -103,26 +170,26 @@ public class Toolbox_Sharedprefs extends Activity {
         editor.apply();
     }
 
+    public long getRegidTimestamp(Context inContext) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        return sharedpreferences.getLong(RegidTS, 0);
+    }
+
+
+
+    public void setPasswd(Context inContext, String passwd) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Status, passwd);
+        editor.apply();
+    }
+
     public String getPasswd(Context inContext) {
 
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         return sharedpreferences.getString(Passwd, "");
-    }
-
-    // THIS IS NOT YET USED - is OK
-    public String getStatus(Context inContext) {
-
-        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        return sharedpreferences.getString(Status, "");
-    }
-
-    // THIS IS NOT YET USED - is OK
-    public void setStatus(Context inContext, String data_status) {
-
-        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Status, data_status);
-        editor.apply();
     }
 
     public boolean hasPasswd(Context inContext) {
@@ -135,19 +202,24 @@ public class Toolbox_Sharedprefs extends Activity {
         return result;
     }
 
-    public boolean phoneHasRegid(Context inContext) {
+
+
+    public String getStatus(Context inContext) {
+
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        boolean result = false;
-
-        String regid = sharedpreferences.getString(Regid, "");
-        String sanitized_regid = regid.replaceAll("[^\\d.]", "");
-        if (!sanitized_regid.matches("") && !sanitized_regid.matches("4444")) {
-            result = true;
-        }
-
-        return result;
+        return sharedpreferences.getString(Status, "");
     }
-    
+
+    public void setStatus(Context inContext, String status) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Status, status);
+        editor.apply();
+    }
+
+
+
     public void clearUser(Context inContext) {
 
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);

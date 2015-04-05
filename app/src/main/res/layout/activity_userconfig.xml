@@ -167,6 +167,19 @@
             android:layout_toRightOf="@+id/regid_title"
             android:layout_toEndOf="@+id/regid_title" />
 
+        <TextView
+            android:id="@+id/regid_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="#77000000"
+            android:layout_below="@+id/regid_input"
+            android:layout_toRightOf="@+id/clear_input"
+            android:layout_alignRight="@+id/regid_input"
+            android:layout_alignEnd="@+id/regid_input" />
 
         <Button
             android:id="@+id/save_btn"

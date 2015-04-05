@@ -19,18 +19,18 @@ import java.util.regex.Pattern;
 
 /* TODO:
 - If user landed here -> Show why (which details are wrong/needed) MESSAGE ÁREA
-- If Activity is opened/resumed -> just load the current data
+OK- If Activity is opened/resumed -> just load the current data
 - If user saves data ->...
   - ...if data is correct -> Save to DB, send to server and go to Act_Overview
   - ...if data is not correct -> Correct if possible, if not -> Show why (see above) and let user change it
 - If sending data to server -> Encrypt all, then send (decrypt at server)
 - If the UID is missing/wrong -> get UID from server
   - If server is unavailable -> use temporary 4444
-- If the REGID is missing/wrong/older than 1 day -> get Regid from GCM
-  - If GCM returns a new REGID -> update in server
-  - If GCM DOES NOT return a REGID -> ...
-    - ...if current REGID is correct or temporary, keep it
-    - ...if current REGID is empty, get a temporary one
+OK- If the REGID is missing/wrong/older than 1 day -> get Regid from GCM
+  OK- If GCM returns a new REGID -> update local, update timestamp,update in server if different,
+  OK- If GCM DOES NOT return a REGID -> ...
+    OK- ...if current REGID is correct or temporary, keep it
+    OK- ...if current REGID is empty, get a temporary one
 - If the username exists at the server -> show error, get alternatives from server
 - TODO: DEFINE WHAT TO DO WITH PASSWORDS (when the user is known, when it's not, when it's new, when it's recovering an existing one...)
 
@@ -66,6 +66,7 @@ public class Act_UserCfg extends ActionBarActivity {
     EditText passwd;
     TextView uid;
     TextView regid;
+    TextView regid_ts;
 
     /* LOADING Methods */
 
@@ -81,6 +82,7 @@ public class Act_UserCfg extends ActionBarActivity {
         passwd = (EditText) findViewById(R.id.passwd_input);
         uid = (TextView) findViewById(R.id.uid_input);
         regid = (TextView) findViewById(R.id.regid_input);
+        regid_ts = (TextView) findViewById(R.id.regid_timestamp);
     }
 
     @Override
@@ -130,6 +132,12 @@ public class Act_UserCfg extends ActionBarActivity {
         phone.setText(toolbox_SP.getPhone(mContext));
         uid.setText(toolbox_SP.getUid(mContext));
         regid.setText(toolbox_SP.getRegid(mContext));
+        regid_ts.setText(Long.toString(toolbox_SP.getRegidTimestamp(mContext)));
+        Log.i(TAG,"TROUBLESHOOT loaduserdatta");
+        String regid_new = toolbox_SP.correctRegid(mContext,this);
+        if (!regid_new .matches("")) {
+            regid.setText(regid_new);
+        }
     }
 
     public void offerAccount(Context mContext) {
@@ -244,9 +252,9 @@ public class Act_UserCfg extends ActionBarActivity {
 
         mContext = getApplicationContext();
         //TODO: Shall we trigger this already while the user is entering data?
-        //    TODO: Maybe we can create a new function thtat does that, then triggers an update when it's done.
-        // UNDER CONSTRUCTION BELOW (regidCheck)
-        regidCheck();
+        //    TODO: Maybe we can create a new function that does that, then triggers an update when it's done.
+        Log.i(TAG,"TROUBLESHOOT");
+        toolbox_SP.correctRegid(mContext,this);
         String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
@@ -258,22 +266,22 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
     /* CHECK Methods */
-
+/*
     // TODO: MOVE THIS TO toolbox_SP
-    public String regidCheck() {
+    public String regidddCheck() {
         // TODO: Send and check result of AsyncTask
         // TODO: Update regid directly at the Asynctask?
-        /*
-        Check if regid is empty or invalid or older than one day.(check if there is a previous timestamp)
-        If so, ask for a new one
-        If a result comes AND is a valid one, change it and update timestamp
-        If it's not valid AND current one is empty, give a temporary one and
-         */
+        //
+        //Check if regid is empty or invalid or older than one day.(check if there is a previous timestamp)
+        //If so, ask for a new one
+        //If a result comes AND is a valid one, change it and update timestamp
+        //If it's not valid AND current one is empty, give a temporary one and
+
         String regid_old = toolbox_SP.getRegid(mContext);
         long regidts_old = toolbox_SP.getRegidTimestamp(mContext);
         long ts_new = System.currentTimeMillis();
         // IF regid is empty or temporary
-        if (!toolbox_SP.phoneHasRegid(mContext)) {
+        if (!toolbox_SP.acceptableRegid(mContext)) {
             //TODO: get result, check it only update if its correct
             Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
             task.execute();
@@ -289,7 +297,7 @@ public class Act_UserCfg extends ActionBarActivity {
 
         return regid_new;
     }
-
+*/
     public String serverCheck() {
         Log.i(TAG,"serverCheck");
 

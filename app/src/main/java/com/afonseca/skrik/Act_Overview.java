@@ -93,13 +93,7 @@ public class Act_Overview extends ActionBarActivity {
         mContext = getApplicationContext();
         serverSide = serverCheck(mContext);
 
-        if (!toolbox_SP.phoneHasRegid(mContext)) {
-            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
-            task.execute();
-        } else {
-            Log.i("TESTING Save Regid is",toolbox_SP.getRegid(mContext));
-        }
-
+        toolbox_SP.correctRegid(mContext,this);
         /*
 //**************
         Context auxContext = Act_Overview.this;
