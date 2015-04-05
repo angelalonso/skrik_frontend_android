@@ -21,6 +21,7 @@ TODO: Save password in backend (send all secured)
 TODO: Add an Image, send to server
 TODO: Document which Classes are called from here
 TODO: Try to communicate securely
+TODO, SERVER        - If the user connects in a new device with another REGID, set any other user with that same REGID to invalid/999999999
 
 ----- HELPFUL ----
     //http://developer.android.com/guide/topics/ui/actionbar.html
