@@ -246,13 +246,7 @@ public class Act_UserCfg extends ActionBarActivity {
         //TODO: Shall we trigger this already while the user is entering data?
         //    TODO: Maybe we can create a new function thtat does that, then triggers an update when it's done.
         // UNDER CONSTRUCTION BELOW (regidCheck)
-        if (!toolbox_SP.phoneHasRegid(mContext)) {
-            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
-            task.execute();
-            Log.i("TESTING after Regid ", toolbox_SP.getRegid(mContext));
-        } else {
-            Log.i("TESTING Save Regid is", toolbox_SP.getRegid(mContext));
-        }
+        regidCheck();
         String dataCheck = toolbox_SP.userOK_beforeSave(mContext, n, em, ph, pwd);
         if (dataCheck.equals("OK")) {
             String saveResult = toolbox_SP.saveUserConfig(mContext, n, em, ph, id, rid, pwd);
@@ -265,16 +259,35 @@ public class Act_UserCfg extends ActionBarActivity {
 
     /* CHECK Methods */
 
-    public void regidCheck() {
+    // TODO: MOVE THIS TO toolbox_SP
+    public String regidCheck() {
         // TODO: Send and check result of AsyncTask
         // TODO: Update regid directly at the Asynctask?
+        /*
+        Check if regid is empty or invalid or older than one day.(check if there is a previous timestamp)
+        If so, ask for a new one
+        If a result comes AND is a valid one, change it and update timestamp
+        If it's not valid AND current one is empty, give a temporary one and
+         */
+        String regid_old = toolbox_SP.getRegid(mContext);
+        long regidts_old = toolbox_SP.getRegidTimestamp(mContext);
+        long ts_new = System.currentTimeMillis();
+        // IF regid is empty or temporary
         if (!toolbox_SP.phoneHasRegid(mContext)) {
+            //TODO: get result, check it only update if its correct
             Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
             task.execute();
-            Log.i("TESTING after Regid ", toolbox_SP.getRegid(mContext));
-        } else {
-            Log.i("TESTING Save Regid is", toolbox_SP.getRegid(mContext));
+            toolbox_SP.setRegidTimestamp(mContext,ts_new);
+        // IF Timestamp of regid is older than a day
+        } else if (ts_new - regidts_old > 3600000) {
+            //TODO: get result, check it only update if its correct
+            Tool_GCM_AsyncTask task = new Tool_GCM_AsyncTask(this);
+            task.execute();
+            toolbox_SP.setRegidTimestamp(mContext,ts_new);
         }
+        String regid_new = toolbox_SP.getRegid(mContext);
+
+        return regid_new;
     }
 
     public String serverCheck() {

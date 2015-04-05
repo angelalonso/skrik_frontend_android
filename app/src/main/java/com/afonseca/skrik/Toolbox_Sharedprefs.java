@@ -26,6 +26,7 @@ public class Toolbox_Sharedprefs extends Activity {
     public static final String Phone = "phoneKey";
     public static final String Uid = "uidKey";
     public static final String Regid = "regidKey";
+    public static final String RegidTS = "regidTSKey";
     public static final String Status = "statusKey";
     public static final String Passwd = "PasswdKey";
 
@@ -84,6 +85,21 @@ public class Toolbox_Sharedprefs extends Activity {
         SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Regid, regid);
+        editor.apply();
+    }
+
+
+    public long getRegidTimestamp(Context inContext) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        return sharedpreferences.getLong(RegidTS, 0);
+    }
+
+    public void setRegidTimestamp(Context inContext, long regidTimestamp) {
+
+        SharedPreferences sharedpreferences = inContext.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putLong(RegidTS, regidTimestamp);
         editor.apply();
     }
 
