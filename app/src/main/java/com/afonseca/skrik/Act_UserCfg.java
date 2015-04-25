@@ -17,6 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/* TODO:
+TODO - If no user details are found, trigger recognition
+TODO   - If unique phone is found, add it automatically, with possibility to change it
+TODO   - If phone is not unique, show choices
+TODO   - If unique email is found, add it automatically, with possibility to change it
+TODO   - If email is not unique, show choices
+TODO   - If email is in our system and phone too, add name automatically, with possibility to change it
+TODO     - In this case, is password needed?
+TODO   - If no name is automatically found, ask for it
+TODO   - If name is already taken and it does not correspond to email and/or phone -> Show altenratives, possibility to recover?
+TODO   - Show on all (password, email, phone) what these are needed for ( ? icon)
+TODO   - If no password is given, ask for one.
+
+ */
+
+
 public class Act_UserCfg extends ActionBarActivity {
 
     /* Declarations */
@@ -112,6 +128,116 @@ public class Act_UserCfg extends ActionBarActivity {
     }
 
     public void offerAccount(Context mContext) {
+        Log.i(TAG,"offerAccount");
+/*
+        *TODO   - If unique phone is found, add it automatically, with possibility to change it
+        *TODO   - If phone is not unique, show choices
+        TODO   - If unique email is found, add it automatically, with possibility to change it
+        TODO   - If email is not unique, show choices
+        TODO   - If email is in our system and phone too, add name automatically, with possibility to change it
+        TODO     - In this case, is password needed?
+                TODO   - If no name is automatically found, ask for it
+        TODO   - If name is already taken and it does not correspond to email and/or phone -> Show altenratives, possibility to recover?
+        TODO   - Show on all (password, email, phone) what these are needed for ( ? icon)
+        TODO   - If no password is given, ask for one.
+*/
+
+        final Context inContext = mContext;
+
+        // Though the phone should popup first, I want this to be answered last. So I play with...order
+        List<String> foundEmailAccounts = new ArrayList<>();
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        Account[] eMailAccounts = AccountManager.get(mContext).getAccounts();
+        for (Account account : eMailAccounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                String possibleEmail = account.name;
+                if (!foundEmailAccounts.contains( possibleEmail )) {
+                    foundEmailAccounts.add(possibleEmail);
+                }
+            }
+        }
+
+        //TODO   - If unique email is found, add it automatically, with possibility to change it
+        if (foundEmailAccounts.size() == 1) {
+            toolbox_SP.setEmail(mContext,foundEmailAccounts.get(0));
+        } else if (foundEmailAccounts.size() > 1) {
+            foundEmailAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
+            final CharSequence[] allAccounts = foundEmailAccounts.toArray(new
+                    CharSequence[foundEmailAccounts.size()]);
+            AlertDialog.Builder builderEm = new AlertDialog.Builder(this);
+            builderEm.setTitle(mContext.getResources().getString(R.string.msg_link_account));
+
+            builderEm.setItems(allAccounts, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+                    String Chosen = allAccounts[which].toString();
+                    if (emailPattern.matcher(Chosen).matches())
+                    {
+                        email.setEnabled(true);
+                        email.setText(Chosen);
+                        toolbox_SP.setEmail(inContext,Chosen);
+                    }
+                    //TODO: Call the Backend here with what we have, to see if a name can be received.
+                    if (phone.getText().toString().trim().matches("4915771520744")) {
+                        toast = Toast.makeText(inContext, "OH YES; FOUND IT!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        toast = Toast.makeText(inContext, "*"+phone.getText().toString().trim()+"*", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
+            });
+            builderEm.show();
+            toolbox_SP.setEmail(mContext, email.getText().toString());
+
+
+
+        }
+
+
+
+        List<String> foundPhoneAccounts = new ArrayList<>();
+        Pattern phonePattern = Patterns.PHONE;
+        Account[] accounts = AccountManager.get(mContext).getAccounts();
+        for (Account account : accounts) {
+            if (phonePattern.matcher(account.name).matches()) {
+                String possiblePhone = account.name;
+                if (!foundPhoneAccounts.contains( possiblePhone )) {
+                    foundPhoneAccounts.add(possiblePhone);
+                }
+            }
+        }
+        //TODO   - If unique phone is found, add it automatically, with possibility to change it
+        if (foundPhoneAccounts.size() == 0) {
+            toolbox_SP.setPhone(mContext,foundPhoneAccounts.get(0));
+            //TODO   - If phone is not unique, show choices
+        } else if (foundPhoneAccounts.size() > 0) {
+            foundPhoneAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
+            final CharSequence[] allAccounts = foundPhoneAccounts.toArray(new
+                    CharSequence[foundPhoneAccounts.size()]);
+            AlertDialog.Builder builderPh = new AlertDialog.Builder(this);
+            builderPh.setTitle(mContext.getResources().getString(R.string.msg_link_account));
+            builderPh.setItems(allAccounts, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Pattern phonePattern = Patterns.PHONE;
+                    String Chosen = allAccounts[which].toString();
+                    if (phonePattern.matcher(Chosen).matches())
+                    {
+                        phone.setEnabled(true);
+                        phone.setText(Chosen);
+                        toolbox_SP.setPhone(inContext,Chosen);
+                    }
+                }
+            });
+            builderPh.show();
+            toolbox_SP.setPhone(mContext, phone.getText().toString());
+        }
+
+    }
+
+    public void offerAccountOLD(Context mContext) {
         Log.i(TAG,"offerAccount");
 
         final Context inContext = mContext;

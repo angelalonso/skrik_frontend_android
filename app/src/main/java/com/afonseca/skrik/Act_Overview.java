@@ -43,16 +43,7 @@ public class Act_Overview extends ActionBarActivity {
     **/
 
     /* Declarations */
-/*
-    public static final String EXTRA_MESSAGE = "message";
-    public static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    String SENDER_ID = "610647426983";
-    //GoogleCloudMessaging gcm;
-    String regid;
-*/
     //Extender Activity
     Toolbox_Sharedprefs toolbox_SP = new Toolbox_Sharedprefs();
     Toolbox_Backend backend = new Toolbox_Backend();
