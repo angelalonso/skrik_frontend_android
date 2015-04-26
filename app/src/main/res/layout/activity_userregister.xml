@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_usrreg_title"
+        android:text="@string/title_userreg_new"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_margin="5dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|top"
+        android:layout_margin="40dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="214dp"
+            android:text="New Text"
+            android:id="@+id/tv_usrreg_info"
+            android:gravity="center_horizontal|bottom"
+            android:layout_margin="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:text=""
+            android:id="@+id/tv_usrreg_middleline"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <EditText
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:hint="@string/hint_usercfg_phone"
+                android:id="@+id/et_usrreg_phone"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:inputType="phone" />
+
+            <EditText
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:hint="@string/hint_usercfg_email"
+                android:id="@+id/et_usrreg_email"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:hint="@string/hint_usercfg_code"
+                android:id="@+id/et_usrreg_code"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp" />
+
+            <EditText
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:hint="@string/hint_usercfg_name"
+                android:id="@+id/et_usrreg_name"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp" />
+
+            <Button
+                android:visibility="invisible"
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OK"
+                android:id="@+id/btn_userreg_ok"
+                android:layout_alignBottom="@+id/et_usrreg_phone"
+                android:layout_alignRight="@+id/et_usrreg_phone"
+                android:layout_alignEnd="@+id/et_usrreg_phone"
+                android:layout_alignLeft="@+id/et_usrreg_phone"
+                android:layout_alignStart="@+id/et_usrreg_phone" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -12,6 +12,7 @@
     <string name="title_techdetails">Detalles técnicos</string>
     <string name="title_usercfg">Ajustes</string>
     <string name="title_userdetails">Datos de Usuario</string>
+    <string name="title_userreg_new">¿Quién eres?</string>
 
 
     <string name="btn_all_clear">Resetear</string>
@@ -27,10 +28,11 @@
 
 
     <string name="hint_searchuser_search">Buscar ...</string>
+    <string name="hint_usercfg_code">Introduzca su código aquí</string>
     <string name="hint_usercfg_email">Introduzca su e-Mail aquí</string>
     <string name="hint_usercfg_name">Introduzca su nombre aquí</string>
     <string name="hint_usercfg_pass">Introduzca una contraseña</string>
-    <string name="hint_usercfg_phone">Introduzca su teléfono aquí</string>
+    <string name="hint_usercfg_phone">Introduzca un teléfono</string>
 
     <string name="msg_first_offline">El primer registro necesita internet. Conéctate y pulsa aquí para intentar salvar de nuevo</string>
     <string name="msg_del_confirm">¿Estás seguro de que quieres BORRAR TODOS tus DATOS DE USUARIO?</string>

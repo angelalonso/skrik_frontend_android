@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MyFullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MyFullscreenTheme" parent="Theme.AppCompat.NoActionBar">
     </style>
 
 

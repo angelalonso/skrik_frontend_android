@@ -47,6 +47,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity><activity android:name=".Act_UserRegister" >
         </activity>
         <activity android:name=".Act_UserCfg" >
         </activity>

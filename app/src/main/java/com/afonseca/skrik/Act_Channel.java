@@ -161,8 +161,25 @@ public class Act_Channel extends ActionBarActivity {
             backend.updateNewslist(msgsSQLHandler, usersSQLHandler, me_userid);
         }
         showMessages(other_userid);
+    }
 
 
+    public void cryptMessage(View view) {
+        EditText message_et = (EditText) findViewById(R.id.message_et);
+        String message = message_et.getText().toString();
+        if (!message.matches("") ) {
+            String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+
+            //ERROR HERE SQLite
+            String newUserName = toolbox_SP.getUsername(mContext,other_userid);
+
+            //msgsSQLHandler.addNewMessage(me_userid, other_userid, message, timestamp);
+            serverSide = serverCheck(mContext);
+            if (serverSide.matches("OK")) {
+                backend.sendCryptMsgToBackend(message,me_userid,other_userid,timestamp);
+            }
+        }
+        message_et.setText("");
     }
 
     public void clearChannel() {

@@ -89,7 +89,8 @@ public class Act_Overview extends ActionBarActivity {
         if (check_UserData(mContext).matches("OK")) {
             showWhatever();
         } else {
-            Intent intent = new Intent(this, Act_UserCfg.class);
+            //Intent intent = new Intent(this, Act_UserCfg.class);
+            Intent intent = new Intent(this, Act_UserRegister.class);
             startActivity(intent);
         }
 

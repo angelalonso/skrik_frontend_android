@@ -6,16 +6,29 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Base64;
 import android.util.Patterns;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Pattern;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 
 public class Toolbox_Backend {
@@ -301,13 +314,10 @@ public class Toolbox_Backend {
 
     public String sendMsgToBackend(String message, String userid_from, String userid_to, String timestamp) {
 
-        /*
-        * Throw a message if the email is already in use (maybe get back the data?
-        * */
         String output = null;
-        String url_saveuser = URL + "/newmessage/" + message + "/userfrom/" + userid_from + "/userto/" + userid_to + "/timestamp/" + timestamp + "/";
+        String url_newmessage = URL + "/newmessage/" + message + "/userfrom/" + userid_from + "/userto/" + userid_to + "/timestamp/" + timestamp + "/";
         try {
-            output = new Tool_AsyncTask().execute(url_saveuser).get();
+            output = new Tool_AsyncTask().execute(url_newmessage).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -316,9 +326,46 @@ public class Toolbox_Backend {
         return output;
     }
 
-    public String sendCrypt(String message) {
-        String output = "";
+    public String sendCryptMsgToBackend(String message, String userid_from, String userid_to, String timestamp) {
 
+        String publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEFCCvmp2QWWoeYa2W4HOnV70e9qLsGnDWP2R4qhiZVjj8Igdqe4GbqmFPYZEqQgGl3XieFGjGBQT9IYPOLHLs7j85ZW7qjJ9rOkNvZ66Rm6HottH3ULPCWvgah0SOo87ny2hi+yhnNoDt35e5FEX0w2RMaiAHQTefepnXjKDfEJm/MLEOSVCVEkFBByl2Nv+/RmPXpiOZd87LBQFkLv70AUs1yeA7jGfEkes6LA/WdXtaAXgqqvoR87wXF3oiFrRrJCxd4WUNqjc7xivpxKXn3NiCXpfDzOxigc3ITpP26+6Ngqlk3gFBE3r0LMKkfzDQ+7qGb4NB2W5p6DSvp9Yr pi@raspberrypi";
+
+        String output = null;
+        String url_rawmessage = "/newmessage/" + message + "/userfrom/" + userid_from + "/userto/" + userid_to + "/timestamp/" + timestamp + "/";
+        String url_encrypted = "";
+
+        try {
+            url_encrypted =  URL + "/skrik/" + encryptRSA(url_rawmessage, publicKey) + "/";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            output = new Tool_AsyncTask().execute(url_encrypted).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         return output;
+    }
+
+    public String encryptRSA(String message,String keyString) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
+// http://stackoverflow.com/questions/25211749/rsa-encryption-using-public-key-in-android-for-a-php-server
+        //String keyString = getPublicKeyStringFromPemFormat(publicKeyString, false);
+
+        // converts the String to a PublicKey instance
+        byte[] keyBytes = Base64.decode(keyString.getBytes("utf-8"), Base64.NO_WRAP);
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey key = keyFactory.generatePublic(spec);
+
+        // decrypts the message
+        byte[] dectyptedText = null;
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        dectyptedText = cipher.doFinal(Base64.decode(message.getBytes("utf-8"), Base64.NO_WRAP));
+        return Base64.encodeToString(dectyptedText, Base64.NO_WRAP);
     }
 }

@@ -12,6 +12,7 @@
     <string name="title_techdetails">Technical details</string>
     <string name="title_usercfg">User configuration</string>
     <string name="title_userdetails">User details</string>
+    <string name="title_userreg_new">Who are you?</string>
 
 
     <string name="btn_all_clear">Clear</string>
@@ -27,10 +28,12 @@
 
 
     <string name="hint_searchuser_search">Search ...</string>
+    <string name="hint_usercfg_code">Enter your code here</string>
     <string name="hint_usercfg_email">Enter your e-mail here</string>
     <string name="hint_usercfg_name">Enter your name here</string>
     <string name="hint_usercfg_pass">Add a password</string>
     <string name="hint_usercfg_phone">Enter your phone number here</string>
+
 
     <string name="msg_first_offline">Registering a new user requires internet. Get connected and push here to retry</string>
     <string name="msg_del_confirm">Are you sure you want to DELETE ALL your USER DATA?</string>
