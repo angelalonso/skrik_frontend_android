@@ -52,6 +52,15 @@
                 android:layout_margin="20dp"
                 android:inputType="phone" />
 
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:id="@+id/sp_usrreg_phone" />
+
             <EditText
                 android:visibility="invisible"
                 android:layout_width="match_parent"

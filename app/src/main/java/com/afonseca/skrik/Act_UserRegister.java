@@ -11,8 +11,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +69,7 @@ public class Act_UserRegister extends ActionBarActivity {
 
     TextView tv_info;
     EditText et_phone;
+    Spinner sp_phone;
     EditText et_email;
     EditText et_code;
     EditText et_name;
@@ -88,6 +92,7 @@ public class Act_UserRegister extends ActionBarActivity {
 
         tv_info = (TextView) findViewById(R.id.tv_usrreg_info);
         et_phone = (EditText) findViewById(R.id.et_usrreg_phone);
+        sp_phone = (Spinner) findViewById(R.id.sp_usrreg_phone);
         et_email = (EditText) findViewById(R.id.et_usrreg_email);
         et_code = (EditText) findViewById(R.id.et_usrreg_code);
         et_name = (EditText) findViewById(R.id.et_usrreg_name);
@@ -127,7 +132,6 @@ public class Act_UserRegister extends ActionBarActivity {
     /* ACTION Methods */
 
     public void dataCheckProcess(Context mContext) {
-        final Context inContext = mContext;
         // STEP 1: Check that a phone can be found
         //  If nothing found or several found -> GET ONE
         //  When you have one, DO Something on Backend
@@ -154,29 +158,33 @@ public class Act_UserRegister extends ActionBarActivity {
         // If there is just one, use it
         if (foundPhoneAccounts.size() == 1) {
             toolbox_SP.setPhone(mContext,foundPhoneAccounts.get(0));
+            checkDataFromPhone();
         }
         // If there are more than one, let the user choose one
         else if (foundPhoneAccounts.size() > 1) {
             foundPhoneAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
-            final CharSequence[] allAccounts = foundPhoneAccounts.toArray(new
-                    CharSequence[foundPhoneAccounts.size()]);
-            AlertDialog.Builder builderPh = new AlertDialog.Builder(this);
-            builderPh.setTitle(mContext.getResources().getString(R.string.msg_link_account));
-            builderPh.setItems(allAccounts, new DialogInterface.OnClickListener() {
+            //final CharSequence[] phoneAccounts = foundPhoneAccounts.toArray(new CharSequence[foundPhoneAccounts.size()]);
+            useDataMode("selectPhone");
+            ArrayAdapter<String> adp1 = new ArrayAdapter<>(mContext,android.R.layout.simple_list_item_1,foundPhoneAccounts);
+            sp_phone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Pattern phonePattern = Patterns.PHONE;
-                    String Chosen = allAccounts[which].toString();
-                    if (phonePattern.matcher(Chosen).matches()) {
-                        et_phone.setText(Chosen);
+                public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+                    String selected = parent.getItemAtPosition(pos).toString();
+                    if (selected.matches(getResources().getString(R.string.btn_usercfg_entermanual))) {
+                        useDataMode("enterPhone");
                     }
                 }
-            });
-            builderPh.show();
-        }
-        // Is this phone in our DB?
-        checkDataFromPhone();
 
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+                }
+
+            });
+            sp_phone.setAdapter(adp1);
+        }
+        // No checkdatafromphone here, since it will be triggered with the "OK" click
     }
 
         //TODO: From here on,
@@ -231,6 +239,17 @@ public class Act_UserRegister extends ActionBarActivity {
             case "enterPhone":
                 tv_info.setText(R.string.msg_userreg_writephone);
                 et_phone.setVisibility(View.VISIBLE);
+                sp_phone.setVisibility(View.INVISIBLE);
+                et_email.setVisibility(View.INVISIBLE);
+                et_code.setVisibility(View.INVISIBLE);
+                et_name.setVisibility(View.INVISIBLE);
+                btn_ok.setVisibility(View.VISIBLE);
+                btn_ok.setEnabled(true);
+                break;
+            case "selectPhone":
+                tv_info.setText(R.string.msg_userreg_writephone);
+                et_phone.setVisibility(View.INVISIBLE);
+                sp_phone.setVisibility(View.VISIBLE);
                 et_email.setVisibility(View.INVISIBLE);
                 et_code.setVisibility(View.INVISIBLE);
                 et_name.setVisibility(View.INVISIBLE);
@@ -240,6 +259,7 @@ public class Act_UserRegister extends ActionBarActivity {
             case "enterEmail":
                 tv_info.setText(R.string.msg_userreg_writeemail);
                 et_phone.setVisibility(View.INVISIBLE);
+                sp_phone.setVisibility(View.INVISIBLE);
                 et_email.setVisibility(View.VISIBLE);
                 et_code.setVisibility(View.INVISIBLE);
                 et_name.setVisibility(View.INVISIBLE);
@@ -248,6 +268,7 @@ public class Act_UserRegister extends ActionBarActivity {
                 break;
             case "enterCode":
                 et_phone.setVisibility(View.INVISIBLE);
+                sp_phone.setVisibility(View.INVISIBLE);
                 et_email.setVisibility(View.INVISIBLE);
                 et_code.setVisibility(View.VISIBLE);
                 et_name.setVisibility(View.INVISIBLE);
@@ -256,6 +277,7 @@ public class Act_UserRegister extends ActionBarActivity {
                 break;
             case "enterName":
                 et_phone.setVisibility(View.INVISIBLE);
+                sp_phone.setVisibility(View.INVISIBLE);
                 et_email.setVisibility(View.INVISIBLE);
                 et_code.setVisibility(View.INVISIBLE);
                 et_name.setVisibility(View.VISIBLE);
@@ -264,6 +286,7 @@ public class Act_UserRegister extends ActionBarActivity {
                 break;
             case "None":
                 et_phone.setVisibility(View.INVISIBLE);
+                sp_phone.setVisibility(View.INVISIBLE);
                 et_email.setVisibility(View.INVISIBLE);
                 et_code.setVisibility(View.INVISIBLE);
                 et_name.setVisibility(View.INVISIBLE);
@@ -272,6 +295,7 @@ public class Act_UserRegister extends ActionBarActivity {
                 break;
             default:
                 et_phone.setVisibility(View.INVISIBLE);
+                sp_phone.setVisibility(View.INVISIBLE);
                 et_email.setVisibility(View.INVISIBLE);
                 et_code.setVisibility(View.INVISIBLE);
                 et_name.setVisibility(View.INVISIBLE);
@@ -285,6 +309,10 @@ public class Act_UserRegister extends ActionBarActivity {
 
         switch(datamode) {
             case "enterPhone":
+                checkDataFromPhone();
+                break;
+            case "selectPhone":
+                Toast.makeText(mContext, "OnItemSelectedListener : " + sp_phone.getSelectedItem(), Toast.LENGTH_SHORT).show();
                 checkDataFromPhone();
                 break;
             case "enterEmail":
