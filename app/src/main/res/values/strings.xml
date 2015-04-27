@@ -28,11 +28,11 @@
 
 
     <string name="hint_searchuser_search">Search ...</string>
-    <string name="hint_usercfg_code">Enter your code here</string>
-    <string name="hint_usercfg_email">Enter your e-mail here</string>
-    <string name="hint_usercfg_name">Enter your name here</string>
+    <string name="hint_userreg_code">Enter the code</string>
+    <string name="hint_usercfg_email">Enter your e-mail</string>
+    <string name="hint_usercfg_name">Enter your name</string>
     <string name="hint_usercfg_pass">Add a password</string>
-    <string name="hint_usercfg_phone">Enter your phone number here</string>
+    <string name="hint_usercfg_phone">Enter your phone number</string>
 
 
     <string name="msg_first_offline">Registering a new user requires internet. Get connected and push here to retry</string>
@@ -42,6 +42,8 @@
     <string name="msg_link_account">What do you want to link your account to?</string>
     <string name="msg_press_exit">Press back again to close this app</string>
     <string name="msg_user_not_registered">Your user is not yet registered. Get connected to Internet and retry to save</string>
+    <string name="msg_userreg_writeemail">We need an e-Mail address to secure your user. In the future we might need to send you a code using your e-Mail address, so, please, use a real one</string>
+    <string name="msg_userreg_writephone">We need a phone number to send notifications to</string>
     <string name="msg_you_need_user">You need a user name</string>
 
     <string name="aux_date_format_full">dd/MM/yy HH:mm</string>

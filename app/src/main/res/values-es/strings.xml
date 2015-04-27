@@ -28,9 +28,9 @@
 
 
     <string name="hint_searchuser_search">Buscar ...</string>
-    <string name="hint_usercfg_code">Introduzca su código aquí</string>
-    <string name="hint_usercfg_email">Introduzca su e-Mail aquí</string>
-    <string name="hint_usercfg_name">Introduzca su nombre aquí</string>
+    <string name="hint_userreg_code">Introduzca el código</string>
+    <string name="hint_usercfg_email">Introduzca un e-Mail</string>
+    <string name="hint_usercfg_name">Introduzca un nombre</string>
     <string name="hint_usercfg_pass">Introduzca una contraseña</string>
     <string name="hint_usercfg_phone">Introduzca un teléfono</string>
 
@@ -41,6 +41,8 @@
     <string name="msg_link_account">¿Con qué quieres unir tu cuenta de usuario?</string>
     <string name="msg_press_exit">Pulsa Atrás de nuevo para cerrar la app</string>
     <string name="msg_user_not_registered">Tu usuario aun no está registrado. Conéctate a internet y vuelve a intentar guardar</string>
+    <string name="msg_userreg_writeemail">Necesitamos una dirección de correo electrónico para asegurar tu cuenta. En un futuro es posible que necesitemos enviarte un código a esta dirección, asi que intenta que sea real</string>
+    <string name="msg_userreg_writephone">Necesitamos un número de teléfono al que mandar notificaciones</string>
     <string name="msg_you_need_user">Necesitas un nombre de usuario</string>
 
     <string name="aux_date_format_full">dd/MM/yy HH:mm</string>

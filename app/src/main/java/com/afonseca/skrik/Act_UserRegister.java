@@ -13,6 +13,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class Act_UserRegister extends ActionBarActivity {
 
     Context mContext;
 
+    TextView tv_info;
     EditText et_phone;
     EditText et_email;
     EditText et_code;
@@ -73,6 +75,7 @@ public class Act_UserRegister extends ActionBarActivity {
     private Toast toast;
     private long lastBackPressTime = 0;
 
+    String datamode = "None";
     String TAG = "Checkpoint! ->";
 
     /* LOADING Methods */
@@ -83,6 +86,7 @@ public class Act_UserRegister extends ActionBarActivity {
         setContentView(R.layout.activity_userregister);
         Log.i(TAG, "onCreate");
 
+        tv_info = (TextView) findViewById(R.id.tv_usrreg_info);
         et_phone = (EditText) findViewById(R.id.et_usrreg_phone);
         et_email = (EditText) findViewById(R.id.et_usrreg_email);
         et_code = (EditText) findViewById(R.id.et_usrreg_code);
@@ -97,7 +101,7 @@ public class Act_UserRegister extends ActionBarActivity {
         Log.i(TAG,"onResume");
 
         //serverSide = serverCheck();
-        userCheckProcess(mContext);
+        dataCheckProcess(mContext);
     }
 
     /* onSOMETHINGELSE Methods */
@@ -122,13 +126,15 @@ public class Act_UserRegister extends ActionBarActivity {
 
     /* ACTION Methods */
 
-    public void userCheckProcess(Context mContext) {
+    public void dataCheckProcess(Context mContext) {
         final Context inContext = mContext;
-        //TODO: Change mode according to results instead of this
-        //TODO: Hint text must be shorter
-        et_phone.setVisibility(View.VISIBLE);
-        btn_ok.setVisibility(View.VISIBLE);
         // STEP 1: Check that a phone can be found
+        //  If nothing found or several found -> GET ONE
+        //  When you have one, DO Something on Backend
+        //  If there is no known NAME -> GET ONE
+
+        // Check that a phone can be found
+        useDataMode("enterPhone");
         List<String> foundPhoneAccounts = new ArrayList<>();
         Pattern phonePattern = Patterns.PHONE;
         Account[] accounts = AccountManager.get(mContext).getAccounts();
@@ -140,12 +146,17 @@ public class Act_UserRegister extends ActionBarActivity {
                 }
             }
         }
-        // If there is no phone, let user add it. If there are several phones, let user choose
-        if (foundPhoneAccounts.size() == 0) {
 
-        } else if (foundPhoneAccounts.size() == 1) {
+        // TESTING
+        foundPhoneAccounts.add("00000000");
+
+        // If there is no phone, let user add it. (Nothing to do, then)
+        // If there is just one, use it
+        if (foundPhoneAccounts.size() == 1) {
             toolbox_SP.setPhone(mContext,foundPhoneAccounts.get(0));
-        } else if (foundPhoneAccounts.size() > 1) {
+        }
+        // If there are more than one, let the user choose one
+        else if (foundPhoneAccounts.size() > 1) {
             foundPhoneAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
             final CharSequence[] allAccounts = foundPhoneAccounts.toArray(new
                     CharSequence[foundPhoneAccounts.size()]);
@@ -156,14 +167,17 @@ public class Act_UserRegister extends ActionBarActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     Pattern phonePattern = Patterns.PHONE;
                     String Chosen = allAccounts[which].toString();
-                    if (phonePattern.matcher(Chosen).matches())
-                    {
-                        toolbox_SP.setPhone(inContext,Chosen);
+                    if (phonePattern.matcher(Chosen).matches()) {
+                        et_phone.setText(Chosen);
                     }
                 }
             });
             builderPh.show();
         }
+        // Is this phone in our DB?
+        checkDataFromPhone();
+
+    }
 
         //TODO: From here on,
 
@@ -200,11 +214,98 @@ public class Act_UserRegister extends ActionBarActivity {
             - NO ---------> Go to create a new user
      */
 
+    public void checkDataFromPhone() {
+        String phone = toolbox_SP.getPhone(mContext);
+        String dataSaved = toolbox_BE.getDataFromPhoneNr(phone);
+        toast = Toast.makeText(this, dataSaved, Toast.LENGTH_SHORT);
+        toast.show();
+
+        //toolbox_SP.setPhone(mContext,et_phone.getText().toString());
+        et_phone.setText("");
+        useDataMode("enterEmail");
     }
-    public void dataMode(String mode){
+
+    public void useDataMode(String mode){
+        datamode = mode;
+        switch(mode) {
+            case "enterPhone":
+                tv_info.setText(R.string.msg_userreg_writephone);
+                et_phone.setVisibility(View.VISIBLE);
+                et_email.setVisibility(View.INVISIBLE);
+                et_code.setVisibility(View.INVISIBLE);
+                et_name.setVisibility(View.INVISIBLE);
+                btn_ok.setVisibility(View.VISIBLE);
+                btn_ok.setEnabled(true);
+                break;
+            case "enterEmail":
+                tv_info.setText(R.string.msg_userreg_writeemail);
+                et_phone.setVisibility(View.INVISIBLE);
+                et_email.setVisibility(View.VISIBLE);
+                et_code.setVisibility(View.INVISIBLE);
+                et_name.setVisibility(View.INVISIBLE);
+                btn_ok.setVisibility(View.VISIBLE);
+                btn_ok.setEnabled(true);
+                break;
+            case "enterCode":
+                et_phone.setVisibility(View.INVISIBLE);
+                et_email.setVisibility(View.INVISIBLE);
+                et_code.setVisibility(View.VISIBLE);
+                et_name.setVisibility(View.INVISIBLE);
+                btn_ok.setVisibility(View.VISIBLE);
+                btn_ok.setEnabled(true);
+                break;
+            case "enterName":
+                et_phone.setVisibility(View.INVISIBLE);
+                et_email.setVisibility(View.INVISIBLE);
+                et_code.setVisibility(View.INVISIBLE);
+                et_name.setVisibility(View.VISIBLE);
+                btn_ok.setVisibility(View.VISIBLE);
+                btn_ok.setEnabled(true);
+                break;
+            case "None":
+                et_phone.setVisibility(View.INVISIBLE);
+                et_email.setVisibility(View.INVISIBLE);
+                et_code.setVisibility(View.INVISIBLE);
+                et_name.setVisibility(View.INVISIBLE);
+                btn_ok.setVisibility(View.INVISIBLE);
+                btn_ok.setEnabled(false);
+                break;
+            default:
+                et_phone.setVisibility(View.INVISIBLE);
+                et_email.setVisibility(View.INVISIBLE);
+                et_code.setVisibility(View.INVISIBLE);
+                et_name.setVisibility(View.INVISIBLE);
+                btn_ok.setVisibility(View.INVISIBLE);
+                btn_ok.setEnabled(false);
+        }
+
+    }
+
+    public void dataAdd(View view) {
+
+        switch(datamode) {
+            case "enterPhone":
+                checkDataFromPhone();
+                break;
+            case "enterEmail":
+                useDataMode("enterCode");
+                break;
+            case "enterCode":
+                useDataMode("enterName");
+                break;
+            case "enterName":
+                useDataMode("None");
+                break;
+            case "None":
+                useDataMode("None");
+                break;
+            default:
+                useDataMode("None");
+        }
 
     }
 /*
+
     public String serverCheck() {
         Log.i(TAG,"serverCheck");
 

@@ -100,11 +100,21 @@ public class Toolbox_Backend {
             e.printStackTrace();
         }
         return output;
-
     }
 
 
-
+    public String getDataFromPhoneNr(String phone) {
+        String output = null;
+        String url_getusername = URL + "/getdataforphone/" + phone + "/";
+        try {
+            output = new Tool_AsyncTask().execute(url_getusername).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
     public String saveUserToBackend(String username, String email, String phone, String userid, String regid) {
 
         /*
