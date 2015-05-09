@@ -156,6 +156,7 @@ public class Act_UserRegister extends ActionBarActivity {
 
         // If there is no phone, let user add it. (Nothing to do, then)
         // If there is just one, use it
+        Log.i(TAG,"found " + foundPhoneAccounts.size());
         if (foundPhoneAccounts.size() == 1) {
             toolbox_SP.setPhone(mContext,foundPhoneAccounts.get(0));
             checkDataFromPhone();

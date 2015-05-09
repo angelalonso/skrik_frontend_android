@@ -62,7 +62,7 @@ public class Act_UserCfg extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_userconfig);
+        setContentView(R.layout.activity_usercfg);
         Log.i(TAG,"onCreate");
 
         name = (EditText) findViewById(R.id.name_input);
