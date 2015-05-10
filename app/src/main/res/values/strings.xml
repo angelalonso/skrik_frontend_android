@@ -14,6 +14,10 @@
     <string name="title_userdetails">User details</string>
     <string name="title_userreg_new">Who are you?</string>
 
+    <string name="all_username">Name</string>
+    <string name="all_email">E-Mail</string>
+    <string name="all_phone">Phone Number</string>
+
 
     <string name="btn_all_clear">Clear</string>
     <string name="btn_all_clearall">Clear all</string>
@@ -23,6 +27,7 @@
     <string name="btn_overview_delete">Delete</string>
     <string name="btn_overview_newchannel">New</string>
     <string name="btn_searchuser_search">Search</string>
+    <string name="btn_userreg_reset">Back</string>
     <string name="btn_usercfg_entermanual">Enter manually</string>
     <string name="btn_usercfg_save">Save</string>
 
@@ -42,8 +47,10 @@
     <string name="msg_link_account">What do you want to link your account to?</string>
     <string name="msg_press_exit">Press back again to close this app</string>
     <string name="msg_user_not_registered">Your user is not yet registered. Get connected to Internet and retry to save</string>
+    <string name="msg_userreg_writecode">Enter below the CODE we sent to your e-Mail</string>
     <string name="msg_userreg_writeemail">We need an e-Mail address to secure your user. In the future we might need to send you a code using your e-Mail address, so, please, use a real one</string>
     <string name="msg_userreg_writephone">We need a phone number to send notifications to</string>
+    <string name="msg_userreg_username">Which Name do you want to use?</string>
     <string name="msg_you_need_user">You need a user name</string>
 
     <string name="aux_date_format_full">dd/MM/yy HH:mm</string>

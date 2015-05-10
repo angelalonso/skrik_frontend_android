@@ -209,10 +209,10 @@ public class Act_UserCfg extends ActionBarActivity {
             }
         }
         //TODO   - If unique phone is found, add it automatically, with possibility to change it
-        if (foundPhoneAccounts.size() == 0) {
+        if (foundPhoneAccounts.size() == 1) {
             toolbox_SP.setPhone(mContext,foundPhoneAccounts.get(0));
             //TODO   - If phone is not unique, show choices
-        } else if (foundPhoneAccounts.size() > 0) {
+        } else if (foundPhoneAccounts.size() > 1) {
             foundPhoneAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
             final CharSequence[] allAccounts = foundPhoneAccounts.toArray(new
                     CharSequence[foundPhoneAccounts.size()]);

@@ -14,6 +14,9 @@
     <string name="title_userdetails">Datos de Usuario</string>
     <string name="title_userreg_new">¿Quién eres?</string>
 
+    <string name="all_username">Nombre</string>
+    <string name="all_email">E-Mail</string>
+    <string name="all_phone">Teléfono</string>
 
     <string name="btn_all_clear">Resetear</string>
     <string name="btn_all_clearall">Borrar todo</string>
@@ -23,6 +26,7 @@
     <string name="btn_overview_delete">Borrar</string>
     <string name="btn_overview_newchannel">Nuevo</string>
     <string name="btn_searchuser_search">Buscar</string>
+    <string name="btn_userreg_reset">Atrás</string>
     <string name="btn_usercfg_entermanual">Introducir manualmente</string>
     <string name="btn_usercfg_save">Guardar</string>
 
@@ -41,8 +45,10 @@
     <string name="msg_link_account">¿Con qué quieres unir tu cuenta de usuario?</string>
     <string name="msg_press_exit">Pulsa Atrás de nuevo para cerrar la app</string>
     <string name="msg_user_not_registered">Tu usuario aun no está registrado. Conéctate a internet y vuelve a intentar guardar</string>
+    <string name="msg_userreg_writecode">Introduce el CÓDIGO que te hemos enviado al e-Mail</string>
     <string name="msg_userreg_writeemail">Necesitamos una dirección de correo electrónico para asegurar tu cuenta. En un futuro es posible que necesitemos enviarte un código a esta dirección, asi que intenta que sea real</string>
     <string name="msg_userreg_writephone">Necesitamos un número de teléfono al que mandar notificaciones</string>
+    <string name="msg_userreg_username">¿Qué Nombre de Usuario quieres usar?</string>
     <string name="msg_you_need_user">Necesitas un nombre de usuario</string>
 
     <string name="aux_date_format_full">dd/MM/yy HH:mm</string>
@@ -51,8 +57,8 @@
     <string name="aux_date_yesterday">ayer</string>
     <string name="aux_dummy_uid">99999999999999</string>
     <string name="aux_result_ok">OK</string>
-    <string name="aux_result_passwd">contraseña</string>
-    <string name="aux_result_username">nombre de usuario</string>
+    <string name="aux_result_passwd">Contraseña</string>
+    <string name="aux_result_username">Nombre de usuario</string>
     <string name="aux_result_valid_email">Email \'VÁLIDO\'</string>
     <string name="aux_result_valid_email_phone">Email o teléfono \'VÁLIDO\'</string>
     <string name="aux_result_provide">Necesitas introducir: </string>
