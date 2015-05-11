@@ -371,6 +371,57 @@ public class Act_UserRegister extends ActionBarActivity {
         //TODO:
         //  - Get phone accounts configured
         //  - If there are several, show popup to choose one, and make phone="more"
+
+        List<String> foundPhoneAccounts = new ArrayList<>();
+        Pattern phonePattern = Patterns.PHONE;
+        Account[] accounts = AccountManager.get(mContext).getAccounts();
+        for (Account account : accounts) {
+            if (phonePattern.matcher(account.name).matches()) {
+                String possiblePhone = account.name;
+                if (!foundPhoneAccounts.contains( possiblePhone )) {
+                    foundPhoneAccounts.add(possiblePhone);
+                }
+            }
+        }
+
+
+
+        // TESTING FROM HERE
+
+        // TESTING
+        foundPhoneAccounts.add("00000000");
+        foundPhoneAccounts.add("00000012");
+
+        // If there is no phone, let user add it. (Nothing to do, then)
+        // If there is just one, use it
+        final Context inContext = mContext;
+        Log.i(TAG,"found " + foundPhoneAccounts.size());
+        if (foundPhoneAccounts.size() == 1) {
+            toolbox_SP.setPhone(mContext,foundPhoneAccounts.get(0));
+            checkDataFromPhone();
+        }
+        // If there are more than one, let the user choose one
+        else if (foundPhoneAccounts.size() > 1) {
+            foundPhoneAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
+            final CharSequence[] allAccounts = foundPhoneAccounts.toArray(new
+                    CharSequence[foundPhoneAccounts.size()]);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(mContext.getResources().getString(R.string.msg_link_account));
+            builder.setItems(allAccounts, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String Chosen = allAccounts[which].toString();
+                    toolbox_SP.setPhone(inContext,Chosen);
+                    //TODO: update edittext instead
+
+                }
+            });
+            builder.show();
+        }
+
+
+        // TESTING TO HERE
+
         if ((phone != null) && (!phone.matches(""))){
             result = phone;
         }
@@ -438,10 +489,12 @@ public class Act_UserRegister extends ActionBarActivity {
         }
 
         // TESTING
-        //foundPhoneAccounts.add("00000000");
+        foundPhoneAccounts.add("00000000");
+        foundPhoneAccounts.add("00000012");
 
         // If there is no phone, let user add it. (Nothing to do, then)
         // If there is just one, use it
+        final Context inContext = mContext;
         Log.i(TAG,"found " + foundPhoneAccounts.size());
         if (foundPhoneAccounts.size() == 1) {
             toolbox_SP.setPhone(mContext,foundPhoneAccounts.get(0));
@@ -450,26 +503,27 @@ public class Act_UserRegister extends ActionBarActivity {
         // If there are more than one, let the user choose one
         else if (foundPhoneAccounts.size() > 1) {
             foundPhoneAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
-            //final CharSequence[] phoneAccounts = foundPhoneAccounts.toArray(new CharSequence[foundPhoneAccounts.size()]);
-            useDataMode("selectPhone");
-            ArrayAdapter<String> adp1 = new ArrayAdapter<>(mContext,android.R.layout.simple_list_item_1,foundPhoneAccounts);
-            sp_phone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
+            final CharSequence[] allAccounts = foundPhoneAccounts.toArray(new
+                    CharSequence[foundPhoneAccounts.size()]);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(mContext.getResources().getString(R.string.msg_link_account));
+            builder.setItems(allAccounts, new DialogInterface.OnClickListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-                    String selected = parent.getItemAtPosition(pos).toString();
-                    if (selected.matches(getResources().getString(R.string.btn_usercfg_entermanual))) {
-                        useDataMode("enterPhone");
+                public void onClick(DialogInterface dialog, int which) {
+                    Pattern phonePattern = Patterns.PHONE;
+                    String Chosen = allAccounts[which].toString();
+                    if (phonePattern.matcher(Chosen).matches())
+                    {
+                        toolbox_SP.setPhone(inContext,Chosen);
+                        toolbox_SP.setEmail(inContext,"");
+                    }
+                    else {
+                        toolbox_SP.setEmail(inContext,"");
+                        toolbox_SP.setPhone(inContext,"");
                     }
                 }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> arg0) {
-                    // TODO Auto-generated method stub
-                }
-
             });
-            sp_phone.setAdapter(adp1);
+            builder.show();
         }
         // No checkdatafromphone here, since it will be triggered with the "OK" click
     }
