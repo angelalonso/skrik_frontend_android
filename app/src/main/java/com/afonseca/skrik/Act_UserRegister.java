@@ -427,7 +427,7 @@ public class Act_UserRegister extends ActionBarActivity {
                         toolbox_SP.setPhone(inContext, Chosen);
                         et_phone.setText(Chosen);
                     } else {
-                        //TODO: We are asked twice here
+                        //TODO: We are asked twice here, but not always... only when offline???
                         toolbox_SP.setPhone(inContext, null);
                         et_phone.setText(null);
                     }

@@ -34,7 +34,7 @@ import javax.crypto.NoSuchPaddingException;
 public class Toolbox_Backend {
 
     String IP = "fonseca.de.com";
-    String PORT = "8044";
+    String PORT = "80";
     String URL = "http://" + IP + ":" + PORT;
 
 
