@@ -320,12 +320,18 @@ public class Act_UserRegister extends ActionBarActivity {
     // It should leave us either adding a new phone or adding a new e-Mail or editing the whole apckage (where one can delete all)
     public void dataAddProcess() {
 
-        String phone = getPhones();
+        getPhoneNr();
         //getPhones takes care of any other result that might be in "phone"
-        //if the Phone is needed to be added manually, dataAdd will take care of this later.
+        //if more phone numbers or none of them are found, dataAdd will take care of this later.
         useDataMode("enterPhone");
-        if ((phone != null) && (!phone.matches("more"))) {
-            toolbox_SP.setPhone(mContext, phone);
+        String phone = toolbox_SP.getPhone(mContext);
+        Log.i(TAG,"chosen: " + phone);
+        if ((phone != null) && (phone != ""))  {
+            //This we do already in getPhoneNr
+            //toolbox_SP.setPhone(mContext, phone);
+
+            // THIS LOCKED THE APP!
+            //checkDataFromPhone();
             useDataMode("enterEmail");
             getEmails();
         }
@@ -365,13 +371,9 @@ public class Act_UserRegister extends ActionBarActivity {
 
     }
 
-    public String getPhones() {
-        String result;
-        String phone = toolbox_SP.getPhone(mContext);
-        //TODO:
-        //  - Get phone accounts configured
-        //  - If there are several, show popup to choose one, and make phone="more"
-
+    public void getPhoneNr() {
+        //PART 1 Find Phone numbers
+        // - Find phone accounts in the phone
         List<String> foundPhoneAccounts = new ArrayList<>();
         Pattern phonePattern = Patterns.PHONE;
         Account[] accounts = AccountManager.get(mContext).getAccounts();
@@ -383,50 +385,56 @@ public class Act_UserRegister extends ActionBarActivity {
                 }
             }
         }
-
-
-
-        // TESTING FROM HERE
-
-        // TESTING
+        // - What was already saved in this app? usually nothing, but...
+        String prev_phone = toolbox_SP.getPhone(mContext);
+        if (!foundPhoneAccounts.contains( prev_phone )) {
+            foundPhoneAccounts.add(prev_phone);
+        }
+        // Manually adding for test purposes
         foundPhoneAccounts.add("00000000");
         foundPhoneAccounts.add("00000012");
+        foundPhoneAccounts.add("00000342");
 
-        // If there is no phone, let user add it. (Nothing to do, then)
-        // If there is just one, use it
+        //PART 2 Choose
+
         final Context inContext = mContext;
-        Log.i(TAG,"found " + foundPhoneAccounts.size());
+        Log.i(TAG,"found " + foundPhoneAccounts.size() + "phones");
+
+        // If there is just one, save it to
         if (foundPhoneAccounts.size() == 1) {
-            toolbox_SP.setPhone(mContext,foundPhoneAccounts.get(0));
-            checkDataFromPhone();
+            toolbox_SP.setPhone(mContext, foundPhoneAccounts.get(0));
+            et_phone.setText(foundPhoneAccounts.get(0));
+            Log.i(TAG, "ONE FOUDN");
         }
+
+        //TODO:WE MIGHT NEED A TIMEOUT
         // If there are more than one, let the user choose one
+        //   If there are several, show popup to choose one, and make phone="more"
         else if (foundPhoneAccounts.size() > 1) {
+
             foundPhoneAccounts.add(mContext.getResources().getString(R.string.btn_usercfg_entermanual));
             final CharSequence[] allAccounts = foundPhoneAccounts.toArray(new
                     CharSequence[foundPhoneAccounts.size()]);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
             builder.setTitle(mContext.getResources().getString(R.string.msg_link_account));
-            builder.setItems(allAccounts, new DialogInterface.OnClickListener() {
+            builder = builder.setItems(allAccounts, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String Chosen = allAccounts[which].toString();
-                    toolbox_SP.setPhone(inContext,Chosen);
-                    //TODO: update edittext instead
-
+                    // TODO: TEST THAT IT IS NOT mContext.getResources().getString(R.string.btn_usercfg_entermanual)
+                    if (!Chosen.matches(mContext.getResources().getString(R.string.btn_usercfg_entermanual))) {
+                        toolbox_SP.setPhone(inContext, Chosen);
+                        et_phone.setText(Chosen);
+                    } else {
+                        //TODO: We are asked twice here
+                        toolbox_SP.setPhone(inContext, null);
+                        et_phone.setText(null);
+                    }
                 }
             });
             builder.show();
         }
-
-
-        // TESTING TO HERE
-
-        if ((phone != null) && (!phone.matches(""))){
-            result = phone;
-        }
-        result = "3917575144720";
-        return result;
     }
 
     public String getEmails() {
@@ -525,11 +533,10 @@ public class Act_UserRegister extends ActionBarActivity {
             });
             builder.show();
         }
-        // No checkdatafromphone here, since it will be triggered with the "OK" click
     }
 
 
-
+    // This just checks what we have in the Backend for this Phone number, then
     public void checkDataFromPhone() {
         String phone = toolbox_SP.getPhone(mContext);
         String dataSaved = toolbox_BE.getDataFromPhoneNr(phone);
@@ -537,8 +544,8 @@ public class Act_UserRegister extends ActionBarActivity {
         toast.show();
 
         //toolbox_SP.setPhone(mContext,et_phone.getText().toString());
-        et_phone.setText("");
-        useDataMode("enterEmail");
+        //et_phone.setText("");
+        //useDataMode("enterEmail");
     }
 
 
